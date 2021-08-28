@@ -7,12 +7,14 @@
 //
 
 import Cocoa
-
-
 class ViewController: NSViewController {
 
     override func viewDidLoad() {
     super.viewDidLoad()
+
+        var aux =  LexicalAnalyzer()
+        print()
+        aux.analyse()
 
     // Do any additional setup after loading the view.
     }
