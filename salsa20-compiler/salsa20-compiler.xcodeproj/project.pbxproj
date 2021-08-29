@@ -1,0 +1,576 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6745704926006C452F99EA6E /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67457C0859D082B8DA51C67B /* Node.swift */; };
+		674577A263078AA9C6961B76 /* teste.txt in Resources */ = {isa = PBXBuildFile; fileRef = 67457102F559CFB5D7B3E8BD /* teste.txt */; };
+		67457CE8DC18359E6A5B325F /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67457C69F8692AB1930372A5 /* LinkedList.swift */; };
+		CC70D0CEC79E51614B722ED4 /* salsa20_compilerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70D8A46BB172BB6C0054D2 /* salsa20_compilerTests.swift */; };
+		CC70D1AF5BA2133225F2D9C6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70D162CFE557A7D25BCAE3 /* ViewController.swift */; };
+		CC70D47C3A155E2396DF7388 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70DD38301A5E745F5547BF /* AppDelegate.swift */; };
+		CC70D4ED20CC5608D481A6AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC70D14D9EB26F686D416D86 /* Main.storyboard */; };
+		CC70D64D88C9E148557047D0 /* salsa20_compilerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70D6A9363675F81EAD2366 /* salsa20_compilerUITests.swift */; };
+		CC70D85091AE420DAC751CE0 /* LexicalAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70D4A7E56A2F3C492CBFBA /* LexicalAnalyzer.swift */; };
+		CC70D941A6681D1E9EABFAB3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC70DC5A0D7FA108E0973CE2 /* Assets.xcassets */; };
+		CC70DE2F3644967565DB0ED5 /* Tokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70D2B565C67E48035EAD8F /* Tokens.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CC70D358D43823E7D8100554 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC70DFFE68C7DCB61071D692 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC70DF20EE3760888B02A892;
+			remoteInfo = "salsa20-compiler";
+		};
+		CC70D78F7AEA5CAD15EBA675 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC70DFFE68C7DCB61071D692 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC70DF20EE3760888B02A892;
+			remoteInfo = "salsa20-compiler";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		67457102F559CFB5D7B3E8BD /* teste.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teste.txt; sourceTree = "<group>"; };
+		67457C0859D082B8DA51C67B /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		67457C69F8692AB1930372A5 /* LinkedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedList.swift; sourceTree = "<group>"; };
+		CC70D162CFE557A7D25BCAE3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CC70D1A26F6D83F0914062B0 /* salsa20-compiler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "salsa20-compiler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC70D2AD92778C115294B637 /* salsa20_compiler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = salsa20_compiler.entitlements; sourceTree = "<group>"; };
+		CC70D2B00DA9BE1876E63A48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
+		CC70D2B565C67E48035EAD8F /* Tokens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tokens.swift; sourceTree = "<group>"; };
+		CC70D4A7E56A2F3C492CBFBA /* LexicalAnalyzer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LexicalAnalyzer.swift; sourceTree = "<group>"; };
+		CC70D6A9363675F81EAD2366 /* salsa20_compilerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = salsa20_compilerUITests.swift; sourceTree = "<group>"; };
+		CC70D7B71BA634637568A718 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CC70D8A46BB172BB6C0054D2 /* salsa20_compilerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = salsa20_compilerTests.swift; sourceTree = "<group>"; };
+		CC70D94FC39DD06FB0840A68 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
+		CC70DC5A0D7FA108E0973CE2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CC70DD38301A5E745F5547BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		CC70DDD63460A2DB302F81AA /* salsa20-compilerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "salsa20-compilerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC70DE40A616C5AF7F5A751B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
+		CC70DED6C6FC77E320A0916A /* salsa20-compilerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "salsa20-compilerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CC70D4D01DC1F9E563B428D2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC70D6C8427FD5642132F04C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC70DB23B2F524E5CAABC7A1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		67457C58D8ACC2AF909F168C /* LinkedList */ = {
+			isa = PBXGroup;
+			children = (
+				67457C0859D082B8DA51C67B /* Node.swift */,
+				67457C69F8692AB1930372A5 /* LinkedList.swift */,
+			);
+			path = LinkedList;
+			sourceTree = "<group>";
+		};
+		CC70D185A2EC62834A84D026 /* salsa20-compilerTests */ = {
+			isa = PBXGroup;
+			children = (
+				CC70D94FC39DD06FB0840A68 /* Info.plist */,
+				CC70D8A46BB172BB6C0054D2 /* salsa20_compilerTests.swift */,
+			);
+			path = "salsa20-compilerTests";
+			sourceTree = "<group>";
+		};
+		CC70D3B243698C16395426E9 /* LexicalAnalyzer */ = {
+			isa = PBXGroup;
+			children = (
+				CC70D4A7E56A2F3C492CBFBA /* LexicalAnalyzer.swift */,
+				67457102F559CFB5D7B3E8BD /* teste.txt */,
+			);
+			path = LexicalAnalyzer;
+			sourceTree = "<group>";
+		};
+		CC70D7F56F3A7232565E6641 = {
+			isa = PBXGroup;
+			children = (
+				CC70DBC2A766CE45AAB93211 /* Products */,
+				CC70DF65AA2F7F722DD51E45 /* salsa20-compiler */,
+				CC70D185A2EC62834A84D026 /* salsa20-compilerTests */,
+				CC70DEDA236303F787D22218 /* salsa20-compilerUITests */,
+			);
+			sourceTree = "<group>";
+		};
+		CC70DAEA0E1497C0D942DC52 /* Tokens */ = {
+			isa = PBXGroup;
+			children = (
+				CC70D2B565C67E48035EAD8F /* Tokens.swift */,
+			);
+			path = Tokens;
+			sourceTree = "<group>";
+		};
+		CC70DBC2A766CE45AAB93211 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CC70D1A26F6D83F0914062B0 /* salsa20-compiler.app */,
+				CC70DDD63460A2DB302F81AA /* salsa20-compilerTests.xctest */,
+				CC70DED6C6FC77E320A0916A /* salsa20-compilerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CC70DEDA236303F787D22218 /* salsa20-compilerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				CC70D2B00DA9BE1876E63A48 /* Info.plist */,
+				CC70D6A9363675F81EAD2366 /* salsa20_compilerUITests.swift */,
+			);
+			path = "salsa20-compilerUITests";
+			sourceTree = "<group>";
+		};
+		CC70DF65AA2F7F722DD51E45 /* salsa20-compiler */ = {
+			isa = PBXGroup;
+			children = (
+				CC70DE40A616C5AF7F5A751B /* Info.plist */,
+				CC70DC5A0D7FA108E0973CE2 /* Assets.xcassets */,
+				CC70D2AD92778C115294B637 /* salsa20_compiler.entitlements */,
+				CC70DD38301A5E745F5547BF /* AppDelegate.swift */,
+				CC70D14D9EB26F686D416D86 /* Main.storyboard */,
+				CC70D162CFE557A7D25BCAE3 /* ViewController.swift */,
+				CC70D3B243698C16395426E9 /* LexicalAnalyzer */,
+				CC70DAEA0E1497C0D942DC52 /* Tokens */,
+				67457C58D8ACC2AF909F168C /* LinkedList */,
+			);
+			path = "salsa20-compiler";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CC70D666177B76CB12508792 /* salsa20-compilerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC70DA12F866CB5F6D37B3C5 /* Build configuration list for PBXNativeTarget "salsa20-compilerTests" */;
+			buildPhases = (
+				CC70D09E4AF3FB0591173AD6 /* Sources */,
+				CC70DB23B2F524E5CAABC7A1 /* Frameworks */,
+				CC70DC18B1B2EDADED99170F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CC70DB5E10C5F37CA0067B1D /* PBXTargetDependency */,
+			);
+			name = "salsa20-compilerTests";
+			productName = "salsa20-compilerTests";
+			productReference = CC70DDD63460A2DB302F81AA /* salsa20-compilerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CC70DDB6F3489D032BC748E3 /* salsa20-compilerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC70D180EFA551218C7A4E22 /* Build configuration list for PBXNativeTarget "salsa20-compilerUITests" */;
+			buildPhases = (
+				CC70D274D97E998FD070571B /* Sources */,
+				CC70D6C8427FD5642132F04C /* Frameworks */,
+				CC70D84CDBC39B112CFEF957 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CC70D2D57E65C1202EE59B92 /* PBXTargetDependency */,
+			);
+			name = "salsa20-compilerUITests";
+			productName = "salsa20-compilerUITests";
+			productReference = CC70DED6C6FC77E320A0916A /* salsa20-compilerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		CC70DF20EE3760888B02A892 /* salsa20-compiler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC70DC509F84A04BA036E9B1 /* Build configuration list for PBXNativeTarget "salsa20-compiler" */;
+			buildPhases = (
+				CC70DB75D29A754C11F69759 /* Sources */,
+				CC70D4D01DC1F9E563B428D2 /* Frameworks */,
+				CC70D561FA4CD26688DDB45A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "salsa20-compiler";
+			productName = "salsa20-compiler";
+			productReference = CC70D1A26F6D83F0914062B0 /* salsa20-compiler.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CC70DFFE68C7DCB61071D692 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+			};
+			buildConfigurationList = CC70D6FC76803C0E6217AAC2 /* Build configuration list for PBXProject "salsa20-compiler" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				en,
+				Base,
+			);
+			mainGroup = CC70D7F56F3A7232565E6641;
+			productRefGroup = CC70DBC2A766CE45AAB93211 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CC70DF20EE3760888B02A892 /* salsa20-compiler */,
+				CC70D666177B76CB12508792 /* salsa20-compilerTests */,
+				CC70DDB6F3489D032BC748E3 /* salsa20-compilerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CC70D561FA4CD26688DDB45A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC70D941A6681D1E9EABFAB3 /* Assets.xcassets in Resources */,
+				CC70D4ED20CC5608D481A6AB /* Main.storyboard in Resources */,
+				674577A263078AA9C6961B76 /* teste.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC70D84CDBC39B112CFEF957 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC70DC18B1B2EDADED99170F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CC70D09E4AF3FB0591173AD6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC70D0CEC79E51614B722ED4 /* salsa20_compilerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC70D274D97E998FD070571B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC70D64D88C9E148557047D0 /* salsa20_compilerUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC70DB75D29A754C11F69759 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC70D47C3A155E2396DF7388 /* AppDelegate.swift in Sources */,
+				CC70D1AF5BA2133225F2D9C6 /* ViewController.swift in Sources */,
+				CC70D85091AE420DAC751CE0 /* LexicalAnalyzer.swift in Sources */,
+				CC70DE2F3644967565DB0ED5 /* Tokens.swift in Sources */,
+				6745704926006C452F99EA6E /* Node.swift in Sources */,
+				67457CE8DC18359E6A5B325F /* LinkedList.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CC70D2D57E65C1202EE59B92 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CC70DF20EE3760888B02A892 /* salsa20-compiler */;
+			targetProxy = CC70D78F7AEA5CAD15EBA675 /* PBXContainerItemProxy */;
+		};
+		CC70DB5E10C5F37CA0067B1D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CC70DF20EE3760888B02A892 /* salsa20-compiler */;
+			targetProxy = CC70D358D43823E7D8100554 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		CC70D14D9EB26F686D416D86 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CC70D7B71BA634637568A718 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CC70D01328E3E2DADF165715 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CC70D257889C37BA2FF70BB8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/salsa20-compiler.app/Contents/MacOS/salsa20-compiler";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "salsa20-compilerTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.salsa.inc.salsa20-compilerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+			};
+			name = Release;
+		};
+		CC70D31282E52B34C7953947 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/salsa20-compiler.app/Contents/MacOS/salsa20-compiler";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "salsa20-compilerTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.salsa.inc.salsa20-compilerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+			};
+			name = Debug;
+		};
+		CC70D4C010098744A6FE62B4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Release;
+		};
+		CC70D56D3AA58A21152397BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "salsa20-compilerUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.salsa.inc.salsa20-compilerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "salsa20-compiler";
+			};
+			name = Release;
+		};
+		CC70DA225B367CA2B16CCBE1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "salsa20-compiler/salsa20_compiler.entitlements";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "salsa20-compiler/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.salsa.inc.salsa20-compiler";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		CC70DB0C2027F72FF2E96E13 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "salsa20-compiler/salsa20_compiler.entitlements";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "salsa20-compiler/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.salsa.inc.salsa20-compiler";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		CC70DFF816E45B15866792B4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "salsa20-compilerUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.salsa.inc.salsa20-compilerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "salsa20-compiler";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CC70D180EFA551218C7A4E22 /* Build configuration list for PBXNativeTarget "salsa20-compilerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC70DFF816E45B15866792B4 /* Debug */,
+				CC70D56D3AA58A21152397BE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC70D6FC76803C0E6217AAC2 /* Build configuration list for PBXProject "salsa20-compiler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC70D01328E3E2DADF165715 /* Debug */,
+				CC70D4C010098744A6FE62B4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC70DA12F866CB5F6D37B3C5 /* Build configuration list for PBXNativeTarget "salsa20-compilerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC70D31282E52B34C7953947 /* Debug */,
+				CC70D257889C37BA2FF70BB8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC70DC509F84A04BA036E9B1 /* Build configuration list for PBXNativeTarget "salsa20-compiler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC70DB0C2027F72FF2E96E13 /* Debug */,
+				CC70DA225B367CA2B16CCBE1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CC70DFFE68C7DCB61071D692 /* Project object */;
+}
