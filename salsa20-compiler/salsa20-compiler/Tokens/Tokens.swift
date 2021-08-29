@@ -58,7 +58,7 @@ class Token {
         case sdoispontos = ":"
         case sinicio_comentario = "{"
         case sfim_comentario = "}"
-
+        case sexclamacao = "!"
     }
 
     enum ReserverdWords: String{

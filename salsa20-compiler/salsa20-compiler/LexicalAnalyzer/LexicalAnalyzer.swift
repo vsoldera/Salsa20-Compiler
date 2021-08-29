@@ -4,6 +4,12 @@
 
 import Foundation
 
+struct lineCounter {
+    var line: Int
+    var charactersInLine: Int
+    var sumLastOnes: Int
+}
+
 class LexicalAnalyzer: Token {
 
     let linkedCharacters = LinkedList<String>()
@@ -12,17 +18,16 @@ class LexicalAnalyzer: Token {
 
     override init(){
         fileContent = []
-
     }
 
     func setFileContent(content: String){
-        var aux = content.map({String($0)})
-        fileContent =  aux
+        let aux = content.map({String($0)})
+        fileContent = aux
     }
 
     func openFile() {
         let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-                .appendingPathComponent("teste.txt")
+                .appendingPathComponent("Léxico/teste_10.txt")
 
         print(path)
 
@@ -37,71 +42,127 @@ class LexicalAnalyzer: Token {
 
     func treatCommentaryRemoveSpaces(fileContent: Array<String>, totalLength: Int) -> Int{
         var i = 0
-
-        while( i < totalLength && (fileContent[i] == ReservedCharacters.sinicio_comentario.rawValue || fileContent[i] == " ")) {
-
-            if(fileContent[i] == ReservedCharacters.sinicio_comentario.rawValue) {
-                var j = i
-                
-                
-                while(j < totalLength && ( fileContent[j] != ReservedCharacters.sfim_comentario.rawValue)) {
-                    j+=1
+        var arrayLines : Array<lineCounter>
+        arrayLines = []
+        var lines = 1
+        
+        while(i < totalLength){
+        
+            while( i < totalLength && (fileContent[i] == ReservedCharacters.sinicio_comentario.rawValue || fileContent[i] == " " || fileContent[i] == "\n" || fileContent[i] == "\r\n" || fileContent[i] == "\t")) {
+                if(fileContent[i] == ReservedCharacters.sinicio_comentario.rawValue) {
+                    var j = i
+                    
+                    
+                    while(j < totalLength && ( fileContent[j] != ReservedCharacters.sfim_comentario.rawValue)) {
+                        j += 1
+                    }
+                    j += 1
+                    i = j
+                } // Coleta dados de comentario
+                while(i < totalLength && (fileContent[i] == " " || fileContent[i] == "\n" || fileContent[i] == "\r\n" || fileContent[i] == "\r" || fileContent[i] == "\t")  ) {
+                    
+                    if(fileContent[i] == "\n" || fileContent[i] == "\r\n") {
+                        var a: lineCounter
+                        if(arrayLines.count == 0){
+                            a = lineCounter(line: lines, charactersInLine: i+1, sumLastOnes: i+1)
+                        }else{
+                            let b = arrayLines.last
+                            var sum = b?.sumLastOnes ?? 0
+                            a = lineCounter(line: lines, charactersInLine: (i+1) - sum , sumLastOnes: i+1)
+                        }
+                        arrayLines.append(a)
+                        lines+=1
+                    }
+                    
+                    i += 1;
+                } // Coleta espacoes em branco
+               
+            }
+            if(i < totalLength){
+                let pointer = getToken(fileContent: fileContent.suffix(from: i).map({String($0)}), totalLength: totalLength, generalPointer: i ,arrayLines: arrayLines)
+                if(pointer == -1){
+                    break
                 }
                 
-                j+=1
-                
-
-                i = j
-            } // Coleta dados de comentario
-
-
-            while(i < totalLength && (fileContent[i] == " " || fileContent[i] == "\n")  ) {
-                i+=1;
-            } // Coleta espacoes em branco
-           
-
-            if(i < totalLength){
-                
-                let pointer = getToken(fileContent: fileContent.suffix(from: i).map({String($0)}), totalLength: totalLength)
                 i += pointer
-                // linkedCharacters.append(value: fileContent[i])
+            }else{
+                i += 1
             }
+            
+            
         }
 
         return -1
     }
 
-    func getToken(fileContent: Array<String>, totalLength: Int) -> Int{
+    func getToken(fileContent: Array<String>, totalLength: Int, generalPointer: Int,arrayLines: Array<lineCounter>) -> Int{
         let character = Character(fileContent[0])
         var pointer = 0
-        print("is character", character)
 
         if(character.isNumber == true ) {
             pointer = isDigit(fileContent: fileContent, totalLength: totalLength)
         }
         else if(character.isLetter) {
             
-            pointer = self.treatReserverdWord(fileContent: fileContent)
+            pointer = treatReserverdWord(fileContent: fileContent)
             
         } else {
             if(fileContent[0] == ReservedCharacters.sdoispontos.rawValue) {
                 //trataAtribuicao
-            } else if (fileContent[0] == ReservedCharacters.smais.rawValue || fileContent[0] == ReservedCharacters.smenos.rawValue || fileContent[0] == ReservedCharacters.smult.rawValue) {
-                    //trataOperadorAritmetico
-            } else if(fileContent[0] == ReservedCharacters.snao.rawValue || fileContent[0] == ReservedCharacters.smenor.rawValue || fileContent[0] == ReservedCharacters.smaior.rawValue) {
-                        //trataOperadorRelacional
-
+                linkedCharacters.append(lexema: "\(fileContent[0])", simbolo: whichEnumIs(value: fileContent[0]) != "" ?
+                        whichEnumIs(value: fileContent[0]) : "sidenficador" )
+                pointer+=1
+            } else if(fileContent[0] == ReservedCharacters.smais.rawValue || fileContent[0] == ReservedCharacters.smenos.rawValue || fileContent[0] == ReservedCharacters.smult.rawValue) {
+                //trataOperadorAritmetico
+                linkedCharacters.append(lexema: "\(fileContent[0])", simbolo: whichEnumIs(value: fileContent[0]) != "" ?
+                        whichEnumIs(value: fileContent[0]) : "sidenficador" )
+                pointer+=1
+            } else if(fileContent[0] == ReservedCharacters.sexclamacao.rawValue || fileContent[0] == ReservedCharacters.smenor.rawValue || fileContent[0] == ReservedCharacters.smaior.rawValue || fileContent[0] == ReservedCharacters.sig.rawValue) {
+                //trataOperadorRelacional
+                var op = ""
+                if(fileContent[0] == ReservedCharacters.sexclamacao.rawValue && fileContent[1] == ReservedCharacters.sig.rawValue){
+                    op = ReservedCharacters.sdif.rawValue
+                    pointer+=1
+    
+                }else
+                if(fileContent[0] == ReservedCharacters.smaior.rawValue && fileContent[1] == ReservedCharacters.sig.rawValue){
+                    op = ReservedCharacters.smaiorig.rawValue
+                    pointer+=1
+    
+                }else
+                if(fileContent[0] == ReservedCharacters.smenor.rawValue && fileContent[1] == ReservedCharacters.sig.rawValue){
+                    op = ReservedCharacters.smaiorig.rawValue
+                    pointer+=1
+                }else{
+                    op = fileContent[0]
+                }
+                
+                linkedCharacters.append(lexema: "\(op)", simbolo: whichEnumIs(value: op) != "" ?
+                        whichEnumIs(value: op) : "sidenficador" )
+                pointer+=1
+                
+                
+                
             } else if(fileContent[0] == ReservedCharacters.sponto_virgula.rawValue || fileContent[0] == ReservedCharacters.svirgula.rawValue || fileContent[0] == ReservedCharacters.sabre_parenteses.rawValue || fileContent[0] == ReservedCharacters.sfecha_parenteses.rawValue || fileContent[0] == ReservedCharacters.sponto.rawValue) {
-                            //trataPontuacao
+                //trataPontuacao
+                
+                linkedCharacters.append(lexema: "\(fileContent[0])", simbolo: whichEnumIs(value: fileContent[0]) != "" ?
+                        whichEnumIs(value: fileContent[0]) : "sidenficador" )
+                pointer+=1
             } else {
-                            //Da erro, parça
+                print(arrayLines)
+                var a = arrayLines.last
+                var line = a?.line ?? 0
+                var sumLastOnes = a?.sumLastOnes ?? 0
+                var column = generalPointer - sumLastOnes
+                print("Lexical Error found on line: ", line + 1, "and column: ", column + 1)
+                return -1
             }
 
         }
         
         return pointer
     }
-
 
     func isDigit(fileContent: Array<String>, totalLength: Int) -> Int{
         var final = 0
@@ -120,7 +181,6 @@ class LexicalAnalyzer: Token {
         linkedCharacters.append(lexema: "\(final)", simbolo: "snumero")
 
         return pointer
-
     }
 
     func treatReserverdWord(fileContent: Array<String>) -> Int{
@@ -159,8 +219,6 @@ class LexicalAnalyzer: Token {
         treatCommentaryRemoveSpaces(fileContent: fileContent, totalLength: TOTAL_LENGTH)
         
         print(linkedCharacters)
-        
-       
     }
 
 }
