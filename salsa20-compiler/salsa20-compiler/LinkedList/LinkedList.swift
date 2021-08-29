@@ -21,7 +21,7 @@ public class LinkedList<T> {
     }
 
     public func append(lexema: T, simbolo: T) {
-        let newNode = Node(lexema, simbolo)
+        let newNode = Node(lexema: lexema, simbolo: simbolo)
         if let tailNode = tail {
             newNode.previous = tailNode
             tailNode.next = newNode
@@ -68,7 +68,7 @@ public class LinkedList<T> {
         node.previous = nil
         node.next = nil
 
-        return node.value
+        return node.value as! T
     }
 }
 

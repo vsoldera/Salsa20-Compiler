@@ -8,7 +8,7 @@ class LexicalAnalyzer: Token {
 
     let linkedCharacters = LinkedList<String>()
     let fileManager = FileManager()
-    var fileContent: Array<Character>
+    var fileContent: Array<String>
 
     override init(){
         fileContent = []
@@ -16,7 +16,8 @@ class LexicalAnalyzer: Token {
     }
 
     func setFileContent(content: String){
-        fileContent = Array(content)
+        var aux = content.map({String($0)})
+        fileContent =  aux
     }
 
     func openFile() {
@@ -37,26 +38,32 @@ class LexicalAnalyzer: Token {
     func treatCommentaryRemoveSpaces(fileContent: Array<String>, totalLength: Int) -> Int{
         var i = 0
 
-        while( fileContent[i] == ReservedCharacters.sabre_parenteses.rawValue || fileContent[i] == " " &&
-                i <= totalLength) {
+        while( i < totalLength && (fileContent[i] == ReservedCharacters.sinicio_comentario.rawValue || fileContent[i] == " ")) {
 
-            if(fileContent[i] == ReservedCharacters.sabre_parenteses.rawValue) {
+            if(fileContent[i] == ReservedCharacters.sinicio_comentario.rawValue) {
                 var j = i
-
-                while(fileContent[j] != ReservedCharacters.sfecha_parenteses.rawValue && j <= totalLength) {
-                    j+=2
+                
+                
+                while(j < totalLength && ( fileContent[j] != ReservedCharacters.sfim_comentario.rawValue)) {
+                    j+=1
                 }
+                
+                j+=1
+                
 
                 i = j
             } // Coleta dados de comentario
 
 
-            while(fileContent[i] == " " && i <= totalLength) {
+            while(i < totalLength && (fileContent[i] == " " || fileContent[i] == "\n")  ) {
                 i+=1;
             } // Coleta espacoes em branco
+           
 
-            if(i>=totalLength){
-                getToken(fileContent: fileContent.prefix(i), totalLength: <#T##Int##Swift.Int#>)
+            if(i < totalLength){
+                
+                let pointer = getToken(fileContent: fileContent.suffix(from: i).map({String($0)}), totalLength: totalLength)
+                i += pointer
                 // linkedCharacters.append(value: fileContent[i])
             }
         }
@@ -64,16 +71,18 @@ class LexicalAnalyzer: Token {
         return -1
     }
 
-    func getToken(fileContent: ArraySlice<String>, totalLength: Int){
+    func getToken(fileContent: Array<String>, totalLength: Int) -> Int{
+        let character = Character(fileContent[0])
+        var pointer = 0
+        print("is character", character)
 
-        if(Int(fileContent[0]) != nil ) {
-            isDigit(fileContent: fileContent, totalLength: totalLength)
+        if(character.isNumber == true ) {
+            pointer = isDigit(fileContent: fileContent, totalLength: totalLength)
         }
-        else if((fileContent[0]  >= "a" && fileContent[0] <= "z") && (fileContent[0] >= "A" && fileContent[0] <= "Z")) {
-            if(true/*trataIdentificador && palavra reservada*/) {
-
-
-            }
+        else if(character.isLetter) {
+            
+            pointer = self.treatReserverdWord(fileContent: fileContent)
+            
         } else {
             if(fileContent[0] == ReservedCharacters.sdoispontos.rawValue) {
                 //trataAtribuicao
@@ -89,14 +98,16 @@ class LexicalAnalyzer: Token {
             }
 
         }
+        
+        return pointer
     }
 
 
-    func isDigit(fileContent: ArraySlice<String>, totalLength: Int) -> Int {
+    func isDigit(fileContent: Array<String>, totalLength: Int) -> Int{
         var final = 0
         var pointer = 0
         for (index, item) in fileContent.enumerated() {
-            var aux = Int(item)
+            let aux = Int(item)
 
             if (aux != nil) {
                 final += aux ?? 0
@@ -112,38 +123,44 @@ class LexicalAnalyzer: Token {
 
     }
 
-    func treatReserverdWord(fileContent: ArraySlice<String>){
+    func treatReserverdWord(fileContent: Array<String>) -> Int{
 
         var word = Character(fileContent[0])
         var lexema : String
+        lexema = ""
         var i = 0
         while(word.isLetter == true || word.isNumber == true
         || fileContent[i] == "_"){
-
             lexema.append(word)
-            i+1
+            
+            i+=1
             word = Character(fileContent[i])
         }
-
-
-
+        
+        linkedCharacters.append(lexema: "\(lexema)", simbolo: whichEnumIs(value: lexema) != "" ? whichEnumIs(value: lexema) : "sidenficador" )
+        
+        return i
     }
 
 
     //Algoritmo Analisador Lexical
     func analyse() {
         openFile()
-
+        
+            
+        print(fileContent)
+        
         if(fileContent.count <= 1){
             return print("Não há dados no arquivo - Arquivo vazio!")
         }
 
         let TOTAL_LENGTH = fileContent.count
 
-        for token in fileContent {
-
-
-       }
+        treatCommentaryRemoveSpaces(fileContent: fileContent, totalLength: TOTAL_LENGTH)
+        
+        print(linkedCharacters)
+        
+       
     }
 
 }

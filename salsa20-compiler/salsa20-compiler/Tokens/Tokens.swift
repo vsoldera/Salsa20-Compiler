@@ -20,6 +20,22 @@ class Token {
 
         return false
     }
+    
+    func whichEnumIs(value: String) -> String{
+        if let character = ReservedCharacters.init(rawValue: "\(value)"){
+            if(character != nil) {
+                return "\(character)"
+            }
+        }
+
+        if let word = ReserverdWords.init(rawValue: "\(value)"){
+            if(word != nil) {
+                return "\(word)" 
+            }
+        }
+
+        return ""
+    }
     enum ReservedCharacters: String {
         case sponto = "."
         case sponto_virgula = ";"
@@ -40,6 +56,8 @@ class Token {
         case sou = "ou"
         case snao = "nao"
         case sdoispontos = ":"
+        case sinicio_comentario = "{"
+        case sfim_comentario = "}"
 
     }
 

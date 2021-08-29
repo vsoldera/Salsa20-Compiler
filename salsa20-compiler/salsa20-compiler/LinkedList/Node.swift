@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct value {
+struct token_struct {
     var lexema: Any
     var simbolo: Any
 }
@@ -12,13 +12,12 @@ struct value {
 // 1
 public class Node<T> {
     // 2
-    var value: value
+    var value: token_struct
     var next: Node<T>?
     weak var previous: Node<T>?
 
     // 3
     init(lexema: T, simbolo: T) {
-        self.value.lexema = lexema
-        self.value.simbolo = simbolo
+        self.value = token_struct(lexema: lexema, simbolo: simbolo)
     }
 }
