@@ -174,13 +174,17 @@ class SyntacticAnalyzer: Token {
     
                         if (value2 != "sfim") {
                             try analyseSimpleCommands(linkedCharacters: &linkedCharacters)
+                            value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
                         } else {
                             throw sintaticException(name: "SintaticException", message: "Esperava encontrar sfim - analyseCommands", stack: linkedCharacters)
                         }
+                    }else{
+                        linkedCharacters.nextNode()
+                        value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
                     }
-                    //linkedCharacters.nextNode()
-                    //value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
-                    print("\(value)")
+                    
+                    
+                    //print("\(value)")
                 }
                 linkedCharacters.nextNode()
                 value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
@@ -223,8 +227,10 @@ class SyntacticAnalyzer: Token {
             //TO_DO
             //PASSIVEL DE ERRO - LEMBRAR
             linkedCharacters.nextNode()
-            //try analyseFactor(linkedCharacters: &linkedCharacters)
-        } else {
+        } else if(value == "sdoispontos"){
+            throw sintaticException(name: "SyntaticException", message: "Esperava econtrar atribuição, analyseChProcedure", stack:linkedCharacters)
+            
+        }else{
             //Chamada_procedimento
             //TO_DO
         }
@@ -308,13 +314,11 @@ class SyntacticAnalyzer: Token {
         if value == "sentao" {
             linkedCharacters.nextNode()
             let value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
-            print("entrou senao")
             //analisa comando simples
             try analyseSimpleCommands(linkedCharacters: &linkedCharacters)
             let value3 = linkedCharacters.first?.value.simbolo as? String ?? ""
     
             if value3 == "ssenao" {
-                print("entrou senao")
     
                 linkedCharacters.nextNode()
                 //analisa comando simples

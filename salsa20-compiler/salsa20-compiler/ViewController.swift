@@ -15,7 +15,7 @@ class ViewController: NSViewController {
         do{
             var lexical =  LexicalAnalyzer()
             self.linkedCharacters = try lexical.analyse()
-            print(self.linkedCharacters)
+            //print(self.linkedCharacters)
             var sintatic = SyntacticAnalyzer(linkedCharacters: self.linkedCharacters)
             
             try sintatic.analyser()

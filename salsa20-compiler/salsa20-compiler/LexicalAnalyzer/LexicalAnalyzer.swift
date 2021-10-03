@@ -34,7 +34,7 @@ class LexicalAnalyzer: Token {
 
     func openFile() {
         let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-                .appendingPathComponent("Léxico/sint1.txt")
+                .appendingPathComponent("Léxico/sint11.txt")
 
         print(path)
 
@@ -164,7 +164,7 @@ class LexicalAnalyzer: Token {
                         whichEnumIs(value: fileContent[0]) : "sidentificador" )
                 pointer+=1
             } else {
-                print(arrayLines)
+                //print(arrayLines)
                 var a = arrayLines.last
                 var line = a?.line ?? 0
                 var sumLastOnes = a?.sumLastOnes ?? 0
@@ -223,7 +223,7 @@ class LexicalAnalyzer: Token {
     func analyse() throws -> LinkedList<String>{
         openFile()
             
-        print(fileContent)
+        //print(fileContent)
         
         if(fileContent.count <= 1){
             print("Não há dados no arquivo - Arquivo vazio!")
