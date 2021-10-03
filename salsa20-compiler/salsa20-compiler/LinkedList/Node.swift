@@ -5,8 +5,8 @@
 import Foundation
 
 struct token_struct {
-    var lexema: Any
-    var simbolo: Any
+    var lexema: String
+    var simbolo: String
 }
 
 // 1
@@ -18,6 +18,6 @@ public class Node<T> {
 
     // 3
     init(lexema: T, simbolo: T) {
-        self.value = token_struct(lexema: lexema, simbolo: simbolo)
+        self.value = token_struct(lexema: lexema as! String, simbolo: simbolo as! String)
     }
 }

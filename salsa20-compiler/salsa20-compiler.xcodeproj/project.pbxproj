@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		6745704926006C452F99EA6E /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67457C0859D082B8DA51C67B /* Node.swift */; };
+		67457558E9B12E4BE8A921F7 /* SintaticAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674577B8CC913EDCF76668B3 /* SintaticAnalyzer.swift */; };
 		674577A263078AA9C6961B76 /* teste.txt in Resources */ = {isa = PBXBuildFile; fileRef = 67457102F559CFB5D7B3E8BD /* teste.txt */; };
+		674577EB07231AA930A03C4E /* SintaticException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674578401B20AD3AB0EBE505 /* SintaticException.swift */; };
 		67457CE8DC18359E6A5B325F /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67457C69F8692AB1930372A5 /* LinkedList.swift */; };
 		CC70D0CEC79E51614B722ED4 /* salsa20_compilerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70D8A46BB172BB6C0054D2 /* salsa20_compilerTests.swift */; };
 		CC70D1AF5BA2133225F2D9C6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70D162CFE557A7D25BCAE3 /* ViewController.swift */; };
@@ -39,6 +41,8 @@
 
 /* Begin PBXFileReference section */
 		67457102F559CFB5D7B3E8BD /* teste.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teste.txt; sourceTree = "<group>"; };
+		674577B8CC913EDCF76668B3 /* SintaticAnalyzer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SintaticAnalyzer.swift; sourceTree = "<group>"; };
+		674578401B20AD3AB0EBE505 /* SintaticException.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SintaticException.swift; sourceTree = "<group>"; };
 		67457C0859D082B8DA51C67B /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		67457C69F8692AB1930372A5 /* LinkedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedList.swift; sourceTree = "<group>"; };
 		CC70D162CFE557A7D25BCAE3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +87,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		674574EF8A0A0EC3CFA46A2D /* SintaticAnalyzer */ = {
+			isa = PBXGroup;
+			children = (
+				674577B8CC913EDCF76668B3 /* SintaticAnalyzer.swift */,
+				674578401B20AD3AB0EBE505 /* SintaticException.swift */,
+			);
+			path = SintaticAnalyzer;
+			sourceTree = "<group>";
+		};
 		67457C58D8ACC2AF909F168C /* LinkedList */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +172,7 @@
 				CC70D3B243698C16395426E9 /* LexicalAnalyzer */,
 				CC70DAEA0E1497C0D942DC52 /* Tokens */,
 				67457C58D8ACC2AF909F168C /* LinkedList */,
+				674574EF8A0A0EC3CFA46A2D /* SintaticAnalyzer */,
 			);
 			path = "salsa20-compiler";
 			sourceTree = "<group>";
@@ -301,6 +315,8 @@
 				CC70DE2F3644967565DB0ED5 /* Tokens.swift in Sources */,
 				6745704926006C452F99EA6E /* Node.swift in Sources */,
 				67457CE8DC18359E6A5B325F /* LinkedList.swift in Sources */,
+				67457558E9B12E4BE8A921F7 /* SintaticAnalyzer.swift in Sources */,
+				674577EB07231AA930A03C4E /* SintaticException.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

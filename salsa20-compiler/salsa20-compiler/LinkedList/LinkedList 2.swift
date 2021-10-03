@@ -19,12 +19,7 @@ public class LinkedList<T> {
     public var last: Node<T>? {
         return tail
     }
-    
-    public func nextNode(){
-        var actualNode = head
-        self.head = actualNode?.next as? Node<T> ?? nil
-    }
-    
+
     public func append(lexema: T, simbolo: T) {
         let newNode = Node(lexema: lexema, simbolo: simbolo)
         if let tailNode = tail {
