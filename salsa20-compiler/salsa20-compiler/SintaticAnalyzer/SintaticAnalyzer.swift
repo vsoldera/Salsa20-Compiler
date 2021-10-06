@@ -180,10 +180,12 @@ class SyntacticAnalyzer: Token {
                             throw sintaticException(name: "SintaticException", message: "Esperava encontrar sfim - analyseCommands", stack: linkedCharacters)
                         }
                     }else{
-                        //olhar aqui
-                        linkedCharacters.nextNode()
-                        value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
+
+                        //linkedCharacters.nextNode()
+                        //value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
+                        throw sintaticException(name: "SintaticException", message: "Esperava encontrar ; - analyseCommands", stack: linkedCharacters)
                     }
+                    
                     
                     
                     //print("\(value)")
@@ -229,11 +231,10 @@ class SyntacticAnalyzer: Token {
             //TO_DO
             //PASSIVEL DE ERRO - LEMBRAR
             linkedCharacters.nextNode()
+            try analyseExpression(linkedCharacters: &linkedCharacters)
             //analisa_expressao
-        } else if(value == "sdoispontos"){
-            throw sintaticException(name: "SyntaticException", message: "Esperava econtrar atribuição, analyseChProcedure", stack:linkedCharacters)
-            
-        }else{
+        }
+         else{
             //Chamada_procedimento
             //TO_DO
         }
