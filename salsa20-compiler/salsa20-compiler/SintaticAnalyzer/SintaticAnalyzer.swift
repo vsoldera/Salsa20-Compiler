@@ -156,6 +156,7 @@ class SyntacticAnalyzer: Token {
         linkedCharacters.nextNode()
     }
     
+    //Olhar essa funcao
     func analyseCommands(linkedCharacters: inout LinkedList<String>) throws {
         //linkedCharacters.nextNode()
         
@@ -179,6 +180,7 @@ class SyntacticAnalyzer: Token {
                             throw sintaticException(name: "SintaticException", message: "Esperava encontrar sfim - analyseCommands", stack: linkedCharacters)
                         }
                     }else{
+                        //olhar aqui
                         linkedCharacters.nextNode()
                         value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
                     }
@@ -227,6 +229,7 @@ class SyntacticAnalyzer: Token {
             //TO_DO
             //PASSIVEL DE ERRO - LEMBRAR
             linkedCharacters.nextNode()
+            //analisa_expressao
         } else if(value == "sdoispontos"){
             throw sintaticException(name: "SyntaticException", message: "Esperava econtrar atribuição, analyseChProcedure", stack:linkedCharacters)
             

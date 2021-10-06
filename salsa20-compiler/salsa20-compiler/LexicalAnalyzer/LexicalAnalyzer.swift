@@ -34,7 +34,7 @@ class LexicalAnalyzer: Token {
 
     func openFile() {
         let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-                .appendingPathComponent("Léxico/sint11.txt")
+                .appendingPathComponent("Léxico/sint7.txt")
 
         print(path)
 
