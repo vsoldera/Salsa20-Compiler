@@ -11,7 +11,6 @@ struct lineCounter {
 }
 
 class LexicalAnalyzer: Token {
-
     let linkedCharacters = LinkedList<String>()
     let fileManager = FileManager()
     var fileContent: Array<String>
@@ -27,7 +26,7 @@ class LexicalAnalyzer: Token {
 
     func openFile() {
         let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-                .appendingPathComponent("Léxico/teste_10.txt")
+            .appendingPathComponent("Léxico/teste_10.txt")
 
         print(path)
 
@@ -47,7 +46,7 @@ class LexicalAnalyzer: Token {
         var lines = 1
         
         while(i < totalLength){
-        
+
             while( i < totalLength && (fileContent[i] == ReservedCharacters.sinicio_comentario.rawValue || fileContent[i] == " " || fileContent[i] == "\n" || fileContent[i] == "\r\n" || fileContent[i] == "\t")) {
                 if(fileContent[i] == ReservedCharacters.sinicio_comentario.rawValue) {
                     var j = i
@@ -76,7 +75,7 @@ class LexicalAnalyzer: Token {
                     
                     i += 1;
                 } // Coleta espacoes em branco
-               
+
             }
             if(i < totalLength){
                 let pointer = getToken(fileContent: fileContent.suffix(from: i).map({String($0)}), totalLength: totalLength, generalPointer: i ,arrayLines: arrayLines)
@@ -110,12 +109,12 @@ class LexicalAnalyzer: Token {
             if(fileContent[0] == ReservedCharacters.sdoispontos.rawValue) {
                 //trataAtribuicao
                 linkedCharacters.append(lexema: "\(fileContent[0])", simbolo: whichEnumIs(value: fileContent[0]) != "" ?
-                        whichEnumIs(value: fileContent[0]) : "sidenficador" )
+                                        whichEnumIs(value: fileContent[0]) : "sidenficador" )
                 pointer+=1
             } else if(fileContent[0] == ReservedCharacters.smais.rawValue || fileContent[0] == ReservedCharacters.smenos.rawValue || fileContent[0] == ReservedCharacters.smult.rawValue) {
                 //trataOperadorAritmetico
                 linkedCharacters.append(lexema: "\(fileContent[0])", simbolo: whichEnumIs(value: fileContent[0]) != "" ?
-                        whichEnumIs(value: fileContent[0]) : "sidenficador" )
+                                        whichEnumIs(value: fileContent[0]) : "sidenficador" )
                 pointer+=1
             } else if(fileContent[0] == ReservedCharacters.sexclamacao.rawValue || fileContent[0] == ReservedCharacters.smenor.rawValue || fileContent[0] == ReservedCharacters.smaior.rawValue || fileContent[0] == ReservedCharacters.sig.rawValue) {
                 //trataOperadorRelacional
@@ -123,22 +122,22 @@ class LexicalAnalyzer: Token {
                 if(fileContent[0] == ReservedCharacters.sexclamacao.rawValue && fileContent[1] == ReservedCharacters.sig.rawValue){
                     op = ReservedCharacters.sdif.rawValue
                     pointer+=1
-    
-                }else
+
+                } else
                 if(fileContent[0] == ReservedCharacters.smaior.rawValue && fileContent[1] == ReservedCharacters.sig.rawValue){
                     op = ReservedCharacters.smaiorig.rawValue
                     pointer+=1
-    
-                }else
+
+                } else
                 if(fileContent[0] == ReservedCharacters.smenor.rawValue && fileContent[1] == ReservedCharacters.sig.rawValue){
                     op = ReservedCharacters.smaiorig.rawValue
                     pointer+=1
-                }else{
+                } else {
                     op = fileContent[0]
                 }
                 
                 linkedCharacters.append(lexema: "\(op)", simbolo: whichEnumIs(value: op) != "" ?
-                        whichEnumIs(value: op) : "sidenficador" )
+                                        whichEnumIs(value: op) : "sidenficador" )
                 pointer+=1
                 
                 
@@ -147,7 +146,7 @@ class LexicalAnalyzer: Token {
                 //trataPontuacao
                 
                 linkedCharacters.append(lexema: "\(fileContent[0])", simbolo: whichEnumIs(value: fileContent[0]) != "" ?
-                        whichEnumIs(value: fileContent[0]) : "sidenficador" )
+                                        whichEnumIs(value: fileContent[0]) : "sidenficador" )
                 pointer+=1
             } else {
                 print(arrayLines)
@@ -190,7 +189,7 @@ class LexicalAnalyzer: Token {
         lexema = ""
         var i = 0
         while(word.isLetter == true || word.isNumber == true
-        || fileContent[i] == "_"){
+              || fileContent[i] == "_"){
             lexema.append(word)
             
             i+=1
@@ -207,7 +206,6 @@ class LexicalAnalyzer: Token {
     func analyse() {
         openFile()
         
-            
         print(fileContent)
         
         if(fileContent.count <= 1){
@@ -220,6 +218,5 @@ class LexicalAnalyzer: Token {
         
         print(linkedCharacters)
     }
-
 }
 
