@@ -761,7 +761,7 @@
                                 </scroller>
                             </scrollView>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="yEu-D0-X2o">
-                                <rect key="frame" x="798" y="57" width="36.5" height="43"/>
+                                <rect key="frame" x="795" y="57" width="37.5" height="43"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="39" id="bcA-8K-i0i"/>
                                     <constraint firstAttribute="width" constant="36.5" id="gvY-f8-MAp"/>
@@ -775,8 +775,8 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ilD-3z-0Xs">
-                                <rect key="frame" x="789" y="42" width="54" height="16"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Compile" id="uke-Mt-d06">
+                                <rect key="frame" x="784" y="42" width="59" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Compilar" id="uke-Mt-d06">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -820,8 +820,8 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AmH-dj-jq3">
-                                <rect key="frame" x="203" y="494" width="75" height="32"/>
-                                <buttonCell key="cell" type="push" title="Import" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="MiC-qJ-gkp">
+                                <rect key="frame" x="203" y="494" width="86" height="32"/>
+                                <buttonCell key="cell" type="push" title="Importar" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="MiC-qJ-gkp">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
