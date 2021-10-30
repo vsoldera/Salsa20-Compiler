@@ -20,6 +20,8 @@
 		CC70D85091AE420DAC751CE0 /* LexicalAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70D4A7E56A2F3C492CBFBA /* LexicalAnalyzer.swift */; };
 		CC70D941A6681D1E9EABFAB3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC70DC5A0D7FA108E0973CE2 /* Assets.xcassets */; };
 		CC70DE2F3644967565DB0ED5 /* Tokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70D2B565C67E48035EAD8F /* Tokens.swift */; };
+		F9494210272C6512002E767B /* test1.txt in Resources */ = {isa = PBXBuildFile; fileRef = F949420F272C6512002E767B /* test1.txt */; };
+		F9494212272C77CA002E767B /* test2.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9494211272C77CA002E767B /* test2.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,8 @@
 		CC70DDD63460A2DB302F81AA /* salsa20-compilerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "salsa20-compilerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC70DE40A616C5AF7F5A751B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		CC70DED6C6FC77E320A0916A /* salsa20-compilerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "salsa20-compilerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F949420F272C6512002E767B /* test1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test1.txt; sourceTree = "<group>"; };
+		F9494211272C77CA002E767B /* test2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test2.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,10 +175,20 @@
 				CC70D162CFE557A7D25BCAE3 /* ViewController.swift */,
 				CC70D3B243698C16395426E9 /* LexicalAnalyzer */,
 				CC70DAEA0E1497C0D942DC52 /* Tokens */,
+				F949420E272C64A2002E767B /* Tests */,
 				67457C58D8ACC2AF909F168C /* LinkedList */,
 				674574EF8A0A0EC3CFA46A2D /* SintaticAnalyzer */,
 			);
 			path = "salsa20-compiler";
+			sourceTree = "<group>";
+		};
+		F949420E272C64A2002E767B /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				F949420F272C6512002E767B /* test1.txt */,
+				F9494211272C77CA002E767B /* test2.txt */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -266,8 +280,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9494210272C6512002E767B /* test1.txt in Resources */,
 				CC70D941A6681D1E9EABFAB3 /* Assets.xcassets in Resources */,
 				CC70D4ED20CC5608D481A6AB /* Main.storyboard in Resources */,
+				F9494212272C77CA002E767B /* test2.txt in Resources */,
 				674577A263078AA9C6961B76 /* teste.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
