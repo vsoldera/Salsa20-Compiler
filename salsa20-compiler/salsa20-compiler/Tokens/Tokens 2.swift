@@ -59,7 +59,6 @@ class Token {
         case sinicio_comentario = "{"
         case sfim_comentario = "}"
         case sexclamacao = "!"
-        case satribuicao = ":="
     }
 
     enum ReserverdWords: String{
@@ -69,7 +68,6 @@ class Token {
         case sprocedimento = "procedimento"
         case sfuncao = "funcao"
         case sse = "se"
-        case ssenao = "senao"
         case sentao = "entao"
         case senquanto = "enquanto"
         case sfaca = "faca"
@@ -80,7 +78,5 @@ class Token {
         case sbooleano = "booleano"
         case sidentificador = "identificador"
         case snumero = "numero"
-        case sverdadeiro = "verdadeiro"
-        case sfalso = "falso"
     }
 }

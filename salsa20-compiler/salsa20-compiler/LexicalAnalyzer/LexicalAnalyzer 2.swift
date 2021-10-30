@@ -10,14 +10,8 @@ struct lineCounter {
     var sumLastOnes: Int
 }
 
-
-struct lexicalException: Error {
-    var name: String
-    var message: String
-}
-
-
 class LexicalAnalyzer: Token {
+
     let linkedCharacters = LinkedList<String>()
     let fileManager = FileManager()
     var fileContent: Array<String>
@@ -33,34 +27,35 @@ class LexicalAnalyzer: Token {
 
     func openFile() {
         let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-                .appendingPathComponent("Léxico/sint7.txt")
+                .appendingPathComponent("Léxico/teste_10.txt")
 
         print(path)
 
         do {
             let todos = try String(contentsOf: path)
             setFileContent(content: todos)
-
         } catch {
             print(error.localizedDescription)
         }
     }
 
-    func treatCommentaryRemoveSpaces(fileContent: Array<String>, totalLength: Int) throws -> Int{
+    func treatCommentaryRemoveSpaces(fileContent: Array<String>, totalLength: Int) -> Int{
         var i = 0
         var arrayLines : Array<lineCounter>
         arrayLines = []
         var lines = 1
         
         while(i < totalLength){
-
+        
             while( i < totalLength && (fileContent[i] == ReservedCharacters.sinicio_comentario.rawValue || fileContent[i] == " " || fileContent[i] == "\n" || fileContent[i] == "\r\n" || fileContent[i] == "\t")) {
                 if(fileContent[i] == ReservedCharacters.sinicio_comentario.rawValue) {
                     var j = i
                     
+                    
                     while(j < totalLength && ( fileContent[j] != ReservedCharacters.sfim_comentario.rawValue)) {
                         j += 1
                     }
+                    
                     j += 1
                     i = j
                 } // Coleta dados de comentario
@@ -72,7 +67,7 @@ class LexicalAnalyzer: Token {
                             a = lineCounter(line: lines, charactersInLine: i+1, sumLastOnes: i+1)
                         }else{
                             let b = arrayLines.last
-                            var sum = b?.sumLastOnes ?? 0
+                            let sum = b?.sumLastOnes ?? 0
                             a = lineCounter(line: lines, charactersInLine: (i+1) - sum , sumLastOnes: i+1)
                         }
                         arrayLines.append(a)
@@ -81,10 +76,10 @@ class LexicalAnalyzer: Token {
                     
                     i += 1;
                 } // Coleta espacoes em branco
-
+               
             }
             if(i < totalLength){
-                let pointer = try getToken(fileContent: fileContent.suffix(from: i).map({String($0)}), totalLength: totalLength, generalPointer: i ,arrayLines: arrayLines)
+                let pointer = getToken(fileContent: fileContent.suffix(from: i).map({String($0)}), totalLength: totalLength, generalPointer: i ,arrayLines: arrayLines)
                 if(pointer == -1){
                     break
                 }
@@ -93,14 +88,12 @@ class LexicalAnalyzer: Token {
             }else{
                 i += 1
             }
-            
-            
         }
 
         return -1
     }
 
-    func getToken(fileContent: Array<String>, totalLength: Int, generalPointer: Int,arrayLines: Array<lineCounter>) throws -> Int{
+    func getToken(fileContent: Array<String>, totalLength: Int, generalPointer: Int,arrayLines: Array<lineCounter>) -> Int{
         let character = Character(fileContent[0])
         var pointer = 0
 
@@ -113,18 +106,10 @@ class LexicalAnalyzer: Token {
             
         } else {
             if(fileContent[0] == ReservedCharacters.sdoispontos.rawValue) {
-                if(fileContent[1] == ReservedCharacters.sig.rawValue){
-                    linkedCharacters.append(lexema: "\(fileContent[0])"+"\(fileContent[1])", simbolo: whichEnumIs(value: "\(fileContent[0])"+"\(fileContent[1])") != "" ?
-                            whichEnumIs(value: "\(fileContent[0])"+"\(fileContent[1])") : "sidentificador" )
-                    pointer+=2
-                }else{
-                    linkedCharacters.append(lexema: "\(fileContent[0])", simbolo: whichEnumIs(value: "\(fileContent[0])") != "" ?
-                            whichEnumIs(value: "\(fileContent[0])") : "sidentificador" )
-                    pointer+=1
-                    
-                }
                 //trataAtribuicao
-               
+                linkedCharacters.append(lexema: "\(fileContent[0])", simbolo: whichEnumIs(value: fileContent[0]) != "" ?
+                        whichEnumIs(value: fileContent[0]) : "sidentificador" )
+                pointer+=1
             } else if(fileContent[0] == ReservedCharacters.smais.rawValue || fileContent[0] == ReservedCharacters.smenos.rawValue || fileContent[0] == ReservedCharacters.smult.rawValue) {
                 //trataOperadorAritmetico
                 linkedCharacters.append(lexema: "\(fileContent[0])", simbolo: whichEnumIs(value: fileContent[0]) != "" ?
@@ -136,25 +121,22 @@ class LexicalAnalyzer: Token {
                 if(fileContent[0] == ReservedCharacters.sexclamacao.rawValue && fileContent[1] == ReservedCharacters.sig.rawValue){
                     op = ReservedCharacters.sdif.rawValue
                     pointer+=1
-
-                } else
+    
+                }else
                 if(fileContent[0] == ReservedCharacters.smaior.rawValue && fileContent[1] == ReservedCharacters.sig.rawValue){
                     op = ReservedCharacters.smaiorig.rawValue
                     pointer+=1
-
                 } else
                 if(fileContent[0] == ReservedCharacters.smenor.rawValue && fileContent[1] == ReservedCharacters.sig.rawValue){
                     op = ReservedCharacters.smaiorig.rawValue
                     pointer+=1
-                } else {
+                }else{
                     op = fileContent[0]
                 }
                 
                 linkedCharacters.append(lexema: "\(op)", simbolo: whichEnumIs(value: op) != "" ?
                         whichEnumIs(value: op) : "sidentificador" )
                 pointer+=1
-                
-                
                 
             } else if(fileContent[0] == ReservedCharacters.sponto_virgula.rawValue || fileContent[0] == ReservedCharacters.svirgula.rawValue || fileContent[0] == ReservedCharacters.sabre_parenteses.rawValue || fileContent[0] == ReservedCharacters.sfecha_parenteses.rawValue || fileContent[0] == ReservedCharacters.sponto.rawValue) {
                 //trataPontuacao
@@ -163,14 +145,14 @@ class LexicalAnalyzer: Token {
                         whichEnumIs(value: fileContent[0]) : "sidentificador" )
                 pointer+=1
             } else {
-                //print(arrayLines)
-                var a = arrayLines.last
-                var line = a?.line ?? 0
-                var sumLastOnes = a?.sumLastOnes ?? 0
-                var column = generalPointer - sumLastOnes
+                print(arrayLines)
+                let a = arrayLines.last
+                let line = a?.line ?? 0
+                let sumLastOnes = a?.sumLastOnes ?? 0
+                let column = generalPointer - sumLastOnes
+                
                 print("Lexical Error found on line: ", line + 1, "and column: ", column + 1)
                 
-                throw sintaticException(name: "LexicalException", message: "Lexical Error Found line : \(line + 1) and column: \(column + 1) - getToken", stack:linkedCharacters)
                 return -1
             }
 
@@ -205,7 +187,7 @@ class LexicalAnalyzer: Token {
         lexema = ""
         var i = 0
         while(word.isLetter == true || word.isNumber == true
-              || fileContent[i] == "_"){
+        || fileContent[i] == "_"){
             lexema.append(word)
             
             i+=1
@@ -219,24 +201,21 @@ class LexicalAnalyzer: Token {
 
 
     //Algoritmo Analisador Lexical
-    func analyse() throws -> LinkedList<String>{
+    func analyse() {
         openFile()
         
             
-        //print(fileContent)
+        print(fileContent)
         
         if(fileContent.count <= 1){
-            print("Não há dados no arquivo - Arquivo vazio!")
-            return linkedCharacters
+            return print("Não há dados no arquivo - Arquivo vazio!")
         }
 
         let TOTAL_LENGTH = fileContent.count
-    
-        try treatCommentaryRemoveSpaces(fileContent: fileContent, totalLength: TOTAL_LENGTH)
-    
-        //print(linkedCharacters)
 
-        return linkedCharacters
+        treatCommentaryRemoveSpaces(fileContent: fileContent, totalLength: TOTAL_LENGTH)
+        
+        print(linkedCharacters)
     }
 }
 
