@@ -25,8 +25,8 @@ public class LinkedList<T> {
         self.head = actualNode?.next as? Node<T> ?? nil
     }
     
-    public func append(lexema: T, simbolo: T) {
-        let newNode = Node(lexema: lexema, simbolo: simbolo)
+    public func append(_ el: T) {
+        let newNode = Node(el: el)
         if let tailNode = tail {
             newNode.previous = tailNode
             tailNode.next = newNode

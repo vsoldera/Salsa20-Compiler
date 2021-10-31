@@ -26,7 +26,7 @@ class ViewController: NSViewController {
             mainTextView.string = fileContent
         }
     }
-    var linkedCharacters = LinkedList<String>()
+    var linkedCharacters = LinkedList<token_struct>()
 
     override func viewDidLoad()  {
     super.viewDidLoad()
@@ -72,15 +72,7 @@ class ViewController: NSViewController {
         let string = try? String(contentsOfFile: path, encoding: .utf8)
         return string
     }
-
-    
-        
-        
-        
-        
-        
-        
-    }
+}
     
     
 

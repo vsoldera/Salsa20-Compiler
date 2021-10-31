@@ -11,7 +11,7 @@ class PosFixed: Token{
     
    
     
-    func posFixedConvertion(tokens: LinkedList<String>){
+    func posFixedConvertion(tokens: LinkedList<token_struct>){
         var _stack = Stack<token_struct>()
         var _auxStack = Stack<token_struct>()
         //let origin : String = "(x + 7 * 5  div (30+y) <= (x*a+2))e(z>0)"
@@ -91,9 +91,9 @@ class PosFixed: Token{
             value = _stack.pop()
         }
         //print(saida)
-        for token in saida{
+        /*for token in saida{
             print(token)
-        }
+        }*/
      }
     
     func getPrecedence(simbolo: String) -> Int{

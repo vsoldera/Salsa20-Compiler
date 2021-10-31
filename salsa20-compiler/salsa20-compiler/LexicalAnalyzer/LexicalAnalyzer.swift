@@ -19,7 +19,7 @@ struct lexicalException: Error {
 
 class LexicalAnalyzer: Token {
 
-    let linkedCharacters = LinkedList<String>()
+    let linkedCharacters = LinkedList<token_struct>()
     let fileManager = FileManager()
     var fileContent: Array<String>
 
@@ -116,12 +116,14 @@ class LexicalAnalyzer: Token {
         } else {
             if(fileContent[0] == ReservedCharacters.sdoispontos.rawValue) {
                 if(fileContent[1] == ReservedCharacters.sig.rawValue){
-                    linkedCharacters.append(lexema: "\(fileContent[0])"+"\(fileContent[1])", simbolo: whichEnumIs(value: "\(fileContent[0])"+"\(fileContent[1])") != "" ?
-                            whichEnumIs(value: "\(fileContent[0])"+"\(fileContent[1])") : "sidentificador" )
+                    linkedCharacters.append(token_struct( lexema: "\(fileContent[0])"+"\(fileContent[1])", simbolo: whichEnumIs(value: "\(fileContent[0])"+"\(fileContent[1])") != "" ?
+                            whichEnumIs(value: "\(fileContent[0])"+"\(fileContent[1])") : "sidentificador" ) )
+                    /*linkedCharacters.append(lexema: "\(fileContent[0])"+"\(fileContent[1])", simbolo: whichEnumIs(value: "\(fileContent[0])"+"\(fileContent[1])") != "" ?
+                            whichEnumIs(value: "\(fileContent[0])"+"\(fileContent[1])") : "sidentificador" )*/
                     pointer+=2
                 }else{
-                    linkedCharacters.append(lexema: "\(fileContent[0])", simbolo: whichEnumIs(value: "\(fileContent[0])") != "" ?
-                            whichEnumIs(value: "\(fileContent[0])") : "sidentificador" )
+                    linkedCharacters.append(token_struct(lexema: "\(fileContent[0])", simbolo: whichEnumIs(value: "\(fileContent[0])") != "" ?
+                            whichEnumIs(value: "\(fileContent[0])") : "sidentificador") )
                     pointer+=1
                     
                 }
@@ -129,8 +131,8 @@ class LexicalAnalyzer: Token {
                
             } else if(fileContent[0] == ReservedCharacters.smais.rawValue || fileContent[0] == ReservedCharacters.smenos.rawValue || fileContent[0] == ReservedCharacters.smult.rawValue) {
                 //trataOperadorAritmetico
-                linkedCharacters.append(lexema: "\(fileContent[0])", simbolo: whichEnumIs(value: fileContent[0]) != "" ?
-                        whichEnumIs(value: fileContent[0]) : "sidentificador" )
+                linkedCharacters.append(token_struct(lexema: "\(fileContent[0])", simbolo: whichEnumIs(value: fileContent[0]) != "" ?
+                        whichEnumIs(value: fileContent[0]) : "sidentificador" ))
                 pointer+=1
             } else if(fileContent[0] == ReservedCharacters.sexclamacao.rawValue || fileContent[0] == ReservedCharacters.smenor.rawValue || fileContent[0] == ReservedCharacters.smaior.rawValue || fileContent[0] == ReservedCharacters.sig.rawValue) {
                 //trataOperadorRelacional
@@ -152,8 +154,8 @@ class LexicalAnalyzer: Token {
                     op = fileContent[0]
                 }
                 
-                linkedCharacters.append(lexema: "\(op)", simbolo: whichEnumIs(value: op) != "" ?
-                        whichEnumIs(value: op) : "sidentificador" )
+                linkedCharacters.append(token_struct(lexema: "\(op)", simbolo: whichEnumIs(value: op) != "" ?
+                        whichEnumIs(value: op) : "sidentificador") )
                 pointer+=1
                 
                 
@@ -161,8 +163,8 @@ class LexicalAnalyzer: Token {
             } else if(fileContent[0] == ReservedCharacters.sponto_virgula.rawValue || fileContent[0] == ReservedCharacters.svirgula.rawValue || fileContent[0] == ReservedCharacters.sabre_parenteses.rawValue || fileContent[0] == ReservedCharacters.sfecha_parenteses.rawValue || fileContent[0] == ReservedCharacters.sponto.rawValue) {
                 //trataPontuacao
                 
-                linkedCharacters.append(lexema: "\(fileContent[0])", simbolo: whichEnumIs(value: fileContent[0]) != "" ?
-                        whichEnumIs(value: fileContent[0]) : "sidentificador" )
+                linkedCharacters.append(token_struct(lexema: "\(fileContent[0])", simbolo: whichEnumIs(value: fileContent[0]) != "" ?
+                        whichEnumIs(value: fileContent[0]) : "sidentificador" ))
                 pointer+=1
             } else {
                 //print(arrayLines)
@@ -195,7 +197,7 @@ class LexicalAnalyzer: Token {
             }
         }
 
-        linkedCharacters.append(lexema: "\(final)", simbolo: "snumero")
+        linkedCharacters.append(token_struct(lexema: "\(final)", simbolo: "snumero"))
 
         return pointer
     }
@@ -214,14 +216,14 @@ class LexicalAnalyzer: Token {
             word = Character(fileContent[i])
         }
         
-        linkedCharacters.append(lexema: "\(lexema)", simbolo: whichEnumIs(value: lexema) != "" ? whichEnumIs(value: lexema) : "sidentificador" )
+        linkedCharacters.append(token_struct(lexema: "\(lexema)", simbolo: whichEnumIs(value: lexema) != "" ? whichEnumIs(value: lexema) : "sidentificador" ))
         
         return i
     }
 
 
     //Algoritmo Analisador Lexical
-    func analyse() throws -> LinkedList<String>{
+    func analyse() throws -> LinkedList<token_struct>{
         openFile()
             
         //print(fileContent)

@@ -19,6 +19,7 @@
 		CC70D47C3A155E2396DF7388 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70DD38301A5E745F5547BF /* AppDelegate.swift */; };
 		CC70D4ED20CC5608D481A6AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC70D14D9EB26F686D416D86 /* Main.storyboard */; };
 		CC70D64D88C9E148557047D0 /* salsa20_compilerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70D6A9363675F81EAD2366 /* salsa20_compilerUITests.swift */; };
+		CC70D7E31BD542E87B3781C0 /* SimbolTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70D847C3221DF48835637D /* SimbolTable.swift */; };
 		CC70D85091AE420DAC751CE0 /* LexicalAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70D4A7E56A2F3C492CBFBA /* LexicalAnalyzer.swift */; };
 		CC70D941A6681D1E9EABFAB3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC70DC5A0D7FA108E0973CE2 /* Assets.xcassets */; };
 		CC70DE2F3644967565DB0ED5 /* Tokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70D2B565C67E48035EAD8F /* Tokens.swift */; };
@@ -59,6 +60,7 @@
 		CC70D4A7E56A2F3C492CBFBA /* LexicalAnalyzer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LexicalAnalyzer.swift; sourceTree = "<group>"; };
 		CC70D6A9363675F81EAD2366 /* salsa20_compilerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = salsa20_compilerUITests.swift; sourceTree = "<group>"; };
 		CC70D7B71BA634637568A718 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CC70D847C3221DF48835637D /* SimbolTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimbolTable.swift; sourceTree = "<group>"; };
 		CC70D8A46BB172BB6C0054D2 /* salsa20_compilerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = salsa20_compilerTests.swift; sourceTree = "<group>"; };
 		CC70D94FC39DD06FB0840A68 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		CC70DC5A0D7FA108E0973CE2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -165,6 +167,14 @@
 			path = Tokens;
 			sourceTree = "<group>";
 		};
+		CC70DB8AC79AA5D475695C99 /* SimbolTable */ = {
+			isa = PBXGroup;
+			children = (
+				CC70D847C3221DF48835637D /* SimbolTable.swift */,
+			);
+			path = SimbolTable;
+			sourceTree = "<group>";
+		};
 		CC70DBC2A766CE45AAB93211 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,6 +210,7 @@
 				F949420E272C64A2002E767B /* Tests */,
 				67457C58D8ACC2AF909F168C /* LinkedList */,
 				674574EF8A0A0EC3CFA46A2D /* SintaticAnalyzer */,
+				CC70DB8AC79AA5D475695C99 /* SimbolTable */,
 			);
 			path = "salsa20-compiler";
 			sourceTree = "<group>";
@@ -357,6 +368,7 @@
 				67457558E9B12E4BE8A921F7 /* SintaticAnalyzer.swift in Sources */,
 				674577EB07231AA930A03C4E /* SintaticException.swift in Sources */,
 				19F42AE5272DCA1600D94422 /* PosFixed.swift in Sources */,
+				CC70D7E31BD542E87B3781C0 /* SimbolTable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
