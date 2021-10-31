@@ -26,7 +26,7 @@ class ViewController: NSViewController {
                 print(error)
             }
             errorTextView.string = ""
-            errorTextView.string = lexicalAnalyzer.syntacticErrorMessage ?? "Build succeeded without any error or warning"
+            errorTextView.string = lexicalAnalyzer.syntacticErrorMessage ?? "Build succeeded without any errors"
         }
     }
 
