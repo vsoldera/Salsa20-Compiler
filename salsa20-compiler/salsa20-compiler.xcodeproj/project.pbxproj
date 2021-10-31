@@ -24,6 +24,16 @@
 		CC70DE2F3644967565DB0ED5 /* Tokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70D2B565C67E48035EAD8F /* Tokens.swift */; };
 		F9494210272C6512002E767B /* test1.txt in Resources */ = {isa = PBXBuildFile; fileRef = F949420F272C6512002E767B /* test1.txt */; };
 		F9494212272C77CA002E767B /* test2.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9494211272C77CA002E767B /* test2.txt */; };
+		F9688226272F223300E2FE6A /* teste_7.txt in Resources */ = {isa = PBXBuildFile; fileRef = F968821C272F223200E2FE6A /* teste_7.txt */; };
+		F9688227272F223300E2FE6A /* teste_6.txt in Resources */ = {isa = PBXBuildFile; fileRef = F968821D272F223200E2FE6A /* teste_6.txt */; };
+		F9688228272F223300E2FE6A /* teste_3.txt in Resources */ = {isa = PBXBuildFile; fileRef = F968821E272F223200E2FE6A /* teste_3.txt */; };
+		F9688229272F223300E2FE6A /* teste_10.txt in Resources */ = {isa = PBXBuildFile; fileRef = F968821F272F223300E2FE6A /* teste_10.txt */; };
+		F968822A272F223300E2FE6A /* teste_2.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9688220272F223300E2FE6A /* teste_2.txt */; };
+		F968822B272F223300E2FE6A /* teste_1.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9688221272F223300E2FE6A /* teste_1.txt */; };
+		F968822C272F223300E2FE6A /* teste_9.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9688222272F223300E2FE6A /* teste_9.txt */; };
+		F968822D272F223300E2FE6A /* teste_5.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9688223272F223300E2FE6A /* teste_5.txt */; };
+		F968822E272F223300E2FE6A /* teste_8.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9688224272F223300E2FE6A /* teste_8.txt */; };
+		F968822F272F223300E2FE6A /* teste_4.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9688225272F223300E2FE6A /* teste_4.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +78,16 @@
 		CC70DED6C6FC77E320A0916A /* salsa20-compilerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "salsa20-compilerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F949420F272C6512002E767B /* test1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test1.txt; sourceTree = "<group>"; };
 		F9494211272C77CA002E767B /* test2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test2.txt; sourceTree = "<group>"; };
+		F968821C272F223200E2FE6A /* teste_7.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teste_7.txt; sourceTree = "<group>"; };
+		F968821D272F223200E2FE6A /* teste_6.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teste_6.txt; sourceTree = "<group>"; };
+		F968821E272F223200E2FE6A /* teste_3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teste_3.txt; sourceTree = "<group>"; };
+		F968821F272F223300E2FE6A /* teste_10.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teste_10.txt; sourceTree = "<group>"; };
+		F9688220272F223300E2FE6A /* teste_2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teste_2.txt; sourceTree = "<group>"; };
+		F9688221272F223300E2FE6A /* teste_1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teste_1.txt; sourceTree = "<group>"; };
+		F9688222272F223300E2FE6A /* teste_9.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teste_9.txt; sourceTree = "<group>"; };
+		F9688223272F223300E2FE6A /* teste_5.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teste_5.txt; sourceTree = "<group>"; };
+		F9688224272F223300E2FE6A /* teste_8.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teste_8.txt; sourceTree = "<group>"; };
+		F9688225272F223300E2FE6A /* teste_4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teste_4.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +229,16 @@
 			children = (
 				F949420F272C6512002E767B /* test1.txt */,
 				F9494211272C77CA002E767B /* test2.txt */,
+				F9688221272F223300E2FE6A /* teste_1.txt */,
+				F9688220272F223300E2FE6A /* teste_2.txt */,
+				F968821E272F223200E2FE6A /* teste_3.txt */,
+				F9688225272F223300E2FE6A /* teste_4.txt */,
+				F9688223272F223300E2FE6A /* teste_5.txt */,
+				F968821D272F223200E2FE6A /* teste_6.txt */,
+				F968821C272F223200E2FE6A /* teste_7.txt */,
+				F9688224272F223300E2FE6A /* teste_8.txt */,
+				F9688222272F223300E2FE6A /* teste_9.txt */,
+				F968821F272F223300E2FE6A /* teste_10.txt */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -302,8 +332,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9688228272F223300E2FE6A /* teste_3.txt in Resources */,
+				F968822D272F223300E2FE6A /* teste_5.txt in Resources */,
 				F9494210272C6512002E767B /* test1.txt in Resources */,
+				F968822C272F223300E2FE6A /* teste_9.txt in Resources */,
 				CC70D941A6681D1E9EABFAB3 /* Assets.xcassets in Resources */,
+				F968822A272F223300E2FE6A /* teste_2.txt in Resources */,
+				F968822B272F223300E2FE6A /* teste_1.txt in Resources */,
+				F9688226272F223300E2FE6A /* teste_7.txt in Resources */,
+				F9688229272F223300E2FE6A /* teste_10.txt in Resources */,
+				F968822E272F223300E2FE6A /* teste_8.txt in Resources */,
+				F9688227272F223300E2FE6A /* teste_6.txt in Resources */,
+				F968822F272F223300E2FE6A /* teste_4.txt in Resources */,
 				CC70D4ED20CC5608D481A6AB /* Main.storyboard in Resources */,
 				F9494212272C77CA002E767B /* test2.txt in Resources */,
 				674577A263078AA9C6961B76 /* teste.txt in Resources */,

@@ -22,6 +22,7 @@ class LexicalAnalyzer: Token {
     let linkedCharacters = LinkedList<String>()
     let fileManager = FileManager()
     var fileContent: Array<String>
+    var syntacticErrorMessage: String?
 
     override init(){
         fileContent = []
@@ -171,7 +172,7 @@ class LexicalAnalyzer: Token {
                 var sumLastOnes = a?.sumLastOnes ?? 0
                 var column = generalPointer - sumLastOnes
                 print("Lexical Error found on line: ", line + 1, "and column: ", column + 1)
-                
+                syntacticErrorMessage = "Lexical Error Found line : \(line + 1) and column: \(column + 1)"
                 throw sintaticException(name: "LexicalException", message: "Lexical Error Found line : \(line + 1) and column: \(column + 1) - getToken", stack:linkedCharacters)
                 return -1
             }
@@ -219,26 +220,44 @@ class LexicalAnalyzer: Token {
         return i
     }
 
-
-    //Algoritmo Analisador Lexical
-    func analyse() throws -> LinkedList<String>{
-        openFile()
+//MARK: - Algoritmo Analisador Lexical
+    func analyse(fileContent: String) throws -> LinkedList<String>{
+        let convertedFileContent = fileContent.map { String($0) }
+        print(convertedFileContent)
+//        openFile()
             
         //print(fileContent)
         
-        if(fileContent.count <= 1){
+        if(convertedFileContent.count <= 1){
             print("Não há dados no arquivo - Arquivo vazio!")
             return linkedCharacters
         }
 
-        let TOTAL_LENGTH = fileContent.count
+        let TOTAL_LENGTH = convertedFileContent.count
     
-        try treatCommentaryRemoveSpaces(fileContent: fileContent, totalLength: TOTAL_LENGTH)
+        try treatCommentaryRemoveSpaces(fileContent: convertedFileContent, totalLength: TOTAL_LENGTH)
     
         //print(linkedCharacters)
 
         return linkedCharacters
     }
-
+    
+//    func analyse() throws -> LinkedList<String>{
+//        openFile()
+//
+//        //print(fileContent)
+//
+//        if(fileContent.count <= 1){
+//            print("Não há dados no arquivo - Arquivo vazio!")
+//            return linkedCharacters
+//        }
+//
+//        let TOTAL_LENGTH = fileContent.count
+//
+//        try treatCommentaryRemoveSpaces(fileContent: fileContent, totalLength: TOTAL_LENGTH)
+//
+//        //print(linkedCharacters)
+//
+//        return linkedCharacters
+//    }
 }
-
