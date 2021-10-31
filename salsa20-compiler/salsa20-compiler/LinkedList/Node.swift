@@ -1,7 +1,3 @@
-//
-// Created by Raven on 28/08/21.
-//
-
 import Foundation
 
 struct token_struct {

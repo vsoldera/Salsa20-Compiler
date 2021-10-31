@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		19F42AE2272DBDEC00D94422 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F42AE1272DBDEC00D94422 /* Stack.swift */; };
+		19F42AE5272DCA1600D94422 /* PosFixed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F42AE4272DCA1600D94422 /* PosFixed.swift */; };
 		6745704926006C452F99EA6E /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67457C0859D082B8DA51C67B /* Node.swift */; };
 		67457558E9B12E4BE8A921F7 /* SintaticAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674577B8CC913EDCF76668B3 /* SintaticAnalyzer.swift */; };
 		674577A263078AA9C6961B76 /* teste.txt in Resources */ = {isa = PBXBuildFile; fileRef = 67457102F559CFB5D7B3E8BD /* teste.txt */; };
@@ -42,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		19F42AE1272DBDEC00D94422 /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		19F42AE4272DCA1600D94422 /* PosFixed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosFixed.swift; sourceTree = "<group>"; };
 		67457102F559CFB5D7B3E8BD /* teste.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teste.txt; sourceTree = "<group>"; };
 		674577B8CC913EDCF76668B3 /* SintaticAnalyzer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SintaticAnalyzer.swift; sourceTree = "<group>"; };
 		674578401B20AD3AB0EBE505 /* SintaticException.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SintaticException.swift; sourceTree = "<group>"; };
@@ -91,6 +95,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		19F42AE0272DBDD600D94422 /* Stack */ = {
+			isa = PBXGroup;
+			children = (
+				19F42AE1272DBDEC00D94422 /* Stack.swift */,
+			);
+			path = Stack;
+			sourceTree = "<group>";
+		};
+		19F42AE3272DC9F800D94422 /* PosFixed */ = {
+			isa = PBXGroup;
+			children = (
+				19F42AE4272DCA1600D94422 /* PosFixed.swift */,
+			);
+			path = PosFixed;
+			sourceTree = "<group>";
+		};
 		674574EF8A0A0EC3CFA46A2D /* SintaticAnalyzer */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,6 +187,8 @@
 		CC70DF65AA2F7F722DD51E45 /* salsa20-compiler */ = {
 			isa = PBXGroup;
 			children = (
+				19F42AE3272DC9F800D94422 /* PosFixed */,
+				19F42AE0272DBDD600D94422 /* Stack */,
 				CC70DE40A616C5AF7F5A751B /* Info.plist */,
 				CC70DC5A0D7FA108E0973CE2 /* Assets.xcassets */,
 				CC70D2AD92778C115294B637 /* salsa20_compiler.entitlements */,
@@ -326,6 +348,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC70D47C3A155E2396DF7388 /* AppDelegate.swift in Sources */,
+				19F42AE2272DBDEC00D94422 /* Stack.swift in Sources */,
 				CC70D1AF5BA2133225F2D9C6 /* ViewController.swift in Sources */,
 				CC70D85091AE420DAC751CE0 /* LexicalAnalyzer.swift in Sources */,
 				CC70DE2F3644967565DB0ED5 /* Tokens.swift in Sources */,
@@ -333,6 +356,7 @@
 				67457CE8DC18359E6A5B325F /* LinkedList.swift in Sources */,
 				67457558E9B12E4BE8A921F7 /* SintaticAnalyzer.swift in Sources */,
 				674577EB07231AA930A03C4E /* SintaticException.swift in Sources */,
+				19F42AE5272DCA1600D94422 /* PosFixed.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

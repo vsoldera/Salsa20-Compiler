@@ -18,6 +18,7 @@ struct lexicalException: Error {
 
 
 class LexicalAnalyzer: Token {
+
     let linkedCharacters = LinkedList<String>()
     let fileManager = FileManager()
     var fileContent: Array<String>
@@ -32,8 +33,9 @@ class LexicalAnalyzer: Token {
     }
 
     func openFile() {
+        
         let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-                .appendingPathComponent("Léxico/sint7.txt")
+                .appendingPathComponent("sintatico/sint2.txt")
 
         print(path)
 
@@ -53,7 +55,7 @@ class LexicalAnalyzer: Token {
         var lines = 1
         
         while(i < totalLength){
-
+        
             while( i < totalLength && (fileContent[i] == ReservedCharacters.sinicio_comentario.rawValue || fileContent[i] == " " || fileContent[i] == "\n" || fileContent[i] == "\r\n" || fileContent[i] == "\t")) {
                 if(fileContent[i] == ReservedCharacters.sinicio_comentario.rawValue) {
                     var j = i
@@ -81,7 +83,7 @@ class LexicalAnalyzer: Token {
                     
                     i += 1;
                 } // Coleta espacoes em branco
-
+               
             }
             if(i < totalLength){
                 let pointer = try getToken(fileContent: fileContent.suffix(from: i).map({String($0)}), totalLength: totalLength, generalPointer: i ,arrayLines: arrayLines)
@@ -136,17 +138,17 @@ class LexicalAnalyzer: Token {
                 if(fileContent[0] == ReservedCharacters.sexclamacao.rawValue && fileContent[1] == ReservedCharacters.sig.rawValue){
                     op = ReservedCharacters.sdif.rawValue
                     pointer+=1
-
-                } else
+    
+                }else
                 if(fileContent[0] == ReservedCharacters.smaior.rawValue && fileContent[1] == ReservedCharacters.sig.rawValue){
                     op = ReservedCharacters.smaiorig.rawValue
                     pointer+=1
-
-                } else
+    
+                }else
                 if(fileContent[0] == ReservedCharacters.smenor.rawValue && fileContent[1] == ReservedCharacters.sig.rawValue){
-                    op = ReservedCharacters.smaiorig.rawValue
+                    op = ReservedCharacters.smenorig.rawValue
                     pointer+=1
-                } else {
+                }else{
                     op = fileContent[0]
                 }
                 
@@ -180,13 +182,13 @@ class LexicalAnalyzer: Token {
     }
 
     func isDigit(fileContent: Array<String>, totalLength: Int) -> Int{
-        var final = 0
+        var final = ""
         var pointer = 0
         for (index, item) in fileContent.enumerated() {
             let aux = Int(item)
 
             if (aux != nil) {
-                final += aux ?? 0
+                final.append(item)
             } else {
                 pointer = index
                 break
@@ -205,7 +207,7 @@ class LexicalAnalyzer: Token {
         lexema = ""
         var i = 0
         while(word.isLetter == true || word.isNumber == true
-              || fileContent[i] == "_"){
+        || fileContent[i] == "_"){
             lexema.append(word)
             
             i+=1
@@ -221,7 +223,6 @@ class LexicalAnalyzer: Token {
     //Algoritmo Analisador Lexical
     func analyse() throws -> LinkedList<String>{
         openFile()
-        
             
         //print(fileContent)
         
@@ -238,5 +239,6 @@ class LexicalAnalyzer: Token {
 
         return linkedCharacters
     }
+
 }
 

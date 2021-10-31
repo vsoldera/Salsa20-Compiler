@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+
 class ViewController: NSViewController {
     @IBOutlet weak var fileNameTextView: NSTextField!
     @IBOutlet weak var importButton: NSButton!
@@ -29,20 +30,29 @@ class ViewController: NSViewController {
 
     override func viewDidLoad()  {
     super.viewDidLoad()
+        
+        let _posFixed = PosFixed()
+        
+        _posFixed.posFixedConvertion()
+        return
+        
+       // return
         do{
             var lexical =  LexicalAnalyzer()
             self.linkedCharacters = try lexical.analyse()
+        
+            
             //print(self.linkedCharacters)
             var sintatic = SyntacticAnalyzer(linkedCharacters: self.linkedCharacters)
             
             try sintatic.analyser()
             print("foi? parece que foi!")
             
-           
+            
         }catch{
             print(error)
         }
-        //DESNECESSARIO, LUIZ-OTARIO
+        //DESNECESSARIO, LUIZ-OTARIO - 30/10/2021 - bjunda ?)
         
         
         
@@ -62,4 +72,15 @@ class ViewController: NSViewController {
         let string = try? String(contentsOfFile: path, encoding: .utf8)
         return string
     }
-}
+
+    
+        
+        
+        
+        
+        
+        
+    }
+    
+    
+

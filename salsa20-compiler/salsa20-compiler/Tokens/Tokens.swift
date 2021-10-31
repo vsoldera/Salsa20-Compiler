@@ -36,6 +36,9 @@ class Token {
 
         return ""
     }
+    
+   
+    
     enum ReservedCharacters: String {
         case sponto = "."
         case sponto_virgula = ";"
@@ -83,4 +86,7 @@ class Token {
         case sverdadeiro = "verdadeiro"
         case sfalso = "falso"
     }
+    
+   
+    
 }

@@ -1,7 +1,3 @@
-//
-// Created by Raven on 28/08/21.
-//
-
 import Foundation
 
 public class LinkedList<T> {
@@ -91,4 +87,3 @@ extension LinkedList: CustomStringConvertible {
         return text + "]"
     }
 }
-

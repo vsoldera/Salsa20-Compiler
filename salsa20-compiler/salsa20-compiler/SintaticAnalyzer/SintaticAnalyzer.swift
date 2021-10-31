@@ -422,6 +422,7 @@ class SyntacticAnalyzer: Token {
     
     func analyseExpression(linkedCharacters: inout LinkedList<String>) throws {
         try analyseSimpleExpression(linkedCharacters: &linkedCharacters)
+        print(linkedCharacters)
         let value = linkedCharacters.first?.value.simbolo as? String ?? ""
         if value == "smaior" || value == "smaiorig" || value == "sig" || value == "smenor" ||
                 value == "smenorig" || value == "sdif" {
