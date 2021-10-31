@@ -82,6 +82,7 @@ class Token {
         case sinteiro = "inteiro"
         case sbooleano = "booleano"
         case sidentificador = "identificador"
+        case su_identificador = "-u"
         case snumero = "numero"
         case sverdadeiro = "verdadeiro"
         case sfalso = "falso"

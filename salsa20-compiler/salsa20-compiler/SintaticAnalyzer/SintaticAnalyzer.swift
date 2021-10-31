@@ -421,8 +421,9 @@ class SyntacticAnalyzer: Token {
     }
     
     func analyseExpression(linkedCharacters: inout LinkedList<String>) throws {
+        try customProcessExpression(linkedCharacters: linkedCharacters)
         try analyseSimpleExpression(linkedCharacters: &linkedCharacters)
-        print(linkedCharacters)
+
         let value = linkedCharacters.first?.value.simbolo as? String ?? ""
         if value == "smaior" || value == "smaiorig" || value == "sig" || value == "smenor" ||
                 value == "smenorig" || value == "sdif" {
@@ -430,6 +431,48 @@ class SyntacticAnalyzer: Token {
             linkedCharacters.nextNode()
             try analyseSimpleExpression(linkedCharacters: &linkedCharacters)
         }
+    }
+
+    //if u are here after this cold night (30/10/2021) u should definitely remove this shit :)
+    func customProcessExpression(linkedCharacters: LinkedList<String>){
+        var list : Array<token_struct> = []
+        var listCopy : LinkedList<String> = LinkedList<String>()
+        //Here, friendodas, we can see a language that tries to helo, but, instead, kills us by faciliting the unfacilitating
+        listCopy.setHead(el: linkedCharacters.first!)
+
+        var value = listCopy.first?.value ?? token_struct(lexema: "", simbolo: "")
+
+        while(value.simbolo != "sfaca" && value.simbolo != "sfim" && value.simbolo != "sponto_virgula"
+                && value.simbolo != "sentao" ) {
+
+            list.append(value)
+
+            listCopy.nextNode()
+            value = listCopy.first?.value ?? token_struct(lexema: "", simbolo: "")
+        }
+
+        //search for "-" before a snumero or sidentificador
+        var listFinal : LinkedList<String> = LinkedList<String>()
+
+        for i in 0..<list.count{
+            if(list[i].simbolo == "smenos"){
+                //listFinal.append(list[i])
+
+                if((list[i+1].simbolo == "sidentificador" || list[i+1].simbolo == "snumero" ) ){
+                    //tuptudurundawn
+                    listFinal.append(lexema: "-u", simbolo: "su_identificador")
+                }else{
+                    listFinal.append(lexema:list[i].lexema, simbolo: list[i].simbolo)
+                }
+            }else{
+                listFinal.append(lexema:list[i].lexema, simbolo: list[i].simbolo)
+            }
+        }
+        let _posFixed = PosFixed()
+
+        _posFixed.posFixedConvertion(tokens: listFinal)
+        print("Copy eeeeeeend")
+
     }
     
     func analyseSimpleExpression(linkedCharacters: inout LinkedList<String>) throws{

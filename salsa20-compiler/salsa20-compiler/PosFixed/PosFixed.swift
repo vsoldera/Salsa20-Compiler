@@ -11,16 +11,16 @@ class PosFixed: Token{
     
    
     
-    func posFixedConvertion(){
+    func posFixedConvertion(tokens: LinkedList<String>){
         var _stack = Stack<token_struct>()
         var _auxStack = Stack<token_struct>()
-        let origin : String = "(x + 7 * 5  div (30+y) <= (x*a+2))e(z>0)"
-        let arrayOrigin = origin.map { s -> String in String(s) }
+        //let origin : String = "(x + 7 * 5  div (30+y) <= (x*a+2))e(z>0)"
+        //let arrayOrigin = origin.map { s -> String in String(s) }
         var saida: Array<token_struct> = []
         
         //_stack.push(token_struct(lexema: "(", simbolo: "sabre_parenteses"))
 
-        let lexical = LexicalAnalyzer()
+        /*let lexical = LexicalAnalyzer()
         
         do{
             try lexical.treatCommentaryRemoveSpaces(fileContent: arrayOrigin, totalLength: arrayOrigin.count)
@@ -30,7 +30,7 @@ class PosFixed: Token{
         }
         
         var tokens = lexical.linkedCharacters
-        //print(lexical.linkedCharacters)
+        //print(lexical.linkedCharacters)*/
         
         while(!tokens.isEmpty){
             let token = tokens.first!.value;
@@ -94,13 +94,7 @@ class PosFixed: Token{
         for token in saida{
             print(token)
         }
-        
-        
-        
-        
-        
      }
-    
     
     func getPrecedence(simbolo: String) -> Int{
        switch simbolo{
@@ -116,6 +110,7 @@ class PosFixed: Token{
             case "se" : return 2
             case "sou" : return 3
             case "snao" : return 4
+            case "su_identificador" : return 10
            default:
             return -1
        }
@@ -125,7 +120,7 @@ class PosFixed: Token{
     
     func isOperator(simbolo: String) -> Bool{
                 
-        if(simbolo == "smaior" || simbolo == "smenor" || simbolo == "smult" || simbolo == "smais" || simbolo == "smaiorig" || simbolo == "smenos" || simbolo == "smenorig" || simbolo == "sdif" || simbolo == "sdiv" || simbolo == "se" || simbolo == "snao" || simbolo == "sou"){
+        if( simbolo == "su_identificador" || simbolo == "smaior" || simbolo == "smenor" || simbolo == "smult" || simbolo == "smais" || simbolo == "smaiorig" || simbolo == "smenos" || simbolo == "smenorig" || simbolo == "sdif" || simbolo == "sdiv" || simbolo == "se" || simbolo == "snao" || simbolo == "sou"){
             
             return true
         }

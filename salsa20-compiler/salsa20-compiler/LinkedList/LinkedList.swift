@@ -15,6 +15,10 @@ public class LinkedList<T> {
     public var last: Node<T>? {
         return tail
     }
+
+    public func setHead(el: Node<T>){ //use wisely
+        head = el
+    }
     
     public func nextNode(){
         var actualNode = head

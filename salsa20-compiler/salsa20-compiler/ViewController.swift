@@ -33,8 +33,8 @@ class ViewController: NSViewController {
         
         let _posFixed = PosFixed()
         
-        _posFixed.posFixedConvertion()
-        return
+       // _posFixed.posFixedConvertion()
+        //return
         
        // return
         do{
@@ -42,7 +42,7 @@ class ViewController: NSViewController {
             self.linkedCharacters = try lexical.analyse()
         
             
-            //print(self.linkedCharacters)
+            print(self.linkedCharacters)
             var sintatic = SyntacticAnalyzer(linkedCharacters: self.linkedCharacters)
             
             try sintatic.analyser()
