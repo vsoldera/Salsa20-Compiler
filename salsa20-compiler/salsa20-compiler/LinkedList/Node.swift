@@ -11,9 +11,10 @@ public class Node<T> {
     var value: T
     var next: Node<T>?
     weak var previous: Node<T>?
-
+    var index : Int = 0
     // 3
-    init(el: T) {
+    init(el: T, n: Int) {
         self.value = el
+        self.index = n
     }
 }

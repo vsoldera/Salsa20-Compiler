@@ -31,7 +31,7 @@ class ViewController: NSViewController {
     override func viewDidLoad()  {
     super.viewDidLoad()
         
-        let _posFixed = PosFixed()
+        //let _posFixed = PosFixed()
         
        // _posFixed.posFixedConvertion()
         //return

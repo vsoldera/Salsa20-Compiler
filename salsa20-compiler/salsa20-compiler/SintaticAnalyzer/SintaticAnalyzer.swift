@@ -33,7 +33,7 @@ class SyntacticAnalyzer: Token {
                 let rawValue = linkedCharacters.first?.value ?? token_struct(lexema: "", simbolo: "")
                 if (sIdentificador == "sidentificador") {
                     //insere_tabela
-                    simbolTable.push(lexema: rawValue.lexema, nivelEscopo: "nomedeprograma", tipo: "", enderecoMemoria: "")
+                    simbolTable.push(lexema: rawValue.lexema, nivelEscopo: "nomedeprograma", tipo: "nomedeprograma", enderecoMemoria: "")
                     linkedCharacters.nextNode()
                     
                     let value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
@@ -231,8 +231,16 @@ class SyntacticAnalyzer: Token {
             //Analisa_atribuicao
             //TO_DO
             //PASSIVEL DE ERRO - LEMBRAR
+            
             linkedCharacters.nextNode()
+
+            var listCopy : LinkedList<token_struct> = LinkedList<token_struct>()
+            listCopy.setHead(el: linkedCharacters.first!)
+
             try analyseExpression(linkedCharacters: &linkedCharacters)
+            
+            try customProcessExpression(linkedCharacters: listCopy, goTo: linkedCharacters.first?.index ?? 0)
+            
             //analisa_expressao
         }
          else{
@@ -311,8 +319,14 @@ class SyntacticAnalyzer: Token {
         linkedCharacters.nextNode()
 
         //analisaExpressão
-        try analyseExpression(linkedCharacters: &linkedCharacters)
 
+        var listCopy : LinkedList<token_struct> = LinkedList<token_struct>()
+        listCopy.setHead(el: linkedCharacters.first!)
+
+        try analyseExpression(linkedCharacters: &linkedCharacters)
+                
+        try customProcessExpression(linkedCharacters: listCopy,  goTo: linkedCharacters.first?.index ?? 0)
+        
         let value = linkedCharacters.first?.value.simbolo as? String ?? ""
         
         if value == "sfaca" {
@@ -326,7 +340,14 @@ class SyntacticAnalyzer: Token {
     func analyseIf(linkedCharacters: inout LinkedList<token_struct>) throws {
         linkedCharacters.nextNode()
         //analyse expression
+
+        var listCopy : LinkedList<token_struct> = LinkedList<token_struct>()
+        listCopy.setHead(el: linkedCharacters.first!)
+
         try analyseExpression(linkedCharacters: &linkedCharacters)
+        
+        try customProcessExpression(linkedCharacters: listCopy, goTo: linkedCharacters.first?.index ?? 0)
+
         
         let value = linkedCharacters.first?.value.simbolo as? String ?? ""
         
@@ -452,7 +473,7 @@ class SyntacticAnalyzer: Token {
     }
     
     func analyseExpression(linkedCharacters: inout LinkedList<token_struct>) throws {
-        try customProcessExpression(linkedCharacters: linkedCharacters)
+       // try customProcessExpression(linkedCharacters: linkedCharacters)
         try analyseSimpleExpression(linkedCharacters: &linkedCharacters)
 
         let value = linkedCharacters.first?.value.simbolo as? String ?? ""
@@ -465,33 +486,35 @@ class SyntacticAnalyzer: Token {
     }
 
     //if u are here after this cold night (30/10/2021) u should definitely remove this shit :)
-    func customProcessExpression(linkedCharacters: LinkedList<token_struct>){
+    func customProcessExpression(linkedCharacters: LinkedList<token_struct>, goTo: Int) throws{
         var list : Array<token_struct> = []
         var listCopy : LinkedList<token_struct> = LinkedList<token_struct>()
         //Here, friendodas, we can see a language that tries to helo, but, instead, kills us by faciliting the unfacilitating
         listCopy.setHead(el: linkedCharacters.first!)
 
         var value = listCopy.first?.value ?? token_struct(lexema: "", simbolo: "")
-
-        while(value.simbolo != "sfaca" && value.simbolo != "sfim" && value.simbolo != "sponto_virgula"
-                && value.simbolo != "sentao" ) {
-
+        var index = listCopy.first?.index ?? 0
+        //fazendo slice
+        while(index <= goTo) {
+            
             list.append(value)
 
             listCopy.nextNode()
             value = listCopy.first?.value ?? token_struct(lexema: "", simbolo: "")
+            index = listCopy.first?.index ?? 0
         }
 
         //search for "-" before a snumero or sidentificador
         var listFinal : LinkedList<token_struct> = LinkedList<token_struct>()
 
+        //marcacoes para -u
         for i in 0..<list.count{
-            if(list[i].simbolo == "smenos"){
+            if(list[i].simbolo == "smenos" || list[i].simbolo == "smais"){
                 //listFinal.append(list[i])
 
                 if((list[i+1].simbolo == "sidentificador" || list[i+1].simbolo == "snumero" ) ){
                     //tuptudurundawn
-                    listFinal.append(token_struct(lexema: "-u", simbolo: "su_identificador"))
+                    listFinal.append(token_struct(lexema: (list[i].simbolo == "smais" ? "+u" : "-u"), simbolo: "su_identificador"))
                 }else{
                     listFinal.append(token_struct(lexema:list[i].lexema, simbolo: list[i].simbolo))
                 }
@@ -502,7 +525,8 @@ class SyntacticAnalyzer: Token {
         let _posFixed = PosFixed()
 
         _posFixed.posFixedConvertion(tokens: listFinal)
-       // print("Copy eeeeeeend")
+        try _posFixed.analyseExpression(simbolTable: simbolTable)
+
 
     }
     

@@ -3,6 +3,7 @@ import Foundation
 public class LinkedList<T> {
     fileprivate var head: Node<T>?
     private var tail: Node<T>?
+    private var globalIndex: Int = 0
 
     public var isEmpty: Bool {
         return head == nil
@@ -26,7 +27,8 @@ public class LinkedList<T> {
     }
     
     public func append(_ el: T) {
-        let newNode = Node(el: el)
+        self.globalIndex += 1
+        let newNode = Node(el: el, n: self.globalIndex)
         if let tailNode = tail {
             newNode.previous = tailNode
             tailNode.next = newNode

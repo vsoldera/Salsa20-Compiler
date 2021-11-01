@@ -30,15 +30,30 @@ class SimbolTable {
     }
 
     func insertIntoTheLastOne(nivelEscopo :String, tipo :String, enderecoMemoria :String){
-        var aux = stack.pop()!
+        var _stackAux : Stack<simbols_table_struct> = Stack<simbols_table_struct>()
 
-        if(aux != nil) {
+        var aux = stack.pop() ?? simbols_table_struct(lexema: "", nivelEscopo: "", tipo: "", enderecoMemoria: "")
+
+        while(aux != nil && aux.lexema != "" && aux.tipo == ""){
             aux.nivelEscopo = nivelEscopo
             aux.enderecoMemoria = enderecoMemoria
             aux.tipo = tipo
 
-            stack.push(aux)
+            _stackAux.push(aux)
+
+            aux = stack.pop() ?? simbols_table_struct(lexema: "", nivelEscopo: "", tipo: "", enderecoMemoria: "")
         }
+        self.stack.push(aux)
+        aux = _stackAux.pop() ?? simbols_table_struct(lexema: "", nivelEscopo: "", tipo: "", enderecoMemoria: "")
+
+        while(aux.lexema != ""){
+            self.stack.push(aux)
+            aux = _stackAux.pop() ?? simbols_table_struct(lexema: "", nivelEscopo: "", tipo: "", enderecoMemoria: "")
+
+        }
+
+
+
 
 
     }
@@ -85,6 +100,20 @@ class SimbolTable {
         }while(value != nil)
 
         return false
+    }
+
+    func findLexemaReturnType(lexema: String) -> String?{
+        var auxStack: Stack<simbols_table_struct> = stack
+        var value = auxStack.peek()
+        repeat{
+            value = auxStack.pop()
+            if(value?.lexema == lexema){
+                return value?.tipo ?? ""
+            }
+
+        }while(value != nil)
+
+        return nil
     }
 
     func itExists(procedimento: String) -> Bool{
