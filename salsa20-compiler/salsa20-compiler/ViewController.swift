@@ -44,7 +44,10 @@ class ViewController: NSViewController {
             
             print(self.linkedCharacters)
             var sintatic = SyntacticAnalyzer(linkedCharacters: self.linkedCharacters)
-            
+
+
+            //print(sintatic.simbolTable)
+
             try sintatic.analyser()
             print("foi? parece que foi!")
             

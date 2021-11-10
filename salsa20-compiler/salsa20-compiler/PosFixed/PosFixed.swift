@@ -153,8 +153,6 @@ class PosFixed: Token{
            default:
             return -1
        }
-        
-        
     }
     
     func isOperator(simbolo: String) -> Bool{

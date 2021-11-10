@@ -144,4 +144,36 @@ class SimbolTable {
         return nil
     }
 
+    func cleanVariables() -> Int{
+        var auxStack = stack
+
+        var sliceStack: Stack<simbols_table_struct> = Stack<simbols_table_struct>()
+        var control = false
+        var value = auxStack.peek()
+        var counter = 0
+        var timesEx = 0
+        repeat{
+            if(value?.tipo == "sinteiro" || value?.tipo == "sbooleano"){
+                counter += 1
+            }
+
+            if(value?.nivelEscopo == "L" || value?.nivelEscopo == "0"){
+                if(timesEx == 0){
+                    stack.pop()
+                }
+                break
+            }
+            timesEx += 1
+            stack.pop()
+            value = auxStack.pop()
+
+        }while(value != nil)
+
+        if(counter == 0){
+            return 0
+        }else{
+            return counter-1
+        }
+
+    }
 }

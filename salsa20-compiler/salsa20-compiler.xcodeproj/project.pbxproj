@@ -22,6 +22,7 @@
 		CC70D7E31BD542E87B3781C0 /* SimbolTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70D847C3221DF48835637D /* SimbolTable.swift */; };
 		CC70D85091AE420DAC751CE0 /* LexicalAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70D4A7E56A2F3C492CBFBA /* LexicalAnalyzer.swift */; };
 		CC70D941A6681D1E9EABFAB3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC70DC5A0D7FA108E0973CE2 /* Assets.xcassets */; };
+		CC70DBFC8C61193D49CC2744 /* CodeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70DAE7C99F688E7A4CD88B /* CodeGenerator.swift */; };
 		CC70DE2F3644967565DB0ED5 /* Tokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70D2B565C67E48035EAD8F /* Tokens.swift */; };
 		F9494210272C6512002E767B /* test1.txt in Resources */ = {isa = PBXBuildFile; fileRef = F949420F272C6512002E767B /* test1.txt */; };
 		F9494212272C77CA002E767B /* test2.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9494211272C77CA002E767B /* test2.txt */; };
@@ -63,6 +64,7 @@
 		CC70D847C3221DF48835637D /* SimbolTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimbolTable.swift; sourceTree = "<group>"; };
 		CC70D8A46BB172BB6C0054D2 /* salsa20_compilerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = salsa20_compilerTests.swift; sourceTree = "<group>"; };
 		CC70D94FC39DD06FB0840A68 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
+		CC70DAE7C99F688E7A4CD88B /* CodeGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeGenerator.swift; sourceTree = "<group>"; };
 		CC70DC5A0D7FA108E0973CE2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CC70DD38301A5E745F5547BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC70DDD63460A2DB302F81AA /* salsa20-compilerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "salsa20-compilerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -211,8 +213,17 @@
 				67457C58D8ACC2AF909F168C /* LinkedList */,
 				674574EF8A0A0EC3CFA46A2D /* SintaticAnalyzer */,
 				CC70DB8AC79AA5D475695C99 /* SimbolTable */,
+				CC70DF967765C8EB5378782E /* CodeGenerator */,
 			);
 			path = "salsa20-compiler";
+			sourceTree = "<group>";
+		};
+		CC70DF967765C8EB5378782E /* CodeGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				CC70DAE7C99F688E7A4CD88B /* CodeGenerator.swift */,
+			);
+			path = CodeGenerator;
 			sourceTree = "<group>";
 		};
 		F949420E272C64A2002E767B /* Tests */ = {
@@ -369,6 +380,7 @@
 				674577EB07231AA930A03C4E /* SintaticException.swift in Sources */,
 				19F42AE5272DCA1600D94422 /* PosFixed.swift in Sources */,
 				CC70D7E31BD542E87B3781C0 /* SimbolTable.swift in Sources */,
+				CC70DBFC8C61193D49CC2744 /* CodeGenerator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -560,12 +572,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "salsa20-compiler/salsa20_compiler.entitlements";
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "salsa20-compiler/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 11.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.salsa.inc.salsa20-compiler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -576,12 +591,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "salsa20-compiler/salsa20_compiler.entitlements";
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "salsa20-compiler/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 11.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.salsa.inc.salsa20-compiler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;

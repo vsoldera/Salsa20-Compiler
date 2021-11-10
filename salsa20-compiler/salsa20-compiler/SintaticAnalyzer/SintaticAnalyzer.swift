@@ -15,6 +15,11 @@ struct sintaticException: Error {
 class SyntacticAnalyzer: Token {
     var linkedCharactersGlobal = LinkedList<token_struct>()
     var simbolTable : SimbolTable = SimbolTable()
+    var rotule : Int = 1;
+    var memoryAllocationPointer: Int = 0
+    var codeGenerator : CodeGenerator = CodeGenerator()
+
+
     init(linkedCharacters: LinkedList<token_struct>) {
         self.linkedCharactersGlobal = linkedCharacters
     }
@@ -22,7 +27,8 @@ class SyntacticAnalyzer: Token {
     func analyser() throws {
         var i = 0
         var linkedCharacters = self.linkedCharactersGlobal;
-        
+        codeGenerator.initProgram()
+        memoryAllocationPointer += 1
         //linkedCharacters.nextNode()
         
             let value = linkedCharacters.first?.value.simbolo as? String ?? ""
@@ -50,6 +56,15 @@ class SyntacticAnalyzer: Token {
                             let value4 = linkedCharacters.first?.value.simbolo as? String ?? ""
                             
                             if (value4 == "" || value4 == "sinicio_comentario") {
+                                var removedVariables = simbolTable.cleanVariables()
+                                if(removedVariables > 0) {
+                                    var lastValue = memoryAllocationPointer
+                                    print(memoryAllocationPointer, removedVariables)
+
+                                    memoryAllocationPointer = memoryAllocationPointer - removedVariables
+
+                                    codeGenerator.generate("        ", "DALLOC", "\(lastValue)", "\(memoryAllocationPointer)")
+                                }
                                 return
                             } else {
                                 throw sintaticException(name: "SintaticException", message: "Final de arquivo encontrado, mas não é o final do arquivo - analyser", stack:linkedCharacters)
@@ -66,6 +81,7 @@ class SyntacticAnalyzer: Token {
             } else {
                 throw sintaticException(name: "SintaticException", message: "Início de programa não encontrado - analyser", stack:linkedCharacters)
             }
+
     }
     
     func blockAnalyser(linkedCharacters: inout LinkedList<token_struct>) throws {
@@ -81,6 +97,7 @@ class SyntacticAnalyzer: Token {
     
     func analyseEtVariables(linkedCharacters: inout LinkedList<token_struct>) throws {
         //linkedCharacters.nextNode()
+        var auxPointer = 0
         let value = linkedCharacters.first?.value.simbolo as? String ?? ""
         
        if value == "svar"{
@@ -91,8 +108,14 @@ class SyntacticAnalyzer: Token {
                 
                 var value3 = linkedCharacters.first?.value.simbolo as? String ?? ""
                 while(value3 == "sidentificador") {
-    
+                    auxPointer = memoryAllocationPointer  //para saber qual valor era do rotulo antes de voltar
+
                     try analyseVariables(linkedCharacters: &linkedCharacters)
+
+                    codeGenerator.generate("        " , "ALLOC", "\(auxPointer)", "\(memoryAllocationPointer - auxPointer)")
+
+                    //memoryAllocationPointer = auxPointer + memoryAllocationPointer
+
                     value3 = linkedCharacters.first?.value.simbolo as? String ?? ""
                     if(value3 == "sponto_virgula") {
                         linkedCharacters.nextNode()
@@ -114,7 +137,9 @@ class SyntacticAnalyzer: Token {
         repeat {
             if (value == "sidentificador") {
                 if(!simbolTable.testDuplicate(lexema: rawValue.lexema)) {
-                    simbolTable.push(lexema: rawValue.lexema, nivelEscopo: "", tipo: "", enderecoMemoria: "")
+                    simbolTable.push(lexema: rawValue.lexema, nivelEscopo: "", tipo: "", enderecoMemoria: "\(memoryAllocationPointer)")
+                    memoryAllocationPointer += 1
+
                     linkedCharacters.nextNode()
                     value = linkedCharacters.first?.value.simbolo as? String ?? ""
 
@@ -316,8 +341,12 @@ class SyntacticAnalyzer: Token {
     }
     
     func analyseWhile(linkedCharacters: inout LinkedList<token_struct>) throws {
-        linkedCharacters.nextNode()
+        var auxRot1, auxRot2 : Int
 
+        auxRot1 = rotule
+        codeGenerator.generate("\(rotule)" , "NULL",  "        ",  "        ")
+        rotule += 1
+        linkedCharacters.nextNode()
         //analisaExpressão
 
         var listCopy : LinkedList<token_struct> = LinkedList<token_struct>()
@@ -330,8 +359,13 @@ class SyntacticAnalyzer: Token {
         let value = linkedCharacters.first?.value.simbolo as? String ?? ""
         
         if value == "sfaca" {
+            auxRot2 = rotule
+            codeGenerator.generate("        ","JMPF" ,  "\(rotule)",    "        ")
+            rotule += 1
             linkedCharacters.nextNode()
             try analyseSimpleCommands(linkedCharacters: &linkedCharacters)
+            codeGenerator.generate("        ", "JMP" ,  "\(auxRot1)",   "        ")
+            codeGenerator.generate("\(auxRot2)" ,  "NULL",  "        ",  "        ")
         } else {
             throw sintaticException(name: "SintaticException", message: "Esperava encontrar sfaca - analyseWhile ", stack:linkedCharacters)
         }
@@ -373,8 +407,18 @@ class SyntacticAnalyzer: Token {
     
     func analyseSubroutines(linkedCharacters: inout LinkedList<token_struct>) throws {
         var flag  = 0
+        var auxRot = 0
         //linkedCharacters.nextNode()
         var value = linkedCharacters.first?.value.simbolo as? String ?? ""
+
+        if(value == "sprocedimento"
+                || value == "sfuncao"){
+            auxRot = rotule
+            codeGenerator.generate( "        ", "JMP", "\(rotule)",    "        ")
+            rotule += 1
+            flag = 1
+        }
+
         
         while (value == "sprocedimento"
                 || value == "sfuncao") {
@@ -398,7 +442,7 @@ class SyntacticAnalyzer: Token {
         }
         
         if (flag == 1) {
-            //Gera(auxrot, NULL, , )
+            codeGenerator.generate( "\(auxRot)",  "NULL",  "        ",  "        ")
         }
         
     }
@@ -412,7 +456,11 @@ class SyntacticAnalyzer: Token {
         if (value == "sidentificador") {
             //Lexico(token)
             if(!simbolTable.itExists(procedimento: rawValue?.lexema ?? "")){
-                simbolTable.push(lexema: rawValue?.lexema ?? "", nivelEscopo: NIVEL, tipo: "IRA SER SUBSTITUIDO", enderecoMemoria: "IRA SER SUBSTITUIDO")
+                simbolTable.push(lexema: rawValue?.lexema ?? "", nivelEscopo: NIVEL, tipo: "IRA SER SUBSTITUIDO", enderecoMemoria: "\(rotule)")
+
+                codeGenerator.generate("\(rotule)" , "NULL",  "        ",  "        ")
+                rotule += 1
+
                 linkedCharacters.nextNode()
                 let value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
                 if (value2 == "sponto_virgula") {
@@ -428,6 +476,17 @@ class SyntacticAnalyzer: Token {
         } else {
             throw sintaticException(name: "SintaticException", message: "Esperava econtrar identificador - analyseProcedureDeclaration ", stack:linkedCharacters)
         }
+
+        var removedVariables = simbolTable.cleanVariables()
+        if(removedVariables > 0) {
+            var lastValue = memoryAllocationPointer
+            print(memoryAllocationPointer, removedVariables)
+
+            memoryAllocationPointer = memoryAllocationPointer - removedVariables
+
+            codeGenerator.generate("        ", "DALLOC", "\(lastValue)", "\(memoryAllocationPointer)")
+        }
+
         NIVEL = "0"
     }
     
@@ -444,7 +503,7 @@ class SyntacticAnalyzer: Token {
             let rawValue = linkedCharacters.first?.value
 
             if(!simbolTable.itExists(procedimento: rawValue?.lexema ?? "")){
-                simbolTable.push(lexema: rawValue?.lexema ?? "", nivelEscopo: NIVEL, tipo: "", enderecoMemoria: "IRA SER SUBSTITUIDO")
+                simbolTable.push(lexema: rawValue?.lexema ?? "", nivelEscopo: NIVEL, tipo: "", enderecoMemoria: "\(rotule)")
                 if (value2 == "sdoispontos") {
                     //Lexico(token)
                     linkedCharacters.nextNode()
@@ -468,6 +527,16 @@ class SyntacticAnalyzer: Token {
             }
         } else {
             throw sintaticException(name: "SintaticException", message: "Esperava encontrar um identificador - analyseFunctionDeclaration", stack:linkedCharacters)
+        }
+
+        var removedVariables = simbolTable.cleanVariables()
+        if(removedVariables > 0) {
+            var lastValue = memoryAllocationPointer
+            print(memoryAllocationPointer, removedVariables)
+
+            memoryAllocationPointer = memoryAllocationPointer - removedVariables
+
+            codeGenerator.generate("        ", "DALLOC", "\(lastValue)", "\(memoryAllocationPointer)")
         }
         NIVEL = ""
     }
@@ -509,18 +578,24 @@ class SyntacticAnalyzer: Token {
 
         //marcacoes para -u
         for i in 0..<list.count{
-            if(list[i].simbolo == "smenos" || list[i].simbolo == "smais"){
-                //listFinal.append(list[i])
+            if(i == 0 && list[i].simbolo == "smais"){
+                listFinal.append(token_struct(lexema:  "+u", simbolo: "su_identificador"))
+            }else{
+                if(list[i].simbolo == "smenos"){
+                    //listFinal.append(list[i])
 
-                if((list[i+1].simbolo == "sidentificador" || list[i+1].simbolo == "snumero" ) ){
-                    //tuptudurundawn
-                    listFinal.append(token_struct(lexema: (list[i].simbolo == "smais" ? "+u" : "-u"), simbolo: "su_identificador"))
+                    if((list[i+1].simbolo == "sidentificador" || list[i+1].simbolo == "snumero" ) ){
+                        //tuptudurundawn
+                        listFinal.append(token_struct(lexema:  "-u", simbolo: "su_identificador"))
+                    }else{
+                        listFinal.append(token_struct(lexema:list[i].lexema, simbolo: list[i].simbolo))
+                    }
                 }else{
                     listFinal.append(token_struct(lexema:list[i].lexema, simbolo: list[i].simbolo))
                 }
-            }else{
-                listFinal.append(token_struct(lexema:list[i].lexema, simbolo: list[i].simbolo))
             }
+            
+            
         }
         let _posFixed = PosFixed()
 
