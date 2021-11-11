@@ -8,10 +8,10 @@
 import Foundation
 
 class PosFixed: Token{
-    
-   
-    
-    func posFixedConvertion(tokens: LinkedList<String>){
+
+    var expression : Array<token_struct> = []
+
+    func posFixedConvertion(tokens: LinkedList<token_struct>){
         var _stack = Stack<token_struct>()
         var _auxStack = Stack<token_struct>()
         //let origin : String = "(x + 7 * 5  div (30+y) <= (x*a+2))e(z>0)"
@@ -91,11 +91,49 @@ class PosFixed: Token{
             value = _stack.pop()
         }
         //print(saida)
-        for token in saida{
-            print(token)
-        }
+        self.expression = saida
+
      }
-    
+
+    func analyseExpression(simbolTable: SimbolTable) throws {
+        var _stack = Stack<token_struct>()
+
+        for item in self.expression {
+            if(item.simbolo == "sidentificador" || item.simbolo == "snumero" || item.simbolo == "sverdadeiro" || item.simbolo == "sfalso") {
+                _stack.push(item)
+            }
+            if(item.simbolo == "smais"  || item.simbolo == "smenos" || item.simbolo == "smult" || item.simbolo == "sdiv") {
+                var i = 0
+                repeat {
+                    var var1 = _stack.pop()
+                    if(var1?.simbolo != "snumero" && simbolTable.findLexemaReturnType(lexema: var1?.lexema ?? "") ?? "" != "sbooleano" && simbolTable.findLexemaReturnType(lexema: var1?.lexema ?? "") ?? "" != "sinteiro") {
+                        print(_stack)
+                        throw sintaticException(name: "LexicalException", message: "Expected to be integer", stack:LinkedList<token_struct>())
+                    }
+                    i+=1
+                } while (i < 2)
+
+                _stack.push(token_struct(lexema: "I", simbolo: "snumero"))
+            }
+
+            if(item.simbolo == "smaior" || item.simbolo == "smenor"
+                    || item.simbolo == "smaiorig" || item.simbolo == "sig"
+                    || item.simbolo == "smenor" || item.simbolo == "smenorig" || item.simbolo == "sdif") {
+
+                var i = 0
+                repeat {
+                    var var1 = _stack.pop()
+                    if (var1?.simbolo != "snumero" && simbolTable.findLexemaReturnType(lexema: var1?.lexema ?? "") ?? "" != "sinteiro") {
+                        throw sintaticException(name: "LexicalException", message: "Expected to be comparator", stack:LinkedList<token_struct>())
+                    }
+                    i+=1
+                }while(i < 2)
+
+                    _stack.push(token_struct(lexema: "B", simbolo: "sverdadeiro"))
+                }
+            }
+    }
+
     func getPrecedence(simbolo: String) -> Int{
        switch simbolo{
             case "smaior": return 0
@@ -114,18 +152,15 @@ class PosFixed: Token{
            default:
             return -1
        }
-        
-        
     }
     
     func isOperator(simbolo: String) -> Bool{
                 
         if( simbolo == "su_identificador" || simbolo == "smaior" || simbolo == "smenor" || simbolo == "smult" || simbolo == "smais" || simbolo == "smaiorig" || simbolo == "smenos" || simbolo == "smenorig" || simbolo == "sdif" || simbolo == "sdiv" || simbolo == "se" || simbolo == "snao" || simbolo == "sou"){
-            
             return true
         }
         
-            return false
+        return false
     }
     
     

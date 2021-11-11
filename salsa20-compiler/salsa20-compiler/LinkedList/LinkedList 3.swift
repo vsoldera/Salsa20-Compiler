@@ -1,9 +1,12 @@
+//
+// Created by Raven on 28/08/21.
+//
+
 import Foundation
 
 public class LinkedList<T> {
     fileprivate var head: Node<T>?
     private var tail: Node<T>?
-    private var globalIndex: Int = 0
 
     public var isEmpty: Bool {
         return head == nil
@@ -17,18 +20,8 @@ public class LinkedList<T> {
         return tail
     }
 
-    public func setHead(el: Node<T>){ //use wisely
-        head = el
-    }
-    
-    public func nextNode(){
-        var actualNode = head
-        self.head = actualNode?.next as? Node<T> ?? nil
-    }
-    
-    public func append(_ el: T) {
-        self.globalIndex += 1
-        let newNode = Node(el: el, n: self.globalIndex)
+    public func append(lexema: T, simbolo: T) {
+        let newNode = Node(lexema: lexema, simbolo: simbolo)
         if let tailNode = tail {
             newNode.previous = tailNode
             tailNode.next = newNode
@@ -93,3 +86,4 @@ extension LinkedList: CustomStringConvertible {
         return text + "]"
     }
 }
+

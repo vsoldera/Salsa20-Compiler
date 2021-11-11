@@ -8,12 +8,13 @@ struct token_struct {
 // 1
 public class Node<T> {
     // 2
-    var value: token_struct
+    var value: T
     var next: Node<T>?
     weak var previous: Node<T>?
-
+    var index : Int = 0
     // 3
-    init(lexema: T, simbolo: T) {
-        self.value = token_struct(lexema: lexema as! String, simbolo: simbolo as! String)
+    init(el: T, n: Int) {
+        self.value = el
+        self.index = n
     }
 }

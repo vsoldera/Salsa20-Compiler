@@ -8,27 +8,21 @@ import Foundation
 struct sintaticException: Error {
     var name: String
     var message: String
-    var stack: LinkedList<token_struct>
+    var stack: LinkedList<String>
 }
 
 
 class SyntacticAnalyzer: Token {
-    var linkedCharactersGlobal = LinkedList<token_struct>()
-    var simbolTable : SimbolTable = SimbolTable()
-    var rotule : Int = 1;
-    var memoryAllocationPointer: Int = 0
-    var codeGenerator : CodeGenerator = CodeGenerator()
-
-
-    init(linkedCharacters: LinkedList<token_struct>) {
+    var linkedCharactersGlobal = LinkedList<String>()
+    
+    init(linkedCharacters: LinkedList<String>) {
         self.linkedCharactersGlobal = linkedCharacters
     }
     
     func analyser() throws {
         var i = 0
         var linkedCharacters = self.linkedCharactersGlobal;
-        codeGenerator.initProgram()
-        memoryAllocationPointer += 1
+        
         //linkedCharacters.nextNode()
         
             let value = linkedCharacters.first?.value.simbolo as? String ?? ""
@@ -36,10 +30,9 @@ class SyntacticAnalyzer: Token {
                 linkedCharacters.nextNode()
                 
                 let sIdentificador = linkedCharacters.first?.value.simbolo as? String ?? ""
-                let rawValue = linkedCharacters.first?.value ?? token_struct(lexema: "", simbolo: "")
+    
                 if (sIdentificador == "sidentificador") {
                     //insere_tabela
-                    simbolTable.push(lexema: rawValue.lexema, nivelEscopo: "nomedeprograma", tipo: "nomedeprograma", enderecoMemoria: "")
                     linkedCharacters.nextNode()
                     
                     let value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
@@ -56,20 +49,6 @@ class SyntacticAnalyzer: Token {
                             let value4 = linkedCharacters.first?.value.simbolo as? String ?? ""
                             
                             if (value4 == "" || value4 == "sinicio_comentario") {
-                                var removedVariables = simbolTable.cleanVariables()
-                                if(removedVariables > 0) {
-                                    var lastValue = memoryAllocationPointer
-                                    print(memoryAllocationPointer, removedVariables)
-        
-                                    memoryAllocationPointer = memoryAllocationPointer - removedVariables
-        
-                                    codeGenerator.generate("        ", "DALLOC", "\(memoryAllocationPointer)", "\(lastValue - memoryAllocationPointer)")
-                                }
-    
-                                codeGenerator.generate("        ", "DALLOC", "0", "1")
-                                codeGenerator.generate("        ", "HLT", "        ", "        ")
-    
-    
                                 return
                             } else {
                                 throw sintaticException(name: "SintaticException", message: "Final de arquivo encontrado, mas não é o final do arquivo - analyser", stack:linkedCharacters)
@@ -86,10 +65,11 @@ class SyntacticAnalyzer: Token {
             } else {
                 throw sintaticException(name: "SintaticException", message: "Início de programa não encontrado - analyser", stack:linkedCharacters)
             }
-
+        
+        
     }
     
-    func blockAnalyser(linkedCharacters: inout LinkedList<token_struct>) throws {
+    func blockAnalyser(linkedCharacters: inout LinkedList<String>) throws {
         //deve retornar o ponteiro para a proxima busca
         //let value = linkedCharacters.nodeAt(index: actualPosition)?.value.simbolo as? String ?? ""
         linkedCharacters.nextNode()
@@ -100,9 +80,8 @@ class SyntacticAnalyzer: Token {
         
     }
     
-    func analyseEtVariables(linkedCharacters: inout LinkedList<token_struct>) throws {
+    func analyseEtVariables(linkedCharacters: inout LinkedList<String>) throws {
         //linkedCharacters.nextNode()
-        var auxPointer = 0
         let value = linkedCharacters.first?.value.simbolo as? String ?? ""
         
        if value == "svar"{
@@ -113,14 +92,8 @@ class SyntacticAnalyzer: Token {
                 
                 var value3 = linkedCharacters.first?.value.simbolo as? String ?? ""
                 while(value3 == "sidentificador") {
-                    auxPointer = memoryAllocationPointer  //para saber qual valor era do rotulo antes de voltar
-
+    
                     try analyseVariables(linkedCharacters: &linkedCharacters)
-
-                    codeGenerator.generate("        " , "ALLOC", "\(auxPointer)", "\(memoryAllocationPointer - auxPointer)")
-
-                    //memoryAllocationPointer = auxPointer + memoryAllocationPointer
-
                     value3 = linkedCharacters.first?.value.simbolo as? String ?? ""
                     if(value3 == "sponto_virgula") {
                         linkedCharacters.nextNode()
@@ -135,37 +108,33 @@ class SyntacticAnalyzer: Token {
         }
     }
     
-    func analyseVariables(linkedCharacters: inout LinkedList<token_struct>) throws {
+    func analyseVariables(linkedCharacters: inout LinkedList<String>) throws {
         //linkedCharacters.nextNode()
         var value = linkedCharacters.first?.value.simbolo as? String ?? ""
-        var rawValue = linkedCharacters.first?.value ?? token_struct(lexema: "", simbolo: "")
+        
         repeat {
             if (value == "sidentificador") {
-                if(!simbolTable.testDuplicate(lexema: rawValue.lexema)) {
-                    simbolTable.push(lexema: rawValue.lexema, nivelEscopo: "", tipo: "", enderecoMemoria: "\(memoryAllocationPointer)")
-                    memoryAllocationPointer += 1
-
-                    linkedCharacters.nextNode()
-                    value = linkedCharacters.first?.value.simbolo as? String ?? ""
-
-                    if (value == "svirgula" || value == "sdoispontos") {
-
-                        if (value == "svirgula") {
-
-                            linkedCharacters.nextNode()
-                            value = linkedCharacters.first?.value.simbolo as? String ?? ""
-                            rawValue = linkedCharacters.first?.value ?? token_struct(lexema: "", simbolo: "")
-                            if (value == "sdoispontos") {
-                                throw sintaticException(name: "SintaticException", message: "Esperava encontrar dois pontos - analyseVariables", stack: linkedCharacters)
-                            }
-
+                linkedCharacters.nextNode()
+                
+                value = linkedCharacters.first?.value.simbolo as? String ?? ""
+                
+                if (value == "svirgula"
+                        || value == "sdoispontos") {
+                    
+                    if (value == "svirgula") {
+                        
+                        linkedCharacters.nextNode()
+                        value = linkedCharacters.first?.value.simbolo as? String ?? ""
+                        
+                        if (value == "sdoispontos") {
+                            throw sintaticException(name: "SintaticException", message: "Esperava encontrar dois pontos - analyseVariables", stack:linkedCharacters)
                         }
-                    } else {
-                        throw sintaticException(name: "SintaticException", message: "Esperava encontrar svirgula ou sdois pontos - analyseVariables", stack: linkedCharacters)
+                        
                     }
                 }else{
-                    throw sintaticException(name: "SintaticException", message: "Variaveis duplicadas", stack: linkedCharacters)
+                    throw sintaticException(name: "SintaticException", message: "Esperava encontrar svirgula ou sdois pontos - analyseVariables", stack:linkedCharacters)
                 }
+                
             }else{
                 throw sintaticException(name: "SintaticException", message: "Esperava encontrar identificador - analyseVariables", stack:linkedCharacters)
             }
@@ -178,19 +147,17 @@ class SyntacticAnalyzer: Token {
         
     }
     
-    func analyseType(linkedCharacters: inout LinkedList<token_struct>) throws {
+    func analyseType(linkedCharacters: inout LinkedList<String>) throws {
         //linkedCharacters.nextNode()
-        let value = linkedCharacters.first?.value
-        if (value?.simbolo != "sinteiro" && value?.simbolo != "sbooleano") {
+        let value = linkedCharacters.first?.value.simbolo as? String ?? ""
+        if (value != "sinteiro" && value != "sbooleano") {
             throw sintaticException(name: "SintaticException", message: "Esperava encontrar diferente de inteiro ou booleano - analyseType", stack:linkedCharacters)
-        }else{
-            simbolTable.insertIntoTheLastOne(nivelEscopo: "", tipo: value?.simbolo ?? "", enderecoMemoria: "ignore")
         }
         linkedCharacters.nextNode()
     }
     
     //Olhar essa funcao
-    func analyseCommands(linkedCharacters: inout LinkedList<token_struct>) throws {
+    func analyseCommands(linkedCharacters: inout LinkedList<String>) throws {
         //linkedCharacters.nextNode()
         
         let value = linkedCharacters.first?.value.simbolo as? String ?? ""
@@ -200,8 +167,8 @@ class SyntacticAnalyzer: Token {
                 
                 var value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
                 
-                while (value2 != "sfim" ) {
-
+                while (value2 != "sfim") {
+                    
                     if (value2 == "sponto_virgula") {
                         linkedCharacters.nextNode()
                         value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
@@ -209,17 +176,18 @@ class SyntacticAnalyzer: Token {
                         if (value2 != "sfim") {
                             try analyseSimpleCommands(linkedCharacters: &linkedCharacters)
                             value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
+                        } else {
+                            throw sintaticException(name: "SintaticException", message: "Esperava encontrar sfim - analyseCommands", stack: linkedCharacters)
                         }
-                        // UM CAGAO DEIXOU UM THROW AQUI, DEIXOU A GENTE BUSCANDO ERRO DESDE - E FOI SO REMOVER QUE RESOLVEU
-                        // AS 19h do 10/11/2021 até 04:00h 11/11/2021 - EU NAO VOU DORMIR, NEM O SALSA
-                        // É A CULPA É DE ALGUM F*** BLAME XU (PS.: NAO FICOU PRA AJUDA #TO_MARCANDO_E_TO_VENDO)
-                    }else {
+                    }else{
 
                         //linkedCharacters.nextNode()
                         //value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
                         throw sintaticException(name: "SintaticException", message: "Esperava encontrar ; - analyseCommands", stack: linkedCharacters)
                     }
-
+                    
+                    
+                    
                     //print("\(value)")
                 }
                 linkedCharacters.nextNode()
@@ -229,22 +197,13 @@ class SyntacticAnalyzer: Token {
             }
     }
     
-    func analyseSimpleCommands(linkedCharacters: inout LinkedList<token_struct>) throws {
+    func analyseSimpleCommands(linkedCharacters: inout LinkedList<String>) throws {
         //linkedCharacters.nextNode()
         let value = linkedCharacters.first?.value.simbolo as? String ?? ""
-        let token = linkedCharacters.first?.value
-    
+        
         if value == "sidentificador" {
             //analisar atrib chprocedimento
             try analyseChProcedure(linkedCharacters: &linkedCharacters)
-            
-            let simbol = simbolTable.findLexemaReturnCompleteSymbol(lexema: token?.lexema ?? "")
-            
-            //Apenas leitura de variaveis inteiras
-            if(simbol != nil && simbol?.tipo != "sbooleano"){
-                codeGenerator.generate("        ", "STR", simbol?.enderecoMemoria ?? "", "        ")
-            }
-            
         } else if value == "sse" {
             //analisa sse
             try analyseIf(linkedCharacters: &linkedCharacters)
@@ -253,7 +212,6 @@ class SyntacticAnalyzer: Token {
             try analyseWhile(linkedCharacters: &linkedCharacters)
         } else if value == "sleia" {
             //analisa sleia
-            codeGenerator.generate("        ", "RD", "        ", "        ")
             try analyseRead(linkedCharacters: &linkedCharacters)
         } else if value == "sescreva" {
             //analisa escreva
@@ -264,7 +222,7 @@ class SyntacticAnalyzer: Token {
         }
     }
     
-    func analyseChProcedure(linkedCharacters: inout LinkedList<token_struct>) throws {
+    func analyseChProcedure(linkedCharacters: inout LinkedList<String>) throws {
         linkedCharacters.nextNode()
         let value = linkedCharacters.first?.value.simbolo as? String ?? ""
         
@@ -272,17 +230,8 @@ class SyntacticAnalyzer: Token {
             //Analisa_atribuicao
             //TO_DO
             //PASSIVEL DE ERRO - LEMBRAR
-            
-            linkedCharacters.nextNode(); //AQUI
-
-            var listCopy : LinkedList<token_struct> = LinkedList<token_struct>()
-            listCopy.setHead(el: linkedCharacters.first!)
-
+            linkedCharacters.nextNode()
             try analyseExpression(linkedCharacters: &linkedCharacters)
-            
-            //ESSA FUNCAO TAMBEM GERA O CODIGO DE MAQUINA
-            try customProcessExpression(linkedCharacters: listCopy, goTo: linkedCharacters.first?.index ?? 0)
-            
             //analisa_expressao
         }
          else{
@@ -291,7 +240,7 @@ class SyntacticAnalyzer: Token {
         }
     }
     
-    func analyseRead(linkedCharacters: inout LinkedList<token_struct>) throws {
+    func analyseRead(linkedCharacters: inout LinkedList<String>) throws {
         linkedCharacters.nextNode()
         let value = linkedCharacters.first?.value.simbolo as? String ?? ""
         
@@ -301,22 +250,14 @@ class SyntacticAnalyzer: Token {
             let value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
             if (value2 == "sidentificador") {
                 //Lexico(token)
-                let rawValue2 = linkedCharacters.first?.value ?? token_struct(lexema: "", simbolo: "")
-                if(simbolTable.itExists(lexema: rawValue2.lexema)){
-                    let simbolo = simbolTable.findLexemaReturnCompleteSymbol(lexema: rawValue2.lexema)
-                    codeGenerator.generate("        ", "STR", "\(simbolo?.enderecoMemoria ?? "")", "        ")
-                    
+                linkedCharacters.nextNode()
+                let value3 = linkedCharacters.first?.value.simbolo as? String ?? ""
+                
+                if (value3 == "sfecha_parenteses") {
+                    //Lexico(token)
                     linkedCharacters.nextNode()
-                    let value3 = linkedCharacters.first?.value.simbolo as? String ?? ""
-                    
-                    if (value3 == "sfecha_parenteses") {
-                        //Lexico(token)
-                        linkedCharacters.nextNode()
-                    } else {
-                        throw sintaticException(name: "SintaticException", message: "Esperava encontrar fecha parenteses - analyseRead", stack:linkedCharacters)
-                    }
-                }else{
-                    throw sintaticException(name: "SintaticException", message: "Identificador nao entrado - analyseRead", stack:linkedCharacters)
+                } else {
+                    throw sintaticException(name: "SintaticException", message: "Esperava encontrar fecha parenteses - analyseRead", stack:linkedCharacters)
                 }
             } else {
                 throw sintaticException(name: "SintaticException", message: "Esperava econtrar identificador - analyseRead", stack:linkedCharacters)
@@ -326,7 +267,7 @@ class SyntacticAnalyzer: Token {
         }
     }
     
-    func analyseWrite(linkedCharacters: inout LinkedList<token_struct>) throws {
+    func analyseWrite(linkedCharacters: inout LinkedList<String>) throws {
         linkedCharacters.nextNode()
         let value = linkedCharacters.first?.value.simbolo as? String ?? ""
         
@@ -334,24 +275,16 @@ class SyntacticAnalyzer: Token {
             //Lexico(token)
             linkedCharacters.nextNode()
             let value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
-            let rawValue2 = linkedCharacters.first?.value ?? token_struct(lexema: "", simbolo: "")
-
             if (value2 == "sidentificador") {
-
-                if(simbolTable.itExists(procedimento: rawValue2.lexema)){
-                    linkedCharacters.nextNode()
-                    let value3 = linkedCharacters.first?.value.simbolo as? String ?? ""
-                    if (value3 == "sfecha_parenteses") {
-                        //Lexico(token)
-                        linkedCharacters.nextNode()
-                    } else {
-                        throw sintaticException(name: "SintaticException", message: "Esperava encontrar fecha parenteses - analyseWrite", stack:linkedCharacters)
-                    }
-                }else{
-                    throw sintaticException(name: "SintaticException", message: "Identificador nao encontrado - analyseWrite", stack:linkedCharacters)
-                }
                 //Lexico(token)
-
+                linkedCharacters.nextNode()
+                let value3 = linkedCharacters.first?.value.simbolo as? String ?? ""
+                if (value3 == "sfecha_parenteses") {
+                    //Lexico(token)
+                    linkedCharacters.nextNode()
+                } else {
+                    throw sintaticException(name: "SintaticException", message: "Esperava encontrar fecha parenteses - analyseWrite", stack:linkedCharacters)
+                }
             } else {
                 throw sintaticException(name: "SintaticException", message: "Esperava sidentificador - analyseWrite", stack:linkedCharacters)
             }
@@ -360,48 +293,25 @@ class SyntacticAnalyzer: Token {
         }
     }
     
-    func analyseWhile(linkedCharacters: inout LinkedList<token_struct>) throws {
-        var auxRot1, auxRot2 : Int
-
-        auxRot1 = rotule
-        codeGenerator.generate("\(rotule)" , "NULL",  "        ",  "        ")
-        rotule += 1
+    func analyseWhile(linkedCharacters: inout LinkedList<String>) throws {
         linkedCharacters.nextNode()
         //analisaExpressão
-
-        var listCopy : LinkedList<token_struct> = LinkedList<token_struct>()
-        listCopy.setHead(el: linkedCharacters.first!)
-
         try analyseExpression(linkedCharacters: &linkedCharacters)
-                
-        try customProcessExpression(linkedCharacters: listCopy,  goTo: linkedCharacters.first?.index ?? 0)
         
         let value = linkedCharacters.first?.value.simbolo as? String ?? ""
         
         if value == "sfaca" {
-            auxRot2 = rotule
-            codeGenerator.generate("        ","JMPF" ,  "\(rotule)",    "        ")
-            rotule += 1
             linkedCharacters.nextNode()
             try analyseSimpleCommands(linkedCharacters: &linkedCharacters)
-            codeGenerator.generate("        ", "JMP" ,  "\(auxRot1)",   "        ")
-            codeGenerator.generate("\(auxRot2)" ,  "NULL",  "        ",  "        ")
         } else {
             throw sintaticException(name: "SintaticException", message: "Esperava encontrar sfaca - analyseWhile ", stack:linkedCharacters)
         }
     }
     
-    func analyseIf(linkedCharacters: inout LinkedList<token_struct>) throws {
+    func analyseIf(linkedCharacters: inout LinkedList<String>) throws {
         linkedCharacters.nextNode()
         //analyse expression
-
-        var listCopy : LinkedList<token_struct> = LinkedList<token_struct>()
-        listCopy.setHead(el: linkedCharacters.first!)
-
         try analyseExpression(linkedCharacters: &linkedCharacters)
-        
-        try customProcessExpression(linkedCharacters: listCopy, goTo: linkedCharacters.first?.index ?? 0)
-
         
         let value = linkedCharacters.first?.value.simbolo as? String ?? ""
         
@@ -425,20 +335,10 @@ class SyntacticAnalyzer: Token {
         }
     }
     
-    func analyseSubroutines(linkedCharacters: inout LinkedList<token_struct>) throws {
+    func analyseSubroutines(linkedCharacters: inout LinkedList<String>) throws {
         var flag  = 0
-        var auxRot = 0
         //linkedCharacters.nextNode()
         var value = linkedCharacters.first?.value.simbolo as? String ?? ""
-
-        if(value == "sprocedimento"
-                || value == "sfuncao"){
-            auxRot = rotule
-            codeGenerator.generate( "        ", "JMP", "\(rotule)",    "        ")
-            rotule += 1
-            flag = 1
-        }
-
         
         while (value == "sprocedimento"
                 || value == "sfuncao") {
@@ -459,113 +359,69 @@ class SyntacticAnalyzer: Token {
             } else {
                 throw sintaticException(name: "SintaticException", message: "Esperava econtrar ponto e virgula - analyseSubroutines", stack:linkedCharacters)
             }
-
-
         }
         
         if (flag == 1) {
-            codeGenerator.generate( "\(auxRot)",  "NULL",  "        ",  "        ")
+            //Gera(auxrot, NULL, , )
         }
         
     }
     
-    func analyseProcedureDeclaration(linkedCharacters: inout LinkedList<token_struct>) throws {
+    func analyseProcedureDeclaration(linkedCharacters: inout LinkedList<String>) throws {
         //Lexico(token)
         linkedCharacters.nextNode()
-        var NIVEL = "L"
         let value = linkedCharacters.first?.value.simbolo as? String ?? ""
-        let rawValue = linkedCharacters.first?.value
         if (value == "sidentificador") {
             //Lexico(token)
-            if(!simbolTable.itExists(procedimento: rawValue?.lexema ?? "")){
-                simbolTable.push(lexema: rawValue?.lexema ?? "", nivelEscopo: NIVEL, tipo: "IRA SER SUBSTITUIDO", enderecoMemoria: "\(rotule)")
-
-                codeGenerator.generate("\(rotule)" , "NULL",  "        ",  "        ")
-                rotule += 1
-
-                linkedCharacters.nextNode()
-                let value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
-                if (value2 == "sponto_virgula") {
-                    //Analisa_bloco
-                    try blockAnalyser(linkedCharacters: &linkedCharacters)
-                } else {
-                    throw sintaticException(name: "SintaticException", message: "Esperava econtrar ponto e virgula - analyseProcedureDeclaration", stack:linkedCharacters)
-                }
-            }else{
-                throw sintaticException(name: "SintaticException", message: "Nome de Procedimento duplicado - analyseProcedureDeclaration", stack:linkedCharacters)
+            linkedCharacters.nextNode()
+            let value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
+            if (value2 == "sponto_virgula") {
+                //Analisa_bloco
+               try blockAnalyser(linkedCharacters: &linkedCharacters)
+            } else {
+                throw sintaticException(name: "SintaticException", message: "Esperava econtrar ponto e virgula - analyseProcedureDeclaration", stack:linkedCharacters)
             }
-
         } else {
             throw sintaticException(name: "SintaticException", message: "Esperava econtrar identificador - analyseProcedureDeclaration ", stack:linkedCharacters)
         }
-
-        var removedVariables = simbolTable.cleanVariables()
-        if(removedVariables > 0) {
-            var lastValue = memoryAllocationPointer
-            print(memoryAllocationPointer, removedVariables)
-
-            memoryAllocationPointer = memoryAllocationPointer - removedVariables
-
-            codeGenerator.generate("        ", "DALLOC", "\(memoryAllocationPointer)", "\(lastValue - memoryAllocationPointer)")
-        }
-
-        NIVEL = "0"
     }
     
-    func analyseFunctionDeclaration(linkedCharacters: inout LinkedList<token_struct>) throws {
+    func analyseFunctionDeclaration(linkedCharacters: inout LinkedList<String>) throws {
         //Lexico(token)
         linkedCharacters.nextNode()
-        var NIVEL = "L"
         let value = linkedCharacters.first?.value.simbolo as? String ?? ""
         
         if (value == "sidentificador") {
             //Lexico(token)
-            let rawValue = linkedCharacters.first?.value
-
-            if(!simbolTable.itExists(procedimento: rawValue?.lexema ?? "")){
-                simbolTable.push(lexema: rawValue?.lexema ?? "", nivelEscopo: NIVEL, tipo: "", enderecoMemoria: "\(rotule)")
+            linkedCharacters.nextNode()
+            let value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
+            if (value2 == "sdoispontos") {
+                //Lexico(token)
                 linkedCharacters.nextNode()
-                let value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
-                if (value2 == "sdoispontos") {
+                let value3 = linkedCharacters.first?.value.simbolo as? String ?? ""
+                if (value3 ==  "sinteiro" ||
+                        value3 == "sbooleano") {
+                    
                     //Lexico(token)
                     linkedCharacters.nextNode()
-                    let value3 = linkedCharacters.first?.value.simbolo as? String ?? ""
-                    if (value3 ==  "sinteiro" ||
-                            value3 == "sbooleano") {
-                        simbolTable.insertIntoTheLastOne(nivelEscopo: NIVEL, tipo: "func "+value3, enderecoMemoria: "IRA SER SUBSTITUIDO")
-                        //Lexico(token)
-                        linkedCharacters.nextNode()
-                        let value4 = linkedCharacters.first?.value.simbolo as? String ?? ""
-                        if (value4 == "sponto_virgula") {
-                            //blockAnalyser()
-                            try blockAnalyser(linkedCharacters: &linkedCharacters)
-                        }
-                    } else {
-                        throw sintaticException(name: "SintaticException", message: "Esperava encontrar um inteiro ou booleano - analyseFunctionDeclaration", stack:linkedCharacters)
+                    let value4 = linkedCharacters.first?.value.simbolo as? String ?? ""
+                    if (value4 == "sponto_virgula") {
+                        //blockAnalyser()
+                        try blockAnalyser(linkedCharacters: &linkedCharacters)
                     }
                 } else {
-                    throw sintaticException(name: "SintaticException", message: "Esperava encontrar dois pontos - analyseFunctionDeclaration", stack:linkedCharacters)
+                    throw sintaticException(name: "SintaticException", message: "Esperava encontrar um inteiro ou booleano - analyseFunctionDeclaration", stack:linkedCharacters)
                 }
+            } else {
+                throw sintaticException(name: "SintaticException", message: "Esperava encontrar dois pontos - analyseFunctionDeclaration", stack:linkedCharacters)
             }
         } else {
             throw sintaticException(name: "SintaticException", message: "Esperava encontrar um identificador - analyseFunctionDeclaration", stack:linkedCharacters)
         }
-    
-        var removedVariables = simbolTable.cleanVariables()
-        if(removedVariables > 0) {
-            var lastValue = memoryAllocationPointer
-            print(memoryAllocationPointer, removedVariables)
-        
-            memoryAllocationPointer = memoryAllocationPointer - removedVariables
-        
-            codeGenerator.generate("        ", "DALLOC", "\(memoryAllocationPointer)", "\(lastValue - memoryAllocationPointer)")
-        }
-    
-        NIVEL = ""
     }
     
-    func analyseExpression(linkedCharacters: inout LinkedList<token_struct>) throws {
-       // try customProcessExpression(linkedCharacters: linkedCharacters)
+    func analyseExpression(linkedCharacters: inout LinkedList<String>) throws {
+        try customProcessExpression(linkedCharacters: linkedCharacters)
         try analyseSimpleExpression(linkedCharacters: &linkedCharacters)
 
         let value = linkedCharacters.first?.value.simbolo as? String ?? ""
@@ -578,118 +434,56 @@ class SyntacticAnalyzer: Token {
     }
 
     //if u are here after this cold night (30/10/2021) u should definitely remove this shit :)
-    func customProcessExpression(linkedCharacters: LinkedList<token_struct>, goTo: Int) throws{
-
+    func customProcessExpression(linkedCharacters: LinkedList<String>){
         var list : Array<token_struct> = []
-        var listCopy : LinkedList<token_struct> = LinkedList<token_struct>()
+        var listCopy : LinkedList<String> = LinkedList<String>()
         //Here, friendodas, we can see a language that tries to helo, but, instead, kills us by faciliting the unfacilitating
         listCopy.setHead(el: linkedCharacters.first!)
 
         var value = listCopy.first?.value ?? token_struct(lexema: "", simbolo: "")
-        var index = listCopy.first?.index ?? 0
-        //fazendo slice
-        while(index <= goTo) {
-            
+
+        while(value.simbolo != "sfaca" && value.simbolo != "sfim" && value.simbolo != "sponto_virgula"
+                && value.simbolo != "sentao" ) {
+
             list.append(value)
 
             listCopy.nextNode()
             value = listCopy.first?.value ?? token_struct(lexema: "", simbolo: "")
-            index = listCopy.first?.index ?? 0
         }
 
         //search for "-" before a snumero or sidentificador
-        var listFinal : LinkedList<token_struct> = LinkedList<token_struct>()
+        var listFinal : LinkedList<String> = LinkedList<String>()
 
-        //marcacoes para -u
         for i in 0..<list.count{
-            if(i == 0 && list[i].simbolo == "smais"){
-                listFinal.append(token_struct(lexema:  "+u", simbolo: "su_identificador"))
-            }else{
-                if(list[i].simbolo == "smenos"){
-                    //listFinal.append(list[i])
+            if(list[i].simbolo == "smenos"){
+                //listFinal.append(list[i])
 
-                    if((list[i+1].simbolo == "sidentificador" || list[i+1].simbolo == "snumero" ) ){
-                        //tuptudurundawn
-                        listFinal.append(token_struct(lexema:  "-u", simbolo: "su_identificador"))
-                    }else{
-                        listFinal.append(token_struct(lexema:list[i].lexema, simbolo: list[i].simbolo))
-                    }
+                if((list[i+1].simbolo == "sidentificador" || list[i+1].simbolo == "snumero" ) ){
+                    //tuptudurundawn
+                    listFinal.append(lexema: "-u", simbolo: "su_identificador")
                 }else{
-                    listFinal.append(token_struct(lexema:list[i].lexema, simbolo: list[i].simbolo))
+                    listFinal.append(lexema:list[i].lexema, simbolo: list[i].simbolo)
                 }
+            }else{
+                listFinal.append(lexema:list[i].lexema, simbolo: list[i].simbolo)
             }
-            
-            
         }
         let _posFixed = PosFixed()
 
         _posFixed.posFixedConvertion(tokens: listFinal)
-        try _posFixed.analyseExpression(simbolTable: simbolTable)
-        
-        for item in _posFixed.expression{
-            switch(item.simbolo){
-                case "sidentificador":
-                    codeGenerator.generate("        ", "LDV", item.lexema, "        ")
-                    break
-                case "snumero":
-                    codeGenerator.generate("        ", "LDC", item.lexema, "        ")
-                break
-                case "smais":
-                    codeGenerator.generate("        ", "ADD", item.lexema, "        ")
-                    break
-                case "smenos":
-                    codeGenerator.generate("        ", "SUB", item.lexema, "        ")
-                    break;
-                case "smult":
-                    codeGenerator.generate("        ", "MULT", item.lexema, "        ")
-                break;
-                case "sdiv":
-                    codeGenerator.generate("        ", "DIVI", item.lexema, "        ")
-                    break;
-                case "su_identificador":
-                    codeGenerator.generate("        ", "INV", item.lexema, "        ")
-                    break;
-                case "se":
-                    codeGenerator.generate("        ", "AND", item.lexema, "        ")
-                    break;
-                case "sou":
-                    codeGenerator.generate("        ", "OR", item.lexema, "        ")
-                    break;
-                case "snao":
-                    codeGenerator.generate("        ", "NEG", item.lexema, "        ")
-                    break;
-                case "smenor":
-                    codeGenerator.generate("        ", "CME", item.lexema, "        ")
-                break;
-                case "smaior":
-                    codeGenerator.generate("        ", "CMA", item.lexema, "        ")
-                    break;
-                case "sdif":
-                    codeGenerator.generate("        ", "CDIF", item.lexema, "        ")
-                    break;
-                case "smenorig":
-                    codeGenerator.generate("        ", "CMEQ", item.lexema, "        ")
-                    break;
-                case "smaiorig":
-                    codeGenerator.generate("        ", "CMAQ", item.lexema, "        ")
-                    break;
-                
-                default:
-                    codeGenerator.generate("        ", "NAO ACHOU", item.lexema, "        ")
-                }
-            
-        }
-
+        print("Copy eeeeeeend")
 
     }
     
-    func analyseSimpleExpression(linkedCharacters: inout LinkedList<token_struct>) throws{
+    func analyseSimpleExpression(linkedCharacters: inout LinkedList<String>) throws{
         //linkedCharacters.nextNode()
         var value = linkedCharacters.first?.value.simbolo as? String ?? ""
     
-        if(value == "smais" || value == "smenos") {
+        if(value == "smais" ||
+          value == "smenos") {
             //Lexico(token)
             linkedCharacters.nextNode()
+            //Analisa Termo()
             value = linkedCharacters.first?.value.simbolo as? String ?? ""
         }
         
@@ -706,7 +500,7 @@ class SyntacticAnalyzer: Token {
         }
     }
     
-    func analyseTerm(linkedCharacters: inout LinkedList<token_struct>) throws {
+    func analyseTerm(linkedCharacters: inout LinkedList<String>) throws {
         try analyseFactor(linkedCharacters: &linkedCharacters)
         var value = linkedCharacters.first?.value.simbolo as? String ?? ""
         while(value == "smult"
@@ -717,24 +511,13 @@ class SyntacticAnalyzer: Token {
         }
     }
     
-    func analyseFactor(linkedCharacters: inout LinkedList<token_struct>) throws {
+    func analyseFactor(linkedCharacters: inout LinkedList<String>) throws {
         var value = linkedCharacters.first?.value
         if value?.simbolo == "sidentificador" {
             //analisa chamada funcao
-
-            let ret = simbolTable.find(lexema: value?.lexema ?? "", nivel: "")
-            if(ret != nil){
-                if(ret?.tipo == "func sinteiro" || ret?.tipo == "func sbooleano"){
-                    //analisa chamada de funcao
-                    linkedCharacters.nextNode()
-                    value = linkedCharacters.first?.value
-                }else{
-                    linkedCharacters.nextNode()
-                    value = linkedCharacters.first?.value
-                }
-            }else{
-                throw sintaticException(name: "SintaticException", message: "Identificador nao encontrado - analyseFactor", stack:linkedCharacters)
-            }
+            linkedCharacters.nextNode()
+            value = linkedCharacters.first?.value
+    
         }else if value?.simbolo == "snumero" {
             linkedCharacters.nextNode()
             value = linkedCharacters.first?.value
