@@ -36,7 +36,9 @@ class SimbolTable {
 
         while(aux != nil && aux.lexema != "" && aux.tipo == ""){
             aux.nivelEscopo = nivelEscopo
-            aux.enderecoMemoria = enderecoMemoria
+            if(enderecoMemoria != "ignore"){
+                aux.enderecoMemoria = enderecoMemoria
+            }
             aux.tipo = tipo
 
             _stackAux.push(aux)
@@ -51,11 +53,6 @@ class SimbolTable {
             aux = _stackAux.pop() ?? simbols_table_struct(lexema: "", nivelEscopo: "", tipo: "", enderecoMemoria: "")
 
         }
-
-
-
-
-
     }
 
     func testDuplicate(lexema: String) -> Bool{
@@ -101,8 +98,9 @@ class SimbolTable {
 
         return false
     }
-
-    func findLexemaReturnType(lexema: String) -> String?{
+    
+    // 10/11/2021 - essa funcao ajudou o meu do futuro. Obg eu do passo - Luiz
+    func findLexemaReturnType(lexema: String) -> String?{ // 10/11/2021 - essa funcao ajudou o meu do futuro. Obg eu do passo - Luiz
         var auxStack: Stack<simbols_table_struct> = stack
         var value = auxStack.peek()
         repeat{
@@ -115,7 +113,21 @@ class SimbolTable {
 
         return nil
     }
-
+    
+    func findLexemaReturnCompleteSymbol(lexema: String) -> simbols_table_struct?{
+        var auxStack: Stack<simbols_table_struct> = stack
+        var value = auxStack.peek()
+        repeat{
+            value = auxStack.pop()
+            if(value?.lexema == lexema){
+                return value ?? simbols_table_struct(lexema: "", nivelEscopo: "", tipo: "", enderecoMemoria: "")
+            }
+            
+        }while(value != nil)
+        
+        return nil
+    }
+    
     func itExists(procedimento: String) -> Bool{
         var auxStack: Stack<simbols_table_struct> = stack
         var value = auxStack.peek()

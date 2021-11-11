@@ -97,7 +97,6 @@ class PosFixed: Token{
 
     func analyseExpression(simbolTable: SimbolTable) throws {
         var _stack = Stack<token_struct>()
-        var _stackAux = Stack<String>()
 
         for item in self.expression {
             if(item.simbolo == "sidentificador" || item.simbolo == "snumero" || item.simbolo == "sverdadeiro" || item.simbolo == "sfalso") {
