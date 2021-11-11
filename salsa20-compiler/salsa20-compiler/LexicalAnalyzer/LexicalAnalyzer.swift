@@ -228,14 +228,14 @@ class LexicalAnalyzer: Token {
             
         //print(fileContent)
         
-        if(convertedFileContent.count <= 1){
+        if(fileContent.count <= 1){
             print("Não há dados no arquivo - Arquivo vazio!")
             return linkedCharacters
         }
 
-        let TOTAL_LENGTH = convertedFileContent.count
+        let TOTAL_LENGTH = fileContent.count
     
-        try treatCommentaryRemoveSpaces(fileContent: convertedFileContent, totalLength: TOTAL_LENGTH)
+        try treatCommentaryRemoveSpaces(fileContent: fileContent, totalLength: TOTAL_LENGTH)
     
         //print(linkedCharacters)
 

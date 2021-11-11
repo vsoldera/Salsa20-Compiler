@@ -17,17 +17,18 @@ class ViewController: NSViewController {
     var linkedCharacters = LinkedList<String>()
 
     @IBAction func compileButtonPressed(_ sender: Any) {
-        lexicalAnalyzer.syntacticErrorMessage = nil
-        if let fileContent = retrieveStringFromFile(fileName: fileNameTextView.stringValue) {
-            lexicalAnalyzer.linkedCharacters.removeAll()
-            do {
-                self.linkedCharacters = try lexicalAnalyzer.analyse(fileContent: fileContent)
-            } catch {
-                print(error)
-            }
-            errorTextView.string = ""
-            errorTextView.string = lexicalAnalyzer.syntacticErrorMessage ?? "Build succeeded without any errors"
-        }
+        errorTextView.string = "Implement this again when everything is done :)"
+//        lexicalAnalyzer.syntacticErrorMessage = nil
+//        if let fileContent = retrieveStringFromFile(fileName: fileNameTextView.stringValue) {
+//            lexicalAnalyzer.linkedCharacters.removeAll()
+//            do {
+//                self.linkedCharacters = try lexicalAnalyzer.analyse(fileContent: fileContent)
+//            } catch {
+//                print(error)
+//            }
+//            errorTextView.string = ""
+//            errorTextView.string = lexicalAnalyzer.syntacticErrorMessage ?? "Build succeeded without any errors"
+//        }
     }
 
     @IBAction func importButtonPressed(_ sender: Any) {
