@@ -200,8 +200,8 @@ class SyntacticAnalyzer: Token {
                 
                 var value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
                 
-                while (value2 != "sfim") {
-                    
+                while (value2 != "sfim" ) {
+
                     if (value2 == "sponto_virgula") {
                         linkedCharacters.nextNode()
                         value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
@@ -209,10 +209,11 @@ class SyntacticAnalyzer: Token {
                         if (value2 != "sfim") {
                             try analyseSimpleCommands(linkedCharacters: &linkedCharacters)
                             value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
-                        } else {
-                            throw sintaticException(name: "SintaticException", message: "Esperava encontrar sfim - analyseCommands", stack: linkedCharacters)
                         }
-                    }else{
+                        // UM CAGAO DEIXOU UM THROW AQUI, DEIXOU A GENTE BUSCANDO ERRO DESDE - E FOI SO REMOVER QUE RESOLVEU
+                        // AS 19h do 10/11/2021 até 04:00h 11/11/2021 - EU NAO VOU DORMIR, NEM O SALSA
+                        // É A CULPA É DE ALGUM F*** BLAME XU (PS.: NAO FICOU PRA AJUDA #TO_MARCANDO_E_TO_VENDO)
+                    }else {
 
                         //linkedCharacters.nextNode()
                         //value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
@@ -337,7 +338,7 @@ class SyntacticAnalyzer: Token {
 
             if (value2 == "sidentificador") {
 
-                if(simbolTable.itExists(lexema: rawValue2.lexema)){
+                if(simbolTable.itExists(procedimento: rawValue2.lexema)){
                     linkedCharacters.nextNode()
                     let value3 = linkedCharacters.first?.value.simbolo as? String ?? ""
                     if (value3 == "sfecha_parenteses") {
@@ -458,6 +459,8 @@ class SyntacticAnalyzer: Token {
             } else {
                 throw sintaticException(name: "SintaticException", message: "Esperava econtrar ponto e virgula - analyseSubroutines", stack:linkedCharacters)
             }
+
+
         }
         
         if (flag == 1) {
@@ -518,12 +521,11 @@ class SyntacticAnalyzer: Token {
         if (value == "sidentificador") {
             //Lexico(token)
             let rawValue = linkedCharacters.first?.value
-            linkedCharacters.nextNode()
-            let value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
-            
 
             if(!simbolTable.itExists(procedimento: rawValue?.lexema ?? "")){
                 simbolTable.push(lexema: rawValue?.lexema ?? "", nivelEscopo: NIVEL, tipo: "", enderecoMemoria: "\(rotule)")
+                linkedCharacters.nextNode()
+                let value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
                 if (value2 == "sdoispontos") {
                     //Lexico(token)
                     linkedCharacters.nextNode()
@@ -577,6 +579,7 @@ class SyntacticAnalyzer: Token {
 
     //if u are here after this cold night (30/10/2021) u should definitely remove this shit :)
     func customProcessExpression(linkedCharacters: LinkedList<token_struct>, goTo: Int) throws{
+
         var list : Array<token_struct> = []
         var listCopy : LinkedList<token_struct> = LinkedList<token_struct>()
         //Here, friendodas, we can see a language that tries to helo, but, instead, kills us by faciliting the unfacilitating
@@ -684,11 +687,9 @@ class SyntacticAnalyzer: Token {
         //linkedCharacters.nextNode()
         var value = linkedCharacters.first?.value.simbolo as? String ?? ""
     
-        if(value == "smais" ||
-          value == "smenos") {
+        if(value == "smais" || value == "smenos") {
             //Lexico(token)
             linkedCharacters.nextNode()
-            //Analisa Termo()
             value = linkedCharacters.first?.value.simbolo as? String ?? ""
         }
         
@@ -720,11 +721,13 @@ class SyntacticAnalyzer: Token {
         var value = linkedCharacters.first?.value
         if value?.simbolo == "sidentificador" {
             //analisa chamada funcao
+
             let ret = simbolTable.find(lexema: value?.lexema ?? "", nivel: "")
             if(ret != nil){
                 if(ret?.tipo == "func sinteiro" || ret?.tipo == "func sbooleano"){
                     //analisa chamada de funcao
-                    
+                    linkedCharacters.nextNode()
+                    value = linkedCharacters.first?.value
                 }else{
                     linkedCharacters.nextNode()
                     value = linkedCharacters.first?.value

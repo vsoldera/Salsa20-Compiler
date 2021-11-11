@@ -162,6 +162,7 @@ class SimbolTable {
         var sliceStack: Stack<simbols_table_struct> = Stack<simbols_table_struct>()
         var control = false
         var value = auxStack.peek()
+        var valueSave : Stack<simbols_table_struct> = Stack<simbols_table_struct>()
         var counter = 0
         var timesEx = 0
         repeat{
@@ -169,17 +170,31 @@ class SimbolTable {
                 counter += 1
             }
 
-            if(value?.nivelEscopo == "L" || value?.nivelEscopo == "0"){
-                if(timesEx == 0){
+            if((value?.nivelEscopo == "L" || value?.nivelEscopo == "0" ) ){
+                if(timesEx == 0 && value?.tipo != "func sinteiro" && value?.tipo != "func sbooleano"){
                     stack.pop()
                 }
                 break
             }
             timesEx += 1
-            stack.pop()
+            if(value?.tipo == "func sinteiro" && value?.tipo == "func sbooleano"){
+                let v = stack.pop()
+                valueSave.push(v ?? simbols_table_struct(lexema: "", nivelEscopo: "", tipo: "", enderecoMemoria: ""))
+            }
+
             value = auxStack.pop()
 
         }while(value != nil)
+
+
+        var aux = valueSave.pop()
+
+        while(aux != nil){
+
+            stack.push(aux ?? simbols_table_struct(lexema: "", nivelEscopo: "", tipo: "", enderecoMemoria: ""))
+            aux = valueSave.pop()
+        }
+
 
         if(counter == 0){
             return 0
