@@ -12,7 +12,7 @@ struct simbols_table_struct: Equatable {
 }
 
 class SimbolTable {
-
+    var counter = 0
     var stack : Stack<simbols_table_struct> = Stack<simbols_table_struct>()
 
     func push ( lexema :String, nivelEscopo :String, tipo :String, enderecoMemoria :String){
@@ -158,42 +158,30 @@ class SimbolTable {
 
     func cleanVariables() -> Int{
         var auxStack = stack
+        var counter = 1
+        var value = stack.pop()
+        var _stack : Stack<simbols_table_struct> = Stack<simbols_table_struct>()
+        self.counter += 1
 
-        var sliceStack: Stack<simbols_table_struct> = Stack<simbols_table_struct>()
-        var control = false
-        var value = auxStack.peek()
-        var valueSave : Stack<simbols_table_struct> = Stack<simbols_table_struct>()
-        var counter = 0
-        var timesEx = 0
-        repeat{
-            if(value?.tipo == "sinteiro" || value?.tipo == "sbooleano"){
-                counter += 1
-            }
 
-            if((value?.nivelEscopo == "L" || value?.nivelEscopo == "0" ) ){
-                if(timesEx == 0 && value?.tipo != "func sinteiro" && value?.tipo != "func sbooleano"){
-                    stack.pop()
+        while(value != nil){
+            if (value?.tipo == "func sinteiro" || value?.tipo == "func sbooleano" || value?.tipo == "sprocedimento") {
+                if (value?.nivelEscopo == "L") {
+                    stack.push(simbols_table_struct(lexema: value?.lexema ?? "", nivelEscopo: "", tipo: value?.tipo ?? "", enderecoMemoria: value?.enderecoMemoria ?? ""))
+                    break
                 }
-                break
-            }
-            timesEx += 1
-            if(value?.tipo == "func sinteiro" && value?.tipo == "func sbooleano"){
-                let v = stack.pop()
-                valueSave.push(v ?? simbols_table_struct(lexema: "", nivelEscopo: "", tipo: "", enderecoMemoria: ""))
             }
 
-            value = auxStack.pop()
+            if(value?.tipo == "sinteiro" || value?.tipo == "sbooleano"){
+                counter+=1
+            }
+            value = stack.pop()
 
-        }while(value != nil)
 
-
-        var aux = valueSave.pop()
-
-        while(aux != nil){
-
-            stack.push(aux ?? simbols_table_struct(lexema: "", nivelEscopo: "", tipo: "", enderecoMemoria: ""))
-            aux = valueSave.pop()
         }
+
+
+
 
 
         if(counter == 0){

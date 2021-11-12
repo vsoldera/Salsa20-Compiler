@@ -29,6 +29,7 @@ class SyntacticAnalyzer: Token {
         var linkedCharacters = self.linkedCharactersGlobal;
         codeGenerator.initProgram()
         memoryAllocationPointer += 1
+
         //linkedCharacters.nextNode()
         
             let value = linkedCharacters.first?.value.simbolo as? String ?? ""
@@ -242,7 +243,12 @@ class SyntacticAnalyzer: Token {
             
             //Apenas leitura de variaveis inteiras
             if(simbol != nil && simbol?.tipo != "sbooleano"){
-                codeGenerator.generate("        ", "STR", simbol?.enderecoMemoria ?? "", "        ")
+                if(simbol?.tipo == "sprocedimento"){
+                    codeGenerator.generate("        ", "CALL", simbol?.enderecoMemoria ?? "", "        ")
+                }else{
+                    codeGenerator.generate("        ", "STR", simbol?.enderecoMemoria ?? "", "        ")
+                }
+
             }
             
         } else if value == "sse" {
@@ -339,6 +345,12 @@ class SyntacticAnalyzer: Token {
             if (value2 == "sidentificador") {
 
                 if(simbolTable.itExists(procedimento: rawValue2.lexema)){
+
+                    var simbol = simbolTable.findLexemaReturnCompleteSymbol(lexema: rawValue2.lexema)
+
+                    codeGenerator.generate("        ", "LDV", "\(simbol?.enderecoMemoria ?? "")", "        ")
+                    codeGenerator.generate("        ", "PRN", "        ", "        ")
+
                     linkedCharacters.nextNode()
                     let value3 = linkedCharacters.first?.value.simbolo as? String ?? ""
                     if (value3 == "sfecha_parenteses") {
@@ -364,7 +376,7 @@ class SyntacticAnalyzer: Token {
         var auxRot1, auxRot2 : Int
 
         auxRot1 = rotule
-        codeGenerator.generate("\(rotule)" , "NULL",  "        ",  "        ")
+        codeGenerator.generate("\(self.rotule)       " , "NULL",  "        ",  "        ")
         rotule += 1
         linkedCharacters.nextNode()
         //analisaExpressão
@@ -379,19 +391,20 @@ class SyntacticAnalyzer: Token {
         let value = linkedCharacters.first?.value.simbolo as? String ?? ""
         
         if value == "sfaca" {
-            auxRot2 = rotule
-            codeGenerator.generate("        ","JMPF" ,  "\(rotule)",    "        ")
-            rotule += 1
+            auxRot2 = self.rotule
+            codeGenerator.generate("        ","JMPF" ,  "\( self.rotule)",    "        ")
+            self.rotule += 1
             linkedCharacters.nextNode()
             try analyseSimpleCommands(linkedCharacters: &linkedCharacters)
             codeGenerator.generate("        ", "JMP" ,  "\(auxRot1)",   "        ")
-            codeGenerator.generate("\(auxRot2)" ,  "NULL",  "        ",  "        ")
+            codeGenerator.generate("\(auxRot2)       " ,  "NULL",  "        ",  "        ")
         } else {
             throw sintaticException(name: "SintaticException", message: "Esperava encontrar sfaca - analyseWhile ", stack:linkedCharacters)
         }
     }
     
     func analyseIf(linkedCharacters: inout LinkedList<token_struct>) throws {
+        var auxRot: Int
         linkedCharacters.nextNode()
         //analyse expression
 
@@ -399,10 +412,14 @@ class SyntacticAnalyzer: Token {
         listCopy.setHead(el: linkedCharacters.first!)
 
         try analyseExpression(linkedCharacters: &linkedCharacters)
-        
+
+        //ja vai processar e gerar o codigo de maquina:
         try customProcessExpression(linkedCharacters: listCopy, goTo: linkedCharacters.first?.index ?? 0)
 
-        
+        codeGenerator.generate("        ", "JMPF", "\(self.rotule)", "        ")
+        auxRot = self.rotule
+
+
         let value = linkedCharacters.first?.value.simbolo as? String ?? ""
         
         if value == "sentao" {
@@ -411,18 +428,27 @@ class SyntacticAnalyzer: Token {
             //analisa comando simples
             try analyseSimpleCommands(linkedCharacters: &linkedCharacters)
             let value3 = linkedCharacters.first?.value.simbolo as? String ?? ""
-    
+
+
             if value3 == "ssenao" {
-    
+                self.rotule+=1
+                codeGenerator.generate("        ", "JMP", "\(self.rotule)", "        ")
+                codeGenerator.generate("\(auxRot)       ", "NULL", "        ", "        ")
                 linkedCharacters.nextNode()
                 //analisa comando simples
                 try analyseSimpleCommands(linkedCharacters: &linkedCharacters)
+
+                codeGenerator.generate("\(self.rotule)       ", "NULL", "        ", "        ")
+
+            }else{
+                codeGenerator.generate("\(auxRot)       ", "NULL", "        ", "        ")
             }
-            
+
         } else {
             
             throw sintaticException(name: "SintaticException", message: "Esperava 'entao' - analyseIf", stack:linkedCharacters)
         }
+
     }
     
     func analyseSubroutines(linkedCharacters: inout LinkedList<token_struct>) throws {
@@ -434,7 +460,7 @@ class SyntacticAnalyzer: Token {
         if(value == "sprocedimento"
                 || value == "sfuncao"){
             auxRot = rotule
-            codeGenerator.generate( "        ", "JMP", "\(rotule)",    "        ")
+            codeGenerator.generate( "        ", "JMP", "\(self.rotule)",    "        ")
             rotule += 1
             flag = 1
         }
@@ -464,7 +490,7 @@ class SyntacticAnalyzer: Token {
         }
         
         if (flag == 1) {
-            codeGenerator.generate( "\(auxRot)",  "NULL",  "        ",  "        ")
+            codeGenerator.generate( "\(auxRot)       ",  "NULL",  "        ",  "        ")
         }
         
     }
@@ -478,10 +504,10 @@ class SyntacticAnalyzer: Token {
         if (value == "sidentificador") {
             //Lexico(token)
             if(!simbolTable.itExists(procedimento: rawValue?.lexema ?? "")){
-                simbolTable.push(lexema: rawValue?.lexema ?? "", nivelEscopo: NIVEL, tipo: "IRA SER SUBSTITUIDO", enderecoMemoria: "\(rotule)")
+                simbolTable.push(lexema: rawValue?.lexema ?? "", nivelEscopo: NIVEL, tipo: "sprocedimento", enderecoMemoria: "\(self.rotule)")
 
-                codeGenerator.generate("\(rotule)" , "NULL",  "        ",  "        ")
-                rotule += 1
+                codeGenerator.generate("\(self.rotule)       " , "NULL",  "        ",  "        ")
+                self.rotule += 1
 
                 linkedCharacters.nextNode()
                 let value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
@@ -508,6 +534,7 @@ class SyntacticAnalyzer: Token {
 
             codeGenerator.generate("        ", "DALLOC", "\(memoryAllocationPointer)", "\(lastValue - memoryAllocationPointer)")
         }
+        codeGenerator.generate("        ", "RETURN", "        ", "        ")
 
         NIVEL = "0"
     }
@@ -523,7 +550,11 @@ class SyntacticAnalyzer: Token {
             let rawValue = linkedCharacters.first?.value
 
             if(!simbolTable.itExists(procedimento: rawValue?.lexema ?? "")){
-                simbolTable.push(lexema: rawValue?.lexema ?? "", nivelEscopo: NIVEL, tipo: "", enderecoMemoria: "\(rotule)")
+                simbolTable.push(lexema: rawValue?.lexema ?? "", nivelEscopo: NIVEL, tipo: "", enderecoMemoria: "\(self.rotule)")
+
+                codeGenerator.generate("\(self.rotule)       " , "NULL",  "        ",  "        ")
+                self.rotule += 1
+
                 linkedCharacters.nextNode()
                 let value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
                 if (value2 == "sdoispontos") {
@@ -532,7 +563,7 @@ class SyntacticAnalyzer: Token {
                     let value3 = linkedCharacters.first?.value.simbolo as? String ?? ""
                     if (value3 ==  "sinteiro" ||
                             value3 == "sbooleano") {
-                        simbolTable.insertIntoTheLastOne(nivelEscopo: NIVEL, tipo: "func "+value3, enderecoMemoria: "IRA SER SUBSTITUIDO")
+                        simbolTable.insertIntoTheLastOne(nivelEscopo: NIVEL, tipo: "func "+value3, enderecoMemoria: "ignore")
                         //Lexico(token)
                         linkedCharacters.nextNode()
                         let value4 = linkedCharacters.first?.value.simbolo as? String ?? ""
@@ -560,8 +591,10 @@ class SyntacticAnalyzer: Token {
         
             codeGenerator.generate("        ", "DALLOC", "\(memoryAllocationPointer)", "\(lastValue - memoryAllocationPointer)")
         }
-    
-        NIVEL = ""
+        codeGenerator.generate("        ", "RETURN", "        ", "        ")
+
+
+
     }
     
     func analyseExpression(linkedCharacters: inout LinkedList<token_struct>) throws {
@@ -627,51 +660,60 @@ class SyntacticAnalyzer: Token {
         try _posFixed.analyseExpression(simbolTable: simbolTable)
         
         for item in _posFixed.expression{
+            let fromSimbolTable = self.simbolTable.findLexemaReturnCompleteSymbol(lexema: item.lexema)
             switch(item.simbolo){
                 case "sidentificador":
-                    codeGenerator.generate("        ", "LDV", item.lexema, "        ")
+
+                    if(fromSimbolTable?.tipo == "func sinteiro" || fromSimbolTable?.tipo == "func sbooleano" || fromSimbolTable?.tipo == "sprocedimento"){
+                        codeGenerator.generate("        ", "CALL", fromSimbolTable?.enderecoMemoria ?? "", "        ")
+                        if(fromSimbolTable?.tipo == "func sinteiro" || fromSimbolTable?.tipo == "func sbooleano"){
+                            codeGenerator.generate("        ", "LDV", "0", "        ")
+                        }
+                    }else{
+                        codeGenerator.generate("        ", "LDV", fromSimbolTable?.enderecoMemoria ?? "", "        ")
+                    }
                     break
                 case "snumero":
                     codeGenerator.generate("        ", "LDC", item.lexema, "        ")
                 break
                 case "smais":
-                    codeGenerator.generate("        ", "ADD", item.lexema, "        ")
+                    codeGenerator.generate("        ", "ADD", "        ", "        ")
                     break
                 case "smenos":
-                    codeGenerator.generate("        ", "SUB", item.lexema, "        ")
+                    codeGenerator.generate("        ", "SUB", "        ", "        ")
                     break;
                 case "smult":
-                    codeGenerator.generate("        ", "MULT", item.lexema, "        ")
+                    codeGenerator.generate("        ", "MULT", "        ", "        ")
                 break;
                 case "sdiv":
-                    codeGenerator.generate("        ", "DIVI", item.lexema, "        ")
+                    codeGenerator.generate("        ", "DIVI", "        ", "        ")
                     break;
                 case "su_identificador":
-                    codeGenerator.generate("        ", "INV", item.lexema, "        ")
+                    codeGenerator.generate("        ", "INV", "        ", "        ")
                     break;
                 case "se":
-                    codeGenerator.generate("        ", "AND", item.lexema, "        ")
+                    codeGenerator.generate("        ", "AND", "        ", "        ")
                     break;
                 case "sou":
-                    codeGenerator.generate("        ", "OR", item.lexema, "        ")
+                    codeGenerator.generate("        ", "OR", "        ", "        ")
                     break;
                 case "snao":
-                    codeGenerator.generate("        ", "NEG", item.lexema, "        ")
+                    codeGenerator.generate("        ", "NEG", "        ", "        ")
                     break;
                 case "smenor":
-                    codeGenerator.generate("        ", "CME", item.lexema, "        ")
+                    codeGenerator.generate("        ", "CME", "        ", "        ")
                 break;
                 case "smaior":
-                    codeGenerator.generate("        ", "CMA", item.lexema, "        ")
+                    codeGenerator.generate("        ", "CMA", "        ", "        ")
                     break;
                 case "sdif":
-                    codeGenerator.generate("        ", "CDIF", item.lexema, "        ")
+                    codeGenerator.generate("        ", "CDIF", "        ", "        ")
                     break;
                 case "smenorig":
-                    codeGenerator.generate("        ", "CMEQ", item.lexema, "        ")
+                    codeGenerator.generate("        ", "CMEQ", "        ", "        ")
                     break;
                 case "smaiorig":
-                    codeGenerator.generate("        ", "CMAQ", item.lexema, "        ")
+                    codeGenerator.generate("        ", "CMAQ", "        ", "        ")
                     break;
                 
                 default:

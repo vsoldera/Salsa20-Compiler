@@ -128,7 +128,6 @@ class PosFixed: Token{
                     }
                     i+=1
                 }while(i < 2)
-
                     _stack.push(token_struct(lexema: "B", simbolo: "sverdadeiro"))
                 }
             }
