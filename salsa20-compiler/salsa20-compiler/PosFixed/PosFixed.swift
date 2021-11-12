@@ -97,6 +97,7 @@ class PosFixed: Token{
 
     func analyseExpression(simbolTable: SimbolTable) throws {
         var _stack = Stack<token_struct>()
+        print("entrou 1: ")
 
         for item in self.expression {
             if(item.simbolo == "sidentificador" || item.simbolo == "snumero" || item.simbolo == "sverdadeiro" || item.simbolo == "sfalso") {
@@ -106,7 +107,7 @@ class PosFixed: Token{
                 var i = 0
                 repeat {
                     var var1 = _stack.pop()
-                    if(var1?.simbolo != "snumero" && simbolTable.findLexemaReturnType(lexema: var1?.lexema ?? "") ?? "" != "sbooleano" && simbolTable.findLexemaReturnType(lexema: var1?.lexema ?? "") ?? "" != "sinteiro") {
+                    if(var1?.simbolo != "snumero" && simbolTable.findLexemaReturnType(lexema: var1?.lexema ?? "") ?? "" != "sinteiro") {
                         print(_stack)
                         throw sintaticException(name: "LexicalException", message: "Expected to be integer", stack:LinkedList<token_struct>())
                     }

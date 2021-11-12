@@ -162,6 +162,7 @@ class SyntacticAnalyzer: Token {
 
                         }
                     } else {
+                        print("VALOR: ", value)
                         throw sintaticException(name: "SintaticException", message: "Esperava encontrar svirgula ou sdois pontos - analyseVariables", stack: linkedCharacters)
                     }
                 }else{
@@ -220,12 +221,13 @@ class SyntacticAnalyzer: Token {
                         //value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
                         throw sintaticException(name: "SintaticException", message: "Esperava encontrar ; - analyseCommands", stack: linkedCharacters)
                     }
-
                     //print("\(value)")
                 }
                 linkedCharacters.nextNode()
                 value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
             }else {
+                print("aoba")
+                print("VALOR: ", value)
                 throw sintaticException(name: "SintaticException", message: "Esperava encontrar inicio - analyseCommands", stack:linkedCharacters)
             }
     }
