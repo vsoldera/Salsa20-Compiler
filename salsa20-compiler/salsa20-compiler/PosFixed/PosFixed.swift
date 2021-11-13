@@ -10,7 +10,7 @@ import Foundation
 class PosFixed: Token{
 
     var expression : Array<token_struct> = []
-
+    var typeExpression: String = ""
     func posFixedConvertion(tokens: LinkedList<token_struct>){
         var _stack = Stack<token_struct>()
         var _auxStack = Stack<token_struct>()
@@ -91,6 +91,8 @@ class PosFixed: Token{
             value = _stack.pop()
         }
         //print(saida)
+
+
         self.expression = saida
 
      }
@@ -100,7 +102,7 @@ class PosFixed: Token{
         print("entrou 1: ")
 
         for item in self.expression {
-            if(item.simbolo == "sidentificador" || item.simbolo == "snumero" || item.simbolo == "sverdadeiro" || item.simbolo == "sfalso") {
+            if(item.simbolo == "sidentificador" || item.simbolo == "snumero" || item.simbolo == "sbooleano" ) {
                 _stack.push(item)
             }
             if(item.simbolo == "smais"  || item.simbolo == "smenos" || item.simbolo == "smult" || item.simbolo == "sdiv") {
@@ -129,9 +131,13 @@ class PosFixed: Token{
                     }
                     i+=1
                 }while(i < 2)
-                    _stack.push(token_struct(lexema: "B", simbolo: "sverdadeiro"))
+                    _stack.push(token_struct(lexema: "B", simbolo: "sbooleano"))
                 }
             }
+
+        //print(_stack)
+
+        self.typeExpression =  _stack.pop()?.simbolo ?? ""
     }
 
     func getPrecedence(simbolo: String) -> Int{

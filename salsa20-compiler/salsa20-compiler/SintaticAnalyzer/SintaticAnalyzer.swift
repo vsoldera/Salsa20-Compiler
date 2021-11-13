@@ -240,19 +240,7 @@ class SyntacticAnalyzer: Token {
         if value == "sidentificador" {
             //analisar atrib chprocedimento
             try analyseChProcedure(linkedCharacters: &linkedCharacters)
-            
-            let simbol = simbolTable.findLexemaReturnCompleteSymbol(lexema: token?.lexema ?? "")
-            
-            //Apenas leitura de variaveis inteiras
-            if(simbol != nil && simbol?.tipo != "sbooleano"){
-                if(simbol?.tipo == "sprocedimento"){
-                    codeGenerator.generate("        ", "CALL", simbol?.enderecoMemoria ?? "", "        ")
-                }else{
-                    codeGenerator.generate("        ", "STR", simbol?.enderecoMemoria ?? "", "        ")
-                }
 
-            }
-            
         } else if value == "sse" {
             //analisa sse
             try analyseIf(linkedCharacters: &linkedCharacters)
@@ -273,6 +261,7 @@ class SyntacticAnalyzer: Token {
     }
     
     func analyseChProcedure(linkedCharacters: inout LinkedList<token_struct>) throws {
+        let _value = linkedCharacters.first?.value ?? token_struct(lexema: "", simbolo: "")// para ser usado antes da atribuição
         linkedCharacters.nextNode()
         let value = linkedCharacters.first?.value.simbolo as? String ?? ""
         
@@ -280,22 +269,46 @@ class SyntacticAnalyzer: Token {
             //Analisa_atribuicao
             //TO_DO
             //PASSIVEL DE ERRO - LEMBRAR
-            
+
             linkedCharacters.nextNode(); //AQUI
 
             var listCopy : LinkedList<token_struct> = LinkedList<token_struct>()
+
+
             listCopy.setHead(el: linkedCharacters.first!)
 
             try analyseExpression(linkedCharacters: &linkedCharacters)
             
             //ESSA FUNCAO TAMBEM GERA O CODIGO DE MAQUINA
-            try customProcessExpression(linkedCharacters: listCopy, goTo: linkedCharacters.first?.index ?? 0)
-            
+            let typeExpression = try customProcessExpression(linkedCharacters: listCopy, goTo: linkedCharacters.first?.index ?? 0)
+
+            let simbol = simbolTable.findLexemaReturnCompleteSymbol(lexema: _value.lexema ?? "")
+
+            if(simbol != nil ){
+                if(simbol?.tipo == "func sinteiro" || simbol?.tipo == "func sbooleano"){
+                    codeGenerator.generate("        ", "STR", "0", "        ")
+                }else{
+
+                    if(typeExpression == _value.simbolo || (typeExpression == "snumero" && simbol?.tipo == "sinteiro")) {
+                        codeGenerator.generate("        ", "STR", "\(simbol?.enderecoMemoria ?? "")", "        ")
+                    }else{
+                        throw sintaticException(name: "SintaticException", message: "Atribuição incorreta de tipo para variavel \(_value.lexema)", stack:linkedCharacters)
+                    }
+                }
+            }
+
             //analisa_expressao
         }
-         else{
+         else {
             //Chamada_procedimento
             //TO_DO
+             let simbol = simbolTable.findLexemaReturnCompleteSymbol(lexema: _value.lexema ?? "")
+
+             if(simbol != nil ){
+                 if(simbol?.tipo == "sprocedimento"){
+                     codeGenerator.generate("        ", "CALL", simbol?.enderecoMemoria ?? "", "        ")
+                 }
+             }
         }
     }
     
@@ -312,8 +325,14 @@ class SyntacticAnalyzer: Token {
                 let rawValue2 = linkedCharacters.first?.value ?? token_struct(lexema: "", simbolo: "")
                 if(simbolTable.itExists(lexema: rawValue2.lexema)){
                     let simbolo = simbolTable.findLexemaReturnCompleteSymbol(lexema: rawValue2.lexema)
-                    codeGenerator.generate("        ", "STR", "\(simbolo?.enderecoMemoria ?? "")", "        ")
-                    
+
+                    //Apenas leitura de tipos inteiros
+                    if(simbolo?.tipo == "sinteiro"){
+                        codeGenerator.generate("        ", "STR", "\(simbolo?.enderecoMemoria ?? "")", "        ")
+                    }else if(simbolo?.tipo == "sbooleano"){
+                        throw sintaticException(name: "SintaticException", message: "Leitura de variáveis booleanas não permitida - AnalyseRead", stack:linkedCharacters)
+                    }
+
                     linkedCharacters.nextNode()
                     let value3 = linkedCharacters.first?.value.simbolo as? String ?? ""
                     
@@ -349,9 +368,10 @@ class SyntacticAnalyzer: Token {
                 if(simbolTable.itExists(procedimento: rawValue2.lexema)){
 
                     var simbol = simbolTable.findLexemaReturnCompleteSymbol(lexema: rawValue2.lexema)
-
-                    codeGenerator.generate("        ", "LDV", "\(simbol?.enderecoMemoria ?? "")", "        ")
-                    codeGenerator.generate("        ", "PRN", "        ", "        ")
+                    if(simbol?.tipo == "sinteiro"){
+                        codeGenerator.generate("        ", "LDV", "\(simbol?.enderecoMemoria ?? "")", "        ")
+                        codeGenerator.generate("        ", "PRN", "        ", "        ")
+                    }
 
                     linkedCharacters.nextNode()
                     let value3 = linkedCharacters.first?.value.simbolo as? String ?? ""
@@ -444,6 +464,7 @@ class SyntacticAnalyzer: Token {
 
             }else{
                 codeGenerator.generate("\(auxRot)       ", "NULL", "        ", "        ")
+                self.rotule+=1
             }
 
         } else {
@@ -613,7 +634,7 @@ class SyntacticAnalyzer: Token {
     }
 
     //if u are here after this cold night (30/10/2021) u should definitely remove this shit :)
-    func customProcessExpression(linkedCharacters: LinkedList<token_struct>, goTo: Int) throws{
+    func customProcessExpression(linkedCharacters: LinkedList<token_struct>, goTo: Int) throws -> String{
 
         var list : Array<token_struct> = []
         var listCopy : LinkedList<token_struct> = LinkedList<token_struct>()
@@ -723,6 +744,8 @@ class SyntacticAnalyzer: Token {
                 }
             
         }
+
+        return _posFixed.typeExpression
 
 
     }
