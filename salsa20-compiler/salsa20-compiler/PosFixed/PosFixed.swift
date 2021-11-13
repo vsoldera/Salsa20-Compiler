@@ -103,6 +103,13 @@ class PosFixed: Token{
 
         for item in self.expression {
             if(item.simbolo == "sidentificador" || item.simbolo == "snumero" || item.simbolo == "sbooleano" ) {
+                
+                if(item.simbolo == "sidentificador" && simbolTable.findLexemaReturnType(lexema: item.lexema ?? "") ?? "" == "sbooleano") {
+                    _stack.push(token_struct(lexema: "B", simbolo: "sbooleano"))
+                }
+                if(item.simbolo == "sidentificador" && simbolTable.findLexemaReturnType(lexema: item.lexema ?? "") ?? "" == "sinteiro") {
+                    _stack.push(token_struct(lexema: "I", simbolo: "snumero"))
+                }
                 _stack.push(item)
             }
             if(item.simbolo == "smais"  || item.simbolo == "smenos" || item.simbolo == "smult" || item.simbolo == "sdiv") {
@@ -135,7 +142,7 @@ class PosFixed: Token{
                 }
             }
 
-        //print(_stack)
+        print(_stack)
 
         self.typeExpression =  _stack.pop()?.simbolo ?? ""
     }
