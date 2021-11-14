@@ -292,6 +292,7 @@ class SyntacticAnalyzer: Token {
                     if(typeExpression == simbol?.tipo || (typeExpression == "snumero" && simbol?.tipo == "sinteiro")) {
                         codeGenerator.generate("        ", "STR", "\(simbol?.enderecoMemoria ?? "")", "        ")
                     }else{
+                        print("AQUI: ", typeExpression, (typeExpression) ,simbol?.tipo)
                         throw sintaticException(name: "SintaticException", message: "Atribuição incorreta de tipo para variavel \(_value.lexema)", stack:linkedCharacters)
                     }
                 }

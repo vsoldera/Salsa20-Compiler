@@ -102,12 +102,14 @@ class PosFixed: Token{
         print("entrou 1: ", self.expression )
 
         for item in self.expression {
+            var symbol = item.simbolo
+            
             if(item.simbolo == "sidentificador" || item.simbolo == "snumero" || item.simbolo == "sverdadeiro" || item.simbolo == "sfalso" ) {
-                
-                if(item.simbolo == "sidentificador" && (simbolTable.findLexemaReturnType(lexema: item.lexema ?? "") ?? "" == "sbooleano" || simbolTable.findLexemaReturnType(lexema: item.lexema ?? "") ?? "" == "func sbooleano")) {
-                    _stack.push(token_struct(lexema:  item.lexema, simbolo: "sbooleano"))
+    
+                if(item.simbolo == "sidentificador" && ((simbolTable.findLexemaReturnType(lexema: item.lexema ?? "") ?? "" == "sbooleano" || simbolTable.findLexemaReturnType(lexema: item.lexema ?? "") ?? "" == "func sbooleano"))) {
+                    _stack.push(token_struct(lexema: item.lexema, simbolo: "sbooleano"))
                 } else
-                if(item.simbolo == "sidentificador" && (simbolTable.findLexemaReturnType(lexema: item.lexema ?? "") ?? "" == "sinteiro" || simbolTable.findLexemaReturnType(lexema: item.lexema ?? "") ?? "" == "func sinteiro")) {
+                if(item.simbolo == "sidentificador" && ((simbolTable.findLexemaReturnType(lexema: item.lexema ?? "") ?? "" == "sinteiro" || simbolTable.findLexemaReturnType(lexema: item.lexema ?? "") ?? "" == "func sinteiro"))) {
                     _stack.push(token_struct(lexema: item.lexema, simbolo: "snumero"))
                 }else if(item.simbolo == "sverdadeiro" || item.simbolo == "sfalso"){
                     _stack.push(token_struct(lexema: item.lexema, simbolo: "sbooleano"))
@@ -153,7 +155,12 @@ class PosFixed: Token{
                         if (var1?.simbolo != "snumero" && var1?.simbolo != "sbooleano") {
                             throw sintaticException(name: "LexicalException", message: "Hmm... Someone is doing something nasty", stack:LinkedList<token_struct>())
                         }
-                    }else if (var1?.simbolo != "snumero" && simbolTable.findLexemaReturnType(lexema: var1?.lexema ?? "") ?? "" != "sinteiro") {
+                        if (var1?.simbolo == "snumero" && _stack.peek()?.simbolo == "sbooleano") {
+                            //print("AOBA: ", simbolTable.findLexemaReturnType(lexema: var1?.lexema ?? "") )
+                            throw sintaticException(name: "LexicalException", message: "Hmm... Someone is doing something nasty - the second", stack:LinkedList<token_struct>())
+                        }
+                    }else
+                    if (var1?.simbolo != "snumero" && simbolTable.findLexemaReturnType(lexema: var1?.lexema ?? "") ?? "" != "sinteiro") {
                         throw sintaticException(name: "LexicalException", message: "Expected to be comparator", stack:LinkedList<token_struct>())
                     }
                     i+=1
