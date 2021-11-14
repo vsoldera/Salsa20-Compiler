@@ -106,11 +106,12 @@ class PosFixed: Token{
                 
                 if(item.simbolo == "sidentificador" && simbolTable.findLexemaReturnType(lexema: item.lexema ?? "") ?? "" == "sbooleano") {
                     _stack.push(token_struct(lexema: "B", simbolo: "sbooleano"))
-                }
+                } else
                 if(item.simbolo == "sidentificador" && simbolTable.findLexemaReturnType(lexema: item.lexema ?? "") ?? "" == "sinteiro") {
                     _stack.push(token_struct(lexema: "I", simbolo: "snumero"))
+                } else {
+                    _stack.push(item)
                 }
-                _stack.push(item)
             }
             if(item.simbolo == "smais"  || item.simbolo == "smenos" || item.simbolo == "smult" || item.simbolo == "sdiv") {
                 var i = 0
