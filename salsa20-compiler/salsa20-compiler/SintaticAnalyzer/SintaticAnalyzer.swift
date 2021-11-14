@@ -289,7 +289,7 @@ class SyntacticAnalyzer: Token {
                     codeGenerator.generate("        ", "STR", "0", "        ")
                 }else{
 
-                    if(typeExpression == _value.simbolo || (typeExpression == "snumero" && simbol?.tipo == "sinteiro")) {
+                    if(typeExpression == simbol?.tipo || (typeExpression == "snumero" && simbol?.tipo == "sinteiro")) {
                         codeGenerator.generate("        ", "STR", "\(simbol?.enderecoMemoria ?? "")", "        ")
                     }else{
                         throw sintaticException(name: "SintaticException", message: "Atribuição incorreta de tipo para variavel \(_value.lexema)", stack:linkedCharacters)
@@ -670,7 +670,10 @@ class SyntacticAnalyzer: Token {
                     }else{
                         listFinal.append(token_struct(lexema:list[i].lexema, simbolo: list[i].simbolo))
                     }
-                }else{
+                }/*else if(list[i].simbolo == "sverdadeiro" || list[i].simbolo == "sfalso"){
+                    listFinal.append(token_struct(lexema:list[i].lexema, simbolo: "sbooleano"))
+                }*/
+                else{
                     listFinal.append(token_struct(lexema:list[i].lexema, simbolo: list[i].simbolo))
                 }
             }
@@ -738,6 +741,15 @@ class SyntacticAnalyzer: Token {
                 case "smaiorig":
                     codeGenerator.generate("        ", "CMAQ", "        ", "        ")
                     break;
+                case "sig":
+                    codeGenerator.generate("        ", "CEQ", "        ", "        ")
+                break;
+                case "sverdadeiro":
+                    codeGenerator.generate("        ", "LDC", "1", "        ")
+                break;
+                case "sfalso":
+                    codeGenerator.generate("        ", "LDC", "0", "        ")
+                break;
                 
                 default:
                     codeGenerator.generate("        ", "NAO ACHOU", item.lexema, "        ")
@@ -820,7 +832,7 @@ class SyntacticAnalyzer: Token {
                 throw sintaticException(name: "SintaticException", message: "Esperava encontrar um fecha parenteses - analyseFactor", stack:linkedCharacters)
             }
     
-        }else if value?.lexema == "sverdadeiro" || value?.lexema == "sfalso" {
+        }else if value?.simbolo == "sverdadeiro" || value?.simbolo == "sfalso" {
             linkedCharacters.nextNode()
             value = linkedCharacters.first?.value
         } else {

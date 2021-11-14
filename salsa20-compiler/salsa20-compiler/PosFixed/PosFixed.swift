@@ -39,7 +39,7 @@ class PosFixed: Token{
             
             var i = 0
            
-            if(simbolo == "snumero" || simbolo == "sidentificador"){
+            if(simbolo == "snumero" || simbolo == "sidentificador" || simbolo == "sverdadeiro" || simbolo == "sfalso"){
                 saida.append(token)
                                 
             }else if(simbolo == "sabre_parenteses"){
@@ -99,21 +99,23 @@ class PosFixed: Token{
 
     func analyseExpression(simbolTable: SimbolTable) throws {
         var _stack = Stack<token_struct>()
-        print("entrou 1: ")
+        print("entrou 1: ", self.expression )
 
         for item in self.expression {
-            if(item.simbolo == "sidentificador" || item.simbolo == "snumero" || item.simbolo == "sbooleano" ) {
+            if(item.simbolo == "sidentificador" || item.simbolo == "snumero" || item.simbolo == "sverdadeiro" || item.simbolo == "sfalso" ) {
                 
-                if(item.simbolo == "sidentificador" && simbolTable.findLexemaReturnType(lexema: item.lexema ?? "") ?? "" == "sbooleano") {
-                    _stack.push(token_struct(lexema: "B", simbolo: "sbooleano"))
+                if(item.simbolo == "sidentificador" && (simbolTable.findLexemaReturnType(lexema: item.lexema ?? "") ?? "" == "sbooleano" || simbolTable.findLexemaReturnType(lexema: item.lexema ?? "") ?? "" == "func sbooleano")) {
+                    _stack.push(token_struct(lexema:  item.lexema, simbolo: "sbooleano"))
                 } else
-                if(item.simbolo == "sidentificador" && simbolTable.findLexemaReturnType(lexema: item.lexema ?? "") ?? "" == "sinteiro") {
-                    _stack.push(token_struct(lexema: "I", simbolo: "snumero"))
+                if(item.simbolo == "sidentificador" && (simbolTable.findLexemaReturnType(lexema: item.lexema ?? "") ?? "" == "sinteiro" || simbolTable.findLexemaReturnType(lexema: item.lexema ?? "") ?? "" == "func sinteiro")) {
+                    _stack.push(token_struct(lexema: item.lexema, simbolo: "snumero"))
+                }else if(item.simbolo == "sverdadeiro" || item.simbolo == "sfalso"){
+                    _stack.push(token_struct(lexema: item.lexema, simbolo: "sbooleano"))
                 } else {
                     _stack.push(item)
                 }
             }
-            if(item.simbolo == "smais"  || item.simbolo == "smenos" || item.simbolo == "smult" || item.simbolo == "sdiv") {
+            if(item.simbolo == "smais"  || item.simbolo == "smenos" || item.simbolo == "smult" || item.simbolo == "sdiv" ) {
                 var i = 0
                 repeat {
                     var var1 = _stack.pop()
@@ -124,7 +126,18 @@ class PosFixed: Token{
                     i+=1
                 } while (i < 2)
 
-                _stack.push(token_struct(lexema: "I", simbolo: "snumero"))
+                _stack.push(token_struct(lexema: item.lexema, simbolo: "snumero"))
+            }
+
+            if(item.simbolo == "su_identificador" ){
+
+                var var1 = _stack.pop()
+                if(var1?.simbolo != "snumero" && (simbolTable.findLexemaReturnType(lexema: var1?.lexema ?? "") ?? "" != "sinteiro" || simbolTable.findLexemaReturnType(lexema: var1?.lexema ?? "") ?? "" != "func sinteiro")) {
+                    print(_stack)
+                    throw sintaticException(name: "LexicalException", message: "O modificador `-`/`+`  so deve ser atribuido para variaveis inteiras", stack:LinkedList<token_struct>())
+                }
+
+                _stack.push(token_struct(lexema: item.lexema, simbolo: "snumero"))
             }
 
             if(item.simbolo == "smaior" || item.simbolo == "smenor"
@@ -132,18 +145,24 @@ class PosFixed: Token{
                     || item.simbolo == "smenor" || item.simbolo == "smenorig" || item.simbolo == "sdif") {
 
                 var i = 0
+
                 repeat {
                     var var1 = _stack.pop()
-                    if (var1?.simbolo != "snumero" && simbolTable.findLexemaReturnType(lexema: var1?.lexema ?? "") ?? "" != "sinteiro") {
+                    if(item.simbolo == "sig" || item.simbolo == "sdif"){
+                        //deve aceitar inteiros e booleanos
+                        if (var1?.simbolo != "snumero" && var1?.simbolo != "sbooleano") {
+                            throw sintaticException(name: "LexicalException", message: "Hmm... Someone is doing something nasty", stack:LinkedList<token_struct>())
+                        }
+                    }else if (var1?.simbolo != "snumero" && simbolTable.findLexemaReturnType(lexema: var1?.lexema ?? "") ?? "" != "sinteiro") {
                         throw sintaticException(name: "LexicalException", message: "Expected to be comparator", stack:LinkedList<token_struct>())
                     }
                     i+=1
                 }while(i < 2)
-                    _stack.push(token_struct(lexema: "B", simbolo: "sbooleano"))
+                    _stack.push(token_struct(lexema: item.lexema, simbolo: "sbooleano"))
                 }
             }
 
-        print(_stack)
+        //print(_stack)
 
         self.typeExpression =  _stack.pop()?.simbolo ?? ""
     }
@@ -152,6 +171,7 @@ class PosFixed: Token{
        switch simbolo{
             case "smaior": return 0
             case "smaiorig" : return 0
+            case "sig" : return 0
             case "smenor" : return 0
             case "smenorig" : return 0
             case "sdif" : return 0
@@ -170,7 +190,7 @@ class PosFixed: Token{
     
     func isOperator(simbolo: String) -> Bool{
                 
-        if( simbolo == "su_identificador" || simbolo == "smaior" || simbolo == "smenor" || simbolo == "smult" || simbolo == "smais" || simbolo == "smaiorig" || simbolo == "smenos" || simbolo == "smenorig" || simbolo == "sdif" || simbolo == "sdiv" || simbolo == "se" || simbolo == "snao" || simbolo == "sou"){
+        if(simbolo == "sig" || simbolo == "su_identificador" || simbolo == "smaior" || simbolo == "smenor" || simbolo == "smult" || simbolo == "smais" || simbolo == "smaiorig" || simbolo == "smenos" || simbolo == "smenorig" || simbolo == "sdif" || simbolo == "sdiv" || simbolo == "se" || simbolo == "snao" || simbolo == "sou"){
             return true
         }
         
