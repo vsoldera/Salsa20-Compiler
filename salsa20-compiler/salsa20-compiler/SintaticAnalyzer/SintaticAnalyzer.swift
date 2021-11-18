@@ -192,6 +192,7 @@ class SyntacticAnalyzer: Token {
     }
     
     //Olhar essa funcao
+    
     func analyseCommands(linkedCharacters: inout LinkedList<token_struct>) throws {
         //linkedCharacters.nextNode()
         
@@ -306,9 +307,11 @@ class SyntacticAnalyzer: Token {
              let simbol = simbolTable.findLexemaReturnCompleteSymbol(lexema: _value.lexema ?? "")
 
              if(simbol != nil ){
-                 if(simbol?.tipo == "sprocedimento"){
+                 if(simbol?.tipo == "sprocedimento" || simbol?.tipo == "func sinteiro" || simbol?.tipo == "func sbooleano"){
                      codeGenerator.generate("        ", "CALL", simbol?.enderecoMemoria ?? "", "        ")
                  }
+             }else{
+                 throw sintaticException(name: "SintaticException", message: "Identificador não encontrado - AnalyseChProcedure", stack:linkedCharacters)
              }
         }
     }
@@ -804,7 +807,7 @@ class SyntacticAnalyzer: Token {
 
             let ret = simbolTable.find(lexema: value?.lexema ?? "", nivel: "")
             if(ret != nil){
-                if(ret?.tipo == "func sinteiro" || ret?.tipo == "func sbooleano"){
+                if(ret?.tipo == "func sinteiro" || ret?.tipo == "func sbooleano" ){
                     //analisa chamada de funcao
                     linkedCharacters.nextNode()
                     value = linkedCharacters.first?.value

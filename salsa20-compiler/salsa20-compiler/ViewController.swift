@@ -53,6 +53,7 @@ class ViewController: NSViewController {
             
             
         }catch{
+            errorTextView.string = "\(error)"
             print(error)
         }
         //DESNECESSARIO, LUIZ-OTARIO - 30/10/2021 - bjunda ?)
