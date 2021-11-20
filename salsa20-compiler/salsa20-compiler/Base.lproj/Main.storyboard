@@ -718,7 +718,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fvV-fl-0I8">
+                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fvV-fl-0I8">
                                 <rect key="frame" x="18" y="130" width="69" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Lin 1, Col 1" id="Te6-Wl-amD">
                                     <font key="font" metaFont="system"/>

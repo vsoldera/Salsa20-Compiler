@@ -22,30 +22,32 @@ class LexicalAnalyzer: Token {
     let linkedCharacters = LinkedList<token_struct>()
     let fileManager = FileManager()
     var fileContent: Array<String>
+    var syntacticErrorMessage: String?
+
 
     override init(){
         fileContent = []
     }
 
-    func setFileContent(content: String){
+    func setFileContent(content: String) -> [String]{
         let aux = content.map({String($0)})
-        fileContent = aux
+        return aux
     }
 
-    func openFile() {
-        
-        let path = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask)[0].appendingPathComponent("sintatico/gera1.txt")
-
-        print(path)
-
-        do {
-            let todos = try String(contentsOf: path)
-            setFileContent(content: todos)
-
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
+//    func openFile() {
+//
+//        let path = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask)[0].appendingPathComponent("sintatico/gera1.txt")
+//
+//        print(path)
+//
+//        do {
+//            let todos = try String(contentsOf: path)
+//            setFileContent(content: todos)
+//
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+//    }
 
     func treatCommentaryRemoveSpaces(fileContent: Array<String>, totalLength: Int) throws -> Int{
         var i = 0
@@ -172,7 +174,7 @@ class LexicalAnalyzer: Token {
                 var sumLastOnes = a?.sumLastOnes ?? 0
                 var column = generalPointer - sumLastOnes
                 print("Lexical Error found on line: ", line + 1, "and column: ", column + 1)
-                
+                syntacticErrorMessage = "Lexical Error Found line : \(line + 1) and column: \(column + 1)"
                 throw sintaticException(name: "LexicalException", message: "Lexical Error Found line : \(line + 1) and column: \(column + 1) - getToken", stack:linkedCharacters)
                 return -1
             }
@@ -222,19 +224,19 @@ class LexicalAnalyzer: Token {
 
 
     //Algoritmo Analisador Lexical
-    func analyse() throws -> LinkedList<token_struct>{
-        openFile()
+    func analyse(fileContent1: Array<String>) throws -> LinkedList<token_struct>{
+//        openFile()
             
         //print(fileContent)
         
-        if(fileContent.count <= 1){
+        if(fileContent1.count <= 1){
             print("Não há dados no arquivo - Arquivo vazio!")
             return linkedCharacters
         }
 
-        let TOTAL_LENGTH = fileContent.count
+        let TOTAL_LENGTH = fileContent1.count
     
-        try treatCommentaryRemoveSpaces(fileContent: fileContent, totalLength: TOTAL_LENGTH)
+        try treatCommentaryRemoveSpaces(fileContent: fileContent1, totalLength: TOTAL_LENGTH)
     
         //print(linkedCharacters)
 

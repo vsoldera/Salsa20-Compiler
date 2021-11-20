@@ -24,6 +24,10 @@
 		CC70D941A6681D1E9EABFAB3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC70DC5A0D7FA108E0973CE2 /* Assets.xcassets */; };
 		CC70DBFC8C61193D49CC2744 /* CodeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70DAE7C99F688E7A4CD88B /* CodeGenerator.swift */; };
 		CC70DE2F3644967565DB0ED5 /* Tokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC70D2B565C67E48035EAD8F /* Tokens.swift */; };
+		F94226A02749A541002CB91C /* teste_1.txt in Resources */ = {isa = PBXBuildFile; fileRef = F942269F2749A541002CB91C /* teste_1.txt */; };
+		F94226A42749A5CA002CB91C /* sint3.txt in Resources */ = {isa = PBXBuildFile; fileRef = F94226A12749A5CA002CB91C /* sint3.txt */; };
+		F94226A52749A5CA002CB91C /* sint1.txt in Resources */ = {isa = PBXBuildFile; fileRef = F94226A22749A5CA002CB91C /* sint1.txt */; };
+		F94226A62749A5CA002CB91C /* sint2.txt in Resources */ = {isa = PBXBuildFile; fileRef = F94226A32749A5CA002CB91C /* sint2.txt */; };
 		F9494210272C6512002E767B /* test1.txt in Resources */ = {isa = PBXBuildFile; fileRef = F949420F272C6512002E767B /* test1.txt */; };
 		F9494212272C77CA002E767B /* test2.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9494211272C77CA002E767B /* test2.txt */; };
 /* End PBXBuildFile section */
@@ -70,6 +74,10 @@
 		CC70DDD63460A2DB302F81AA /* salsa20-compilerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "salsa20-compilerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC70DE40A616C5AF7F5A751B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		CC70DED6C6FC77E320A0916A /* salsa20-compilerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "salsa20-compilerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F942269F2749A541002CB91C /* teste_1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teste_1.txt; sourceTree = "<group>"; };
+		F94226A12749A5CA002CB91C /* sint3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sint3.txt; sourceTree = "<group>"; };
+		F94226A22749A5CA002CB91C /* sint1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sint1.txt; sourceTree = "<group>"; };
+		F94226A32749A5CA002CB91C /* sint2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sint2.txt; sourceTree = "<group>"; };
 		F949420F272C6512002E767B /* test1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test1.txt; sourceTree = "<group>"; };
 		F9494211272C77CA002E767B /* test2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test2.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -229,6 +237,10 @@
 		F949420E272C64A2002E767B /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				F94226A22749A5CA002CB91C /* sint1.txt */,
+				F94226A32749A5CA002CB91C /* sint2.txt */,
+				F94226A12749A5CA002CB91C /* sint3.txt */,
+				F942269F2749A541002CB91C /* teste_1.txt */,
 				F949420F272C6512002E767B /* test1.txt */,
 				F9494211272C77CA002E767B /* test2.txt */,
 			);
@@ -325,9 +337,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9494210272C6512002E767B /* test1.txt in Resources */,
+				F94226A62749A5CA002CB91C /* sint2.txt in Resources */,
 				CC70D941A6681D1E9EABFAB3 /* Assets.xcassets in Resources */,
+				F94226A02749A541002CB91C /* teste_1.txt in Resources */,
 				CC70D4ED20CC5608D481A6AB /* Main.storyboard in Resources */,
+				F94226A42749A5CA002CB91C /* sint3.txt in Resources */,
 				F9494212272C77CA002E767B /* test2.txt in Resources */,
+				F94226A52749A5CA002CB91C /* sint1.txt in Resources */,
 				674577A263078AA9C6961B76 /* teste.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -21,6 +21,7 @@ class SyntacticAnalyzer: Token {
 
 
     init(linkedCharacters: LinkedList<token_struct>) {
+        linkedCharactersGlobal.removeAll()
         self.linkedCharactersGlobal = linkedCharacters
     }
     
