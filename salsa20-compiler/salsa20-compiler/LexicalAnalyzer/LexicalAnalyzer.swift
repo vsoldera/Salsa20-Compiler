@@ -75,7 +75,7 @@ class LexicalAnalyzer: Token {
                             a = lineCounter(line: lines, charactersInLine: i+1, sumLastOnes: i+1)
                         }else{
                             let b = arrayLines.last
-                            var sum = b?.sumLastOnes ?? 0
+                            let sum = b?.sumLastOnes ?? 0
                             a = lineCounter(line: lines, charactersInLine: (i+1) - sum , sumLastOnes: i+1)
                         }
                         arrayLines.append(a)
@@ -169,13 +169,13 @@ class LexicalAnalyzer: Token {
                 pointer+=1
             } else {
                 //print(arrayLines)
-                var a = arrayLines.last
-                var line = a?.line ?? 0
-                var sumLastOnes = a?.sumLastOnes ?? 0
-                var column = generalPointer - sumLastOnes
+                let a = arrayLines.last
+                let line = a?.line ?? 0
+                let sumLastOnes = a?.sumLastOnes ?? 0
+                let column = generalPointer - sumLastOnes
                 print("Lexical Error found on line: ", line + 1, "and column: ", column + 1)
                 syntacticErrorMessage = "Lexical Error Found line : \(line + 1) and column: \(column + 1)"
-                throw sintaticException(name: "LexicalException", message: "Lexical Error Found line : \(line + 1) and column: \(column + 1) - getToken", stack:linkedCharacters)
+                throw sintaticException(name: "Lexical Exception", message: "Error Found line : \(line + 1) and column: \(column + 1) - getToken", stack:linkedCharacters)
                 return -1
             }
 

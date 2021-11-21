@@ -27,9 +27,11 @@ class ViewController: NSViewController {
                 linkedCharacters = try lexical.analyse(fileContent1: fileContent)
                 let sintatic = SyntacticAnalyzer(linkedCharacters: linkedCharacters)
                 try sintatic.analyser()
+                errorTextView.string = "Code successfully exited with no errors"
             } catch {
-//                errorTextView.string = "\(error)"
-                errorTextView.string = "\(error)"
+                if let errorMessage = error as? sintaticException {
+                    errorTextView.string = "\(errorMessage.name): \(errorMessage.message)"
+                }
                 print(error)
             }
         }

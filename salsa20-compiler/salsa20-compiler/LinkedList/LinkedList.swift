@@ -22,8 +22,8 @@ public class LinkedList<T> {
     }
     
     public func nextNode(){
-        var actualNode = head
-        self.head = actualNode?.next as? Node<T> ?? nil
+        let actualNode = head
+        self.head = actualNode?.next ?? nil
     }
     
     public func append(_ el: T) {
@@ -75,7 +75,7 @@ public class LinkedList<T> {
         node.previous = nil
         node.next = nil
 
-        return node.value as! T
+        return node.value 
     }
 }
 
