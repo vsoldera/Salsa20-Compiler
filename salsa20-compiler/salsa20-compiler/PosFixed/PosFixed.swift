@@ -155,10 +155,10 @@ class PosFixed: Token{
                         if (var1?.simbolo != "snumero" && var1?.simbolo != "sbooleano") {
                             throw sintaticException(name: "LexicalException", message: "Hmm... Someone is doing something nasty", stack:LinkedList<token_struct>())
                         }
-                        if (var1?.simbolo == "snumero" && _stack.peek()?.simbolo == "sbooleano") {
+                        /*if (var1?.simbolo == "snumero" && _stack.peek()?.simbolo == "sbooleano") {
                             //print("AOBA: ", simbolTable.findLexemaReturnType(lexema: var1?.lexema ?? "") )
                             throw sintaticException(name: "LexicalException", message: "Hmm... Someone is doing something nasty - the second", stack:LinkedList<token_struct>())
-                        }
+                        }*/
                     }else
                     if (var1?.simbolo != "snumero" && simbolTable.findLexemaReturnType(lexema: var1?.lexema ?? "") ?? "" != "sinteiro") {
                         throw sintaticException(name: "LexicalException", message: "Expected to be comparator", stack:LinkedList<token_struct>())

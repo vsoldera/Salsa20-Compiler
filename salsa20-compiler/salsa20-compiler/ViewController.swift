@@ -21,7 +21,9 @@ class ViewController: NSViewController {
         errorTextView.string = ""
         lexical.fileContent = []
         if let documentString = retrieveStringFromFile(fileName: fileNameTextView.stringValue) {
-            let fileContent = lexical.setFileContent(content: documentString)
+            let fileContent = lexical.setFileContent(content: mainTextView.string)
+            print(fileContent)
+            //let fileContent = mainTextView.string
             lexical.linkedCharacters.removeAll()
             do {
                 linkedCharacters = try lexical.analyse(fileContent1: fileContent)
