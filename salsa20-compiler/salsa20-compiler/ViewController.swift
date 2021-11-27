@@ -14,10 +14,26 @@ class ViewController: NSViewController {
     @IBOutlet var mainTextView: NSTextView!
     @IBOutlet var errorTextView: NSTextView!
 
+    var lexical = LexicalAnalyzer()
+    var linkedCharacters = LinkedList<token_struct>()
+
     @IBAction func compileButtonPressed(_ sender: Any) {
-        if let fileContent = retrieveStringFromFile(fileName: fileNameTextView.stringValue) {
-            print(fileContent)
-            // Chamar lexical analyser passando fileContent
+        errorTextView.string = ""
+        lexical.fileContent = []
+        if let documentString = retrieveStringFromFile(fileName: fileNameTextView.stringValue) {
+            let fileContent = lexical.setFileContent(content: documentString)
+            lexical.linkedCharacters.removeAll()
+            do {
+                linkedCharacters = try lexical.analyse(fileContent1: fileContent)
+                let sintatic = SyntacticAnalyzer(linkedCharacters: linkedCharacters)
+                try sintatic.analyser()
+                errorTextView.string = "Code successfully exited with no errors"
+            } catch {
+                if let errorMessage = error as? sintaticException {
+                    errorTextView.string = "\(errorMessage.name): \(errorMessage.message)"
+                }
+                print(error)
+            }
         }
     }
 
@@ -26,7 +42,6 @@ class ViewController: NSViewController {
             mainTextView.string = fileContent
         }
     }
-    var linkedCharacters = LinkedList<token_struct>()
 
     override func viewDidLoad()  {
     super.viewDidLoad()
@@ -37,25 +52,25 @@ class ViewController: NSViewController {
         //return
         
        // return
-        do{
-            var lexical =  LexicalAnalyzer()
-            self.linkedCharacters = try lexical.analyse()
-        
-            
-            print(self.linkedCharacters)
-            var sintatic = SyntacticAnalyzer(linkedCharacters: self.linkedCharacters)
-
-
-            //print(sintatic.simbolTable)
-
-            try sintatic.analyser()
-            print("foi? parece que foi!")
-            
-            
-        }catch{
-            errorTextView.string = "\(error)"
-            print(error)
-        }
+//        do{
+//            var lexical =  LexicalAnalyzer()
+////            self.linkedCharacters = try lexical.analyse()
+//
+//
+//            print(self.linkedCharacters)
+//            var sintatic = SyntacticAnalyzer(linkedCharacters: self.linkedCharacters)
+//
+//
+//            //print(sintatic.simbolTable)
+//
+//            try sintatic.analyser()
+//            print("foi? parece que foi!")
+//
+//
+//        }catch{
+//            errorTextView.string = "\(error)"
+//            print(error)
+//        }
         //DESNECESSARIO, LUIZ-OTARIO - 30/10/2021 - bjunda ?)
         
         
