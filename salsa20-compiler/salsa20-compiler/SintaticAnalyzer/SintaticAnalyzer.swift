@@ -663,13 +663,18 @@ class SyntacticAnalyzer: Token {
 
         //marcacoes para -u
         for i in 0..<list.count{
-            if(i == 0 && list[i].simbolo == "smais"){
-                listFinal.append(token_struct(lexema:  "+u", simbolo: "su_identificador"))
+            if(i == 0 && (list[i].simbolo == "smais" || list[i].simbolo == "smenos" ) ){
+                if(list[i].simbolo == "smenos"){
+                    listFinal.append(token_struct(lexema:  "-u", simbolo: "su_identificador"))
+                }else if(list[i].simbolo == "smais"){
+                    listFinal.append(token_struct(lexema:  "+u", simbolo: "su_identificador"))
+                }
+                
             }else{
                 if(list[i].simbolo == "smenos"){
                     //listFinal.append(list[i])
 
-                    if((list[i+1].simbolo == "sidentificador" || list[i+1].simbolo == "snumero" ) ){
+                    if(list[i-1].simbolo == "sabre_parenteses" && (list[i+1].simbolo == "sidentificador" || list[i+1].simbolo == "snumero" ) ){
                         //tuptudurundawn
                         listFinal.append(token_struct(lexema:  "-u", simbolo: "su_identificador"))
                     }else{
