@@ -48,6 +48,7 @@ class ViewController: NSViewController {
     override func viewDidLoad()  {
         super.viewDidLoad()
         mainTextView.font = .systemFont(ofSize: 16)
+        errorTextView.font = .systemFont(ofSize: 13)
     }
 
     override var representedObject: Any? {
