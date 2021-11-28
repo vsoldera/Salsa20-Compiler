@@ -46,38 +46,8 @@ class ViewController: NSViewController {
     }
 
     override func viewDidLoad()  {
-    super.viewDidLoad()
-        
-        //let _posFixed = PosFixed()
-        
-       // _posFixed.posFixedConvertion()
-        //return
-        
-       // return
-//        do{
-//            var lexical =  LexicalAnalyzer()
-////            self.linkedCharacters = try lexical.analyse()
-//
-//
-//            print(self.linkedCharacters)
-//            var sintatic = SyntacticAnalyzer(linkedCharacters: self.linkedCharacters)
-//
-//
-//            //print(sintatic.simbolTable)
-//
-//            try sintatic.analyser()
-//            print("foi? parece que foi!")
-//
-//
-//        }catch{
-//            errorTextView.string = "\(error)"
-//            print(error)
-//        }
-        //DESNECESSARIO, LUIZ-OTARIO - 30/10/2021 - bjunda ?)
-        
-        
-        
-    // Do any additional setup after loading the view.
+        super.viewDidLoad()
+        mainTextView.font = .systemFont(ofSize: 16)
     }
 
     override var representedObject: Any? {
@@ -94,6 +64,3 @@ class ViewController: NSViewController {
         return string
     }
 }
-    
-    
-
