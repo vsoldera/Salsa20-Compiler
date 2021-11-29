@@ -30,6 +30,7 @@
 		F94226A62749A5CA002CB91C /* sint2.txt in Resources */ = {isa = PBXBuildFile; fileRef = F94226A32749A5CA002CB91C /* sint2.txt */; };
 		F9494210272C6512002E767B /* test1.txt in Resources */ = {isa = PBXBuildFile; fileRef = F949420F272C6512002E767B /* test1.txt */; };
 		F9494212272C77CA002E767B /* test2.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9494211272C77CA002E767B /* test2.txt */; };
+		F97152D7275441AA004F5E98 /* teste_6.txt in Resources */ = {isa = PBXBuildFile; fileRef = F97152D6275441AA004F5E98 /* teste_6.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		F94226A32749A5CA002CB91C /* sint2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sint2.txt; sourceTree = "<group>"; };
 		F949420F272C6512002E767B /* test1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test1.txt; sourceTree = "<group>"; };
 		F9494211272C77CA002E767B /* test2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test2.txt; sourceTree = "<group>"; };
+		F97152D6275441AA004F5E98 /* teste_6.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teste_6.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,6 +245,7 @@
 				F942269F2749A541002CB91C /* teste_1.txt */,
 				F949420F272C6512002E767B /* test1.txt */,
 				F9494211272C77CA002E767B /* test2.txt */,
+				F97152D6275441AA004F5E98 /* teste_6.txt */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				F9494212272C77CA002E767B /* test2.txt in Resources */,
 				F94226A52749A5CA002CB91C /* sint1.txt in Resources */,
 				674577A263078AA9C6961B76 /* teste.txt in Resources */,
+				F97152D7275441AA004F5E98 /* teste_6.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
