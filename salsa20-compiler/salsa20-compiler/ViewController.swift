@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class ViewController: NSViewController {
+class ViewController: NSViewController, NSTextViewDelegate {
     @IBOutlet weak var fileNameTextView: NSTextField!
     @IBOutlet weak var importButton: NSButton!
     @IBOutlet var mainTextView: NSTextView!
@@ -42,16 +42,13 @@ class ViewController: NSViewController {
     @IBAction func importButtonPressed(_ sender: Any) {
         if let fileContent = retrieveStringFromFile(fileName: fileNameTextView.stringValue) {
             mainTextView.string = fileContent
-            changeVariableColors()
-            changeTypeColors()
-            changeFunctionColors()
-            changeStartEndColors()
-            changeIfElseColors()
+            beautifyCode()
         }
     }
 
     override func viewDidLoad()  {
         super.viewDidLoad()
+        mainTextView.delegate = self
         let menloRegularFont = NSFont(name: "Menlo", size: 13)
         mainTextView.font = menloRegularFont
         errorTextView.font = .systemFont(ofSize: 13)
@@ -63,6 +60,12 @@ class ViewController: NSViewController {
         }
     }
 
+    func textDidChange(_ notification: Notification) {
+        DispatchQueue.main.async {
+            self.beautifyCode()
+        }
+    }
+
     func retrieveStringFromFile(fileName: String) -> String? {
         guard let path = Bundle.main.path(forResource: fileName, ofType: "txt") else {
             return nil
@@ -70,85 +73,56 @@ class ViewController: NSViewController {
         let string = try? String(contentsOfFile: path, encoding: .utf8)
         return string
     }
+
     //MARK: - Code beautifier
 
-    func changeVariableColors() {
-        let varColor = NSColor(red: 8/255, green: 126/255, blue: 139/255, alpha: 1)
-        let searchString = "var"
-        let formatedString = NSString(string: mainTextView.string)
-        var rangesArray = [NSRange]()
+    //Colors
+    let varColor = NSColor(red: 8/255, green: 126/255, blue: 139/255, alpha: 1)
+    let intBoolColor = NSColor(red: 125/255, green: 91/255, blue: 166/255, alpha: 1)
+    let funcProcColor = NSColor(red: 226/255, green: 109/255, blue: 90/255, alpha: 1)
+    let startEndColor = NSColor(red: 244/255, green: 211/255, blue: 94/255, alpha: 1)
+    let ifElseColor = NSColor(red: 197/255, green: 230/255, blue: 166/255, alpha: 1)
 
-        NSString(string: mainTextView.string).enumerateSubstrings(in: NSMakeRange(0, formatedString.length), options: .byWords) { substring, substringRange, _, _ in
-            if substring == searchString {
-                rangesArray.append(substringRange)
-            }
-        }
-        for range in rangesArray {
-            mainTextView.setTextColor(varColor, range: range)
-        }
-    }
-    func changeTypeColors() {
-        let typeColor = NSColor(red: 125/255, green: 91/255, blue: 166/255, alpha: 1)
-        let searchStrings = ["inteiro", "booleano"]
-        let formatedString = NSString(string: mainTextView.string)
-        var rangesArray = [NSRange]()
+    //Reserved Strings
+    let varString = "var"
+    let intBoolStrings = ["inteiro", "booleano"]
+    let funcProcStrings = ["funcao", "procedimento"]
+    let startEndString = ["inicio", "fim"]
+    let ifElseString = ["se", "entao", "senao"]
+    let searchStrings = ["var", "inteiro", "booleano", "funcao", "procedimento",
+                         "inicio", "fim", "se", "entao", "senao"]
 
-        NSString(string: mainTextView.string).enumerateSubstrings(in: NSMakeRange(0, formatedString.length), options: .byWords) { substring, substringRange, _, _ in
-            if searchStrings.contains(substring ?? "") {
-                rangesArray.append(substringRange)
-            }
-        }
-        for range in rangesArray {
-            mainTextView.setTextColor(typeColor, range: range)
-        }
+    //Struct
+    struct WordRange {
+        let variableName: String
+        let range: NSRange
     }
 
-    func changeFunctionColors() {
-        let functionColor = NSColor(red: 226/255, green: 109/255, blue: 90/255, alpha: 1)
-        let searchStrings = ["funcao", "procedimento"]
-        let formatedString = NSString(string: mainTextView.string)
-        var rangesArray = [NSRange]()
+    func beautifyCode() {
+        var allRanges = [WordRange]()
+        let formattedString = NSString(string: mainTextView.string)
 
-        NSString(string: mainTextView.string).enumerateSubstrings(in: NSMakeRange(0, formatedString.length), options: .byWords) { substring, substringRange, _, _ in
-            if searchStrings.contains(substring ?? "") {
-                rangesArray.append(substringRange)
+        NSString(string: mainTextView.string).enumerateSubstrings(in: NSMakeRange(0, formattedString.length), options: .byWords) { substring, substringRange, _, _ in
+            guard let substring = substring else {
+                return
+            }
+            if self.searchStrings.contains(substring) {
+                allRanges.append(WordRange(variableName: substring, range: substringRange))
             }
         }
-        for range in rangesArray {
-            mainTextView.setTextColor(functionColor, range: range)
-        }
-    }
 
-    func changeStartEndColors() {
-        let startEndColor = NSColor(red: 244/255, green: 211/255, blue: 94/255, alpha: 1)
-        let searchStrings = ["inicio", "fim"]
-        let formatedString = NSString(string: mainTextView.string)
-        var rangesArray = [NSRange]()
-
-        NSString(string: mainTextView.string).enumerateSubstrings(in: NSMakeRange(0, formatedString.length), options: .byWords) { substring, substringRange, _, _ in
-            if searchStrings.contains(substring ?? "") {
-                rangesArray.append(substringRange)
+        for range in allRanges {
+            if range.variableName == varString {
+                mainTextView.setTextColor(varColor, range: range.range)
+            } else if intBoolStrings.contains(range.variableName) {
+                mainTextView.setTextColor(intBoolColor, range: range.range)
+            } else if funcProcStrings.contains(range.variableName) {
+                mainTextView.setTextColor(funcProcColor, range: range.range)
+            } else if startEndString.contains(range.variableName) {
+                mainTextView.setTextColor(startEndColor, range: range.range)
+            } else if ifElseString.contains(range.variableName) {
+                mainTextView.setTextColor(ifElseColor, range: range.range)
             }
-        }
-        for range in rangesArray {
-            mainTextView.setTextColor(startEndColor, range: range)
-        }
-    }
-
-    func changeIfElseColors() {
-        let ifElseColor = NSColor(red: 202/255, green: 219/255, blue: 192/255, alpha: 1)
-        let ifElseColor2 = NSColor(red: 197/255, green: 230/255, blue: 166/255, alpha: 1)
-        let searchStrings = ["se", "entao", "senao"]
-        let formatedString = NSString(string: mainTextView.string)
-        var rangesArray = [NSRange]()
-
-        NSString(string: mainTextView.string).enumerateSubstrings(in: NSMakeRange(0, formatedString.length), options: .byWords) { substring, substringRange, _, _ in
-            if searchStrings.contains(substring ?? "") {
-                rangesArray.append(substringRange)
-            }
-        }
-        for range in rangesArray {
-            mainTextView.setTextColor(ifElseColor2, range: range)
         }
     }
 }
