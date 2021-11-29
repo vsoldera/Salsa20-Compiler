@@ -94,7 +94,7 @@ class ViewController: NSViewController {
         var rangesArray = [NSRange]()
 
         NSString(string: mainTextView.string).enumerateSubstrings(in: NSMakeRange(0, formatedString.length), options: .byWords) { substring, substringRange, _, _ in
-            if substring == searchStrings.first || substring == searchStrings.last{
+            if searchStrings.contains(substring ?? "") {
                 rangesArray.append(substringRange)
             }
         }
@@ -110,7 +110,7 @@ class ViewController: NSViewController {
         var rangesArray = [NSRange]()
 
         NSString(string: mainTextView.string).enumerateSubstrings(in: NSMakeRange(0, formatedString.length), options: .byWords) { substring, substringRange, _, _ in
-            if substring == searchStrings.first || substring == searchStrings.last{
+            if searchStrings.contains(substring ?? "") {
                 rangesArray.append(substringRange)
             }
         }
@@ -126,7 +126,7 @@ class ViewController: NSViewController {
         var rangesArray = [NSRange]()
 
         NSString(string: mainTextView.string).enumerateSubstrings(in: NSMakeRange(0, formatedString.length), options: .byWords) { substring, substringRange, _, _ in
-            if substring == searchStrings.first || substring == searchStrings.last{
+            if searchStrings.contains(substring ?? "") {
                 rangesArray.append(substringRange)
             }
         }
@@ -143,7 +143,7 @@ class ViewController: NSViewController {
         var rangesArray = [NSRange]()
 
         NSString(string: mainTextView.string).enumerateSubstrings(in: NSMakeRange(0, formatedString.length), options: .byWords) { substring, substringRange, _, _ in
-            if substring == searchStrings[0] || substring == searchStrings[1] || substring == searchStrings[2] {
+            if searchStrings.contains(substring ?? "") {
                 rangesArray.append(substringRange)
             }
         }
