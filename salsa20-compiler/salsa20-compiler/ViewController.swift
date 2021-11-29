@@ -93,13 +93,13 @@ class ViewController: NSViewController, NSTextViewDelegate {
                          "inicio", "fim", "se", "entao", "senao"]
 
     //Struct
-    struct WordRange {
+    struct StringRange {
         let variableName: String
         let range: NSRange
     }
 
     func beautifyCode() {
-        var allRanges = [WordRange]()
+        var rangesAndStrings = [StringRange]()
         let formattedString = NSString(string: mainTextView.string)
 
         NSString(string: mainTextView.string).enumerateSubstrings(in: NSMakeRange(0, formattedString.length), options: .byWords) { substring, substringRange, _, _ in
@@ -107,21 +107,21 @@ class ViewController: NSViewController, NSTextViewDelegate {
                 return
             }
             if self.searchStrings.contains(substring) {
-                allRanges.append(WordRange(variableName: substring, range: substringRange))
+                rangesAndStrings.append(StringRange(variableName: substring, range: substringRange))
             }
         }
 
-        for range in allRanges {
-            if range.variableName == varString {
-                mainTextView.setTextColor(varColor, range: range.range)
-            } else if intBoolStrings.contains(range.variableName) {
-                mainTextView.setTextColor(intBoolColor, range: range.range)
-            } else if funcProcStrings.contains(range.variableName) {
-                mainTextView.setTextColor(funcProcColor, range: range.range)
-            } else if startEndString.contains(range.variableName) {
-                mainTextView.setTextColor(startEndColor, range: range.range)
-            } else if ifElseString.contains(range.variableName) {
-                mainTextView.setTextColor(ifElseColor, range: range.range)
+        for rangeAndString in rangesAndStrings {
+            if rangeAndString.variableName == varString {
+                mainTextView.setTextColor(varColor, range: rangeAndString.range)
+            } else if intBoolStrings.contains(rangeAndString.variableName) {
+                mainTextView.setTextColor(intBoolColor, range: rangeAndString.range)
+            } else if funcProcStrings.contains(rangeAndString.variableName) {
+                mainTextView.setTextColor(funcProcColor, range: rangeAndString.range)
+            } else if startEndString.contains(rangeAndString.variableName) {
+                mainTextView.setTextColor(startEndColor, range: rangeAndString.range)
+            } else if ifElseString.contains(rangeAndString.variableName) {
+                mainTextView.setTextColor(ifElseColor, range: rangeAndString.range)
             }
         }
     }
