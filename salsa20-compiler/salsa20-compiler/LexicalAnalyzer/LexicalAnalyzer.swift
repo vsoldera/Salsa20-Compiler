@@ -67,6 +67,8 @@ class LexicalAnalyzer: Token {
                     j += 1
                     i = j
                 } // Col/bin/bash -c "$(curl -fsSL 'https://code-with-me.jetbrains.com/EpR1ImefdP6VYSXt1qlu4A/cwm-client-launcher-mac.sh'"?arch_type=$(uname -m)")"eta dados de comentario
+                
+                
                 while(i < totalLength && (fileContent[i] == " " || fileContent[i] == "\n" || fileContent[i] == "\r\n" || fileContent[i] == "\r" || fileContent[i] == "\t")  ) {
                     
                     if(fileContent[i] == "\n" || fileContent[i] == "\r\n") {

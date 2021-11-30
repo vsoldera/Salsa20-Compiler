@@ -33,6 +33,7 @@ class ViewController: NSViewController, NSTextViewDelegate {
             } catch {
                 if let errorMessage = error as? sintaticException {
                     errorTextView.string = "\(errorMessage.name): \(errorMessage.message)"
+                    errorTextView.string += "\n Error detected near to: \n \(errorMessage.stack)"
                 }
                 print(error)
             }
