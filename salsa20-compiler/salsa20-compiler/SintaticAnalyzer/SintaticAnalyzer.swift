@@ -443,39 +443,49 @@ class SyntacticAnalyzer: Token {
         //ja vai processar e gerar o codigo de maquina:
         try customProcessExpression(linkedCharacters: listCopy, goTo: linkedCharacters.first?.index ?? 0)
 
-        codeGenerator.generate("        ", "JMPF", "\(self.rotule)", "        ")
-        auxRot = self.rotule
 
 
         let value = linkedCharacters.first?.value.simbolo ?? ""
+        
+        var falseLabel = self.rotule
+        var finalLabel = self.rotule
+        
+        //auxRot = self.rotule
         
         if value == "sentao" {
             linkedCharacters.nextNode()
             let value2 = linkedCharacters.first?.value.simbolo ?? ""
             //analisa comando simples
+            codeGenerator.generate("        ", "JMPF", "\(falseLabel)", "        ")
+            self.rotule += 1
             try analyseSimpleCommands(linkedCharacters: &linkedCharacters)
             let value3 = linkedCharacters.first?.value.simbolo ?? ""
 
 
             if value3 == "ssenao" {
+                finalLabel = self.rotule
+                codeGenerator.generate("        ", "JMP", "\(finalLabel)", "        ")
+                
                 self.rotule+=1
-                codeGenerator.generate("        ", "JMP", "\(self.rotule)", "        ")
-                codeGenerator.generate("\(auxRot)       ", "NULL", "        ", "        ")
+                
+                codeGenerator.generate("\(falseLabel)       ", "NULL", "        ", "        ")
                 linkedCharacters.nextNode()
                 //analisa comando simples
                 try analyseSimpleCommands(linkedCharacters: &linkedCharacters)
 
-                codeGenerator.generate("\(self.rotule)       ", "NULL", "        ", "        ")
+                //codeGenerator.generate("\(self.rotule)       ", "NULL", "        ", "        ")
 
-            }else{
-                codeGenerator.generate("\(auxRot)       ", "NULL", "        ", "        ")
-                self.rotule+=1
             }
 
         } else {
             
             throw sintaticException(name: "Sintatic Exception", message: "Esperava 'entao' - analyseIf", stack:linkedCharacters)
         }
+        
+       
+        codeGenerator.generate("\(finalLabel)       ", "NULL", "        ", "        ")
+            //self.rotule+=1
+        
 
     }
     
