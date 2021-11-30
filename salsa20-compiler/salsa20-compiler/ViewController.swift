@@ -87,10 +87,10 @@ class ViewController: NSViewController, NSTextViewDelegate {
     let varString = "var"
     let intBoolStrings = ["inteiro", "booleano"]
     let funcProcStrings = ["funcao", "procedimento"]
-    let startEndString = ["inicio", "fim"]
-    let ifElseString = ["se", "entao", "senao"]
+    let startEndString = ["inicio", "fim", "faca", "programa"]
+    let ifElseString = ["se", "entao", "senao", "enquanto"]
     let searchStrings = ["var", "inteiro", "booleano", "funcao", "procedimento",
-                         "inicio", "fim", "se", "entao", "senao"]
+                         "inicio", "fim", "se", "entao", "senao", "enquanto", "faca", "programa"]
 
     //Struct
     struct StringRange {
