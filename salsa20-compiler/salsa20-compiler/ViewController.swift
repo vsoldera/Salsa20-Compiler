@@ -46,6 +46,12 @@ class ViewController: NSViewController, NSTextViewDelegate {
             beautifyCode()
         }
     }
+    @IBAction func textFieldAction(_ sender: Any) {
+        if let fileContent = retrieveStringFromFile(fileName: fileNameTextView.stringValue) {
+            mainTextView.string = fileContent
+            beautifyCode()
+        }
+    }
 
     override func viewDidLoad()  {
         super.viewDidLoad()
@@ -68,11 +74,16 @@ class ViewController: NSViewController, NSTextViewDelegate {
     }
 
     func retrieveStringFromFile(fileName: String) -> String? {
-        guard let path = Bundle.main.path(forResource: fileName, ofType: "txt") else {
-            return nil
+
+        let filepath = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask)[0].appendingPathComponent(fileName)
+        var contents : String
+        do{
+            contents = try String(contentsOf: filepath, encoding: .utf8)
+            return contents
+        } catch {
+            print(error)
         }
-        let string = try? String(contentsOfFile: path, encoding: .utf8)
-        return string
+        return nil
     }
 
     //MARK: - Code beautifier
