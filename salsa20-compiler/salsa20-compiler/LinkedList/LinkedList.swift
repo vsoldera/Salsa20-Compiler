@@ -1,5 +1,12 @@
 import Foundation
 
+/* 
+    #REF
+
+    Implementa a estrutura de dados lista ligada. 
+    Dentro de cada unidade da lista, há um nó que possui um token
+*/
+
 public class LinkedList<T> {
     fileprivate var head: Node<T>?
     private var tail: Node<T>?

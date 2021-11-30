@@ -7,6 +7,13 @@
 
 import Foundation
 
+/*
+#REF Implementa a estrutura e as opções  para geração de uma stack a partir de um
+array basico. 
+
+Em essencia essa struct/classe usa um array sempre removendo o ultimo dado disponivel.
+*/
+
 
 struct Stack<Element> {
 

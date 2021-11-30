@@ -11,27 +11,24 @@ class PosFixed: Token{
 
     var expression : Array<token_struct> = []
     var typeExpression: String = ""
+
+
+    /*
+        #REF
+
+         Método responsável por converter expressão in-fixa em pós-fixa
+
+         Material dado em aula: Conversão pós-fixa usando pilha
+         e http://www.vision.ime.usp.br/~pmiranda/mac122_2s14/aulas/aula13/aula13.html
+     */
+
     func posFixedConvertion(tokens: LinkedList<token_struct>){
         var _stack = Stack<token_struct>()
         var _auxStack = Stack<token_struct>()
         //let origin : String = "(x + 7 * 5  div (30+y) <= (x*a+2))e(z>0)"
         //let arrayOrigin = origin.map { s -> String in String(s) }
         var saida: Array<token_struct> = []
-        
-        //_stack.push(token_struct(lexema: "(", simbolo: "sabre_parenteses"))
 
-        /*let lexical = LexicalAnalyzer()
-        
-        do{
-            try lexical.treatCommentaryRemoveSpaces(fileContent: arrayOrigin, totalLength: arrayOrigin.count)
-            
-        }catch{
-            print(error)
-        }
-        
-        var tokens = lexical.linkedCharacters
-        //print(lexical.linkedCharacters)*/
-        
         while(!tokens.isEmpty){
             let token = tokens.first!.value;
             let simbolo = token.simbolo
@@ -57,32 +54,27 @@ class PosFixed: Token{
                 }
                 
             }else if(isOperator(simbolo: simbolo)){
-                
-                //var value = _stack.peek()
-                
-                while(true){
+
+                while(true) {
                     var value = _stack.peek() ?? token_struct(lexema: "", simbolo: "")
-                    
-                    if(value != nil || value.lexema != "(" ){
-                        if( getPrecedence(simbolo: value.simbolo) >= getPrecedence(simbolo: simbolo) ){
+
+                    if (value != nil || value.lexema != "(") {
+                        if (getPrecedence(simbolo: value.simbolo) >= getPrecedence(simbolo: simbolo)) {
                             value = _stack.pop() ?? token_struct(lexema: "", simbolo: "")
-                            if(value.lexema != "("){
+                            if (value.lexema != "(") {
                                 saida.append(value)
                             }
-                        }else{ //simbolo lido tem maior precedencia que o da pilha
+                        } else { //simbolo lido tem maior precedencia que o da pilha
                             _stack.push(token)
                             break
                         }
-                    }else{
+                    } else {
                         break
                     }
-                    
                 }
-                                
             }
             
             tokens.nextNode()
-            
         }
         
         var value = _stack.pop()
@@ -90,12 +82,21 @@ class PosFixed: Token{
             saida.append(value! as token_struct)
             value = _stack.pop()
         }
-        //print(saida)
-
 
         self.expression = saida
-
      }
+
+    /*
+        #REF
+
+        Recebe uma pilha que contém a expressão em formato pós-fixo e faz um pop pegando um operador lógico ou aritmético
+        e em seguida faz mais dois pops verificando se de fato há o operador esperado
+
+        Exemplo: Se na pilha há 2 2 +
+        Então faz-se o pop do operador lógico ou aritmético, no caso, "+"
+        Em seguida, faz-se o pop e verifica-se se o próximo valor na pilha é um inteiro (1, é inteiro)
+        Depois, novamente, faz-se o pop, verificando se o próximo valor na pilha é um inteiro (1, é inteiro)
+    */
 
     func analyseExpression(simbolTable: SimbolTable) throws {
         var _stack = Stack<token_struct>()
@@ -155,10 +156,7 @@ class PosFixed: Token{
                         if (var1?.simbolo != "snumero" && var1?.simbolo != "sbooleano") {
                             throw sintaticException(name: "LexicalException", message: "Hmm... Someone is doing something nasty", stack:LinkedList<token_struct>())
                         }
-                        /*if (var1?.simbolo == "snumero" && _stack.peek()?.simbolo == "sbooleano") {
-                            //print("AOBA: ", simbolTable.findLexemaReturnType(lexema: var1?.lexema ?? "") )
-                            throw sintaticException(name: "LexicalException", message: "Hmm... Someone is doing something nasty - the second", stack:LinkedList<token_struct>())
-                        }*/
+
                     }else
                     if (var1?.simbolo != "snumero" && simbolTable.findLexemaReturnType(lexema: var1?.lexema ?? "") ?? "" != "sinteiro") {
                         throw sintaticException(name: "LexicalException", message: "Expected to be comparator", stack:LinkedList<token_struct>())
@@ -168,8 +166,6 @@ class PosFixed: Token{
                     _stack.push(token_struct(lexema: item.lexema, simbolo: "sbooleano"))
                 }
             }
-
-        //print(_stack)
 
         self.typeExpression =  _stack.pop()?.simbolo ?? ""
     }
@@ -194,7 +190,8 @@ class PosFixed: Token{
             return -1
        }
     }
-    
+
+
     func isOperator(simbolo: String) -> Bool{
                 
         if(simbolo == "sig" || simbolo == "su_identificador" || simbolo == "smaior" || simbolo == "smenor" || simbolo == "smult" || simbolo == "smais" || simbolo == "smaiorig" || simbolo == "smenos" || simbolo == "smenorig" || simbolo == "sdif" || simbolo == "sdiv" || simbolo == "se" || simbolo == "snao" || simbolo == "sou"){
@@ -203,6 +200,5 @@ class PosFixed: Token{
         
         return false
     }
-    
-    
+
 }

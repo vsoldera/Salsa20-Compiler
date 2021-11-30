@@ -4,20 +4,20 @@
 
 import Foundation
 
-
+//#REF implementa uma estrutura base para erros gerados pelo analisador sintatico
 struct sintaticException: Error {
     var name: String
     var message: String
     var stack: LinkedList<token_struct>?
 }
 
-
+//#REF implementa funcoes base para elaboracao de uma analise sintatica e semantica da LPD
 class SyntacticAnalyzer: Token {
     var linkedCharactersGlobal = LinkedList<token_struct>()
-    var simbolTable : SimbolTable = SimbolTable()
-    var rotule : Int = 1;
+    var simbolTable : SimbolTable = SimbolTable() // Classe para geração da tabela de simbolos
+    var rotule : Int = 1 //rotulo para null
     var memoryAllocationPointer: Int = 0
-    var codeGenerator : CodeGenerator = CodeGenerator()
+    var codeGenerator : CodeGenerator = CodeGenerator() //Classe para geração de codigo de maquina
 
 
     init(linkedCharacters: LinkedList<token_struct>) {
@@ -26,12 +26,12 @@ class SyntacticAnalyzer: Token {
     }
     
     func analyser() throws {
-//        var i = 0
+        //var i = 0
+
         var linkedCharacters = self.linkedCharactersGlobal;
-        codeGenerator.initProgram()
+        codeGenerator.initProgram() //junta ao arquivo de saida, o incio de um programa da LPD
         memoryAllocationPointer += 1
 
-        //linkedCharacters.nextNode()
         
             let value = linkedCharacters.first?.value.simbolo ?? ""
             if (value == "sprograma") {
@@ -103,7 +103,6 @@ class SyntacticAnalyzer: Token {
     }
     
     func analyseEtVariables(linkedCharacters: inout LinkedList<token_struct>) throws {
-        //linkedCharacters.nextNode()
         var auxPointer = 0
         let value = linkedCharacters.first?.value.simbolo ?? ""
         
@@ -120,8 +119,6 @@ class SyntacticAnalyzer: Token {
                     try analyseVariables(linkedCharacters: &linkedCharacters)
 
                     codeGenerator.generate("        " , "ALLOC", "\(auxPointer)", "\(memoryAllocationPointer - auxPointer)")
-
-                    //memoryAllocationPointer = auxPointer + memoryAllocationPointer
 
                     value3 = linkedCharacters.first?.value.simbolo ?? ""
                     if(value3 == "sponto_virgula") {
@@ -192,7 +189,6 @@ class SyntacticAnalyzer: Token {
         linkedCharacters.nextNode()
     }
     
-    //Olhar essa funcao
     
     func analyseCommands(linkedCharacters: inout LinkedList<token_struct>) throws {
         //linkedCharacters.nextNode()
@@ -214,16 +210,13 @@ class SyntacticAnalyzer: Token {
                             try analyseSimpleCommands(linkedCharacters: &linkedCharacters)
                             value2 = linkedCharacters.first?.value.simbolo ?? ""
                         }
-                        // UM CAGAO DEIXOU UM THROW AQUI, DEIXOU A GENTE BUSCANDO ERRO DESDE - E FOI SO REMOVER QUE RESOLVEU
+                        // #BLAME UM CAGAO DEIXOU UM THROW AQUI, DEIXOU A GENTE BUSCANDO ERRO DESDE - E FOI SO REMOVER QUE RESOLVEU
                         // AS 19h do 10/11/2021 até 04:00h 11/11/2021 - EU NAO VOU DORMIR, NEM O SALSA
                         // É A CULPA É DE ALGUM F*** BLAME XU (PS.: NAO FICOU PRA AJUDA #TO_MARCANDO_E_TO_VENDO)
                     }else {
 
-                        //linkedCharacters.nextNode()
-                        //value2 = linkedCharacters.first?.value.simbolo as? String ?? ""
                         throw sintaticException(name: "Sintatic Exception", message: "Esperava encontrar ; - analyseCommands", stack: linkedCharacters)
                     }
-                    //print("\(value)")
                 }
                 linkedCharacters.nextNode()
                 value2 = linkedCharacters.first?.value.simbolo ?? ""

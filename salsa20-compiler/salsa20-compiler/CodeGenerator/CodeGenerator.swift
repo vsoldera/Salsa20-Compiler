@@ -4,6 +4,14 @@
 
 import Foundation
 
+/*
+
+    #REF
+
+    Classe responsável por gerar o código de máquina descrito durante as aulas.
+    Possui funções para criação, escrita de arquivos, assim como a escrita do inicío de
+    qualquer programa gerado
+ */
 
 class CodeGenerator: Token{
 
@@ -24,18 +32,10 @@ class CodeGenerator: Token{
     }
 
     func generate(_ aux1: String, _ aux2: String, _ aux3: String, _ aux4: String ){
-        /*do{
-            try aux.write(to: file, atomically: false, encoding: String.Encoding.utf8)
-        }catch{
 
-        }*/
         // create a new text file at your documents directory or use an existing text file resource url
         let fileURL = file
-       /* do {
-            try Data("Hello World\n".utf8).write(to: fileURL)
-        } catch {
-            print(error)
-        }*/
+
         // open your text file and set the file pointer at the end of it
         do {
             let fileHandle = try FileHandle(forWritingTo: fileURL)
@@ -47,10 +47,6 @@ class CodeGenerator: Token{
             fileHandle.write(textData)
             // close it when done
             fileHandle.closeFile()
-            // testing/reading the file edited
-            /*if let text = try? String(contentsOf: fileURL, encoding: .utf8) {
-                print(text)  // "Hello World\nLine 1\nLine 2\n\n"
-            }*/
         } catch {
             print(error)
         }

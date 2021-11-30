@@ -16,6 +16,13 @@ struct lexicalException: Error {
     var message: String
 }
 
+/*
+    #REF
+
+   Classe responsável por fazer a análise léxica -
+   faz a leitura do arquivo fonte, criando os tokens e ignorando os comentários dados por "{}"
+
+ */
 
 class LexicalAnalyzer: Token {
 
@@ -34,20 +41,11 @@ class LexicalAnalyzer: Token {
         return aux
     }
 
-//    func openFile() {
-//
-//        let path = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask)[0].appendingPathComponent("sintatico/gera1.txt")
-//
-//        print(path)
-//
-//        do {
-//            let todos = try String(contentsOf: path)
-//            setFileContent(content: todos)
-//
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-//    }
+    /*
+        #REF
+
+        Trata os comentário (ignorando-o) e remove espaços
+    */
 
     func treatCommentaryRemoveSpaces(fileContent: Array<String>, totalLength: Int) throws -> Int{
         var i = 0
@@ -105,6 +103,13 @@ class LexicalAnalyzer: Token {
         return -1
     }
 
+    /*
+        #REF
+
+        Adiciona os tokens (lexema e símbolo) a uma lista ligada fazendo as conferencias por palavras reservadas
+
+     */
+
     func getToken(fileContent: Array<String>, totalLength: Int, generalPointer: Int,arrayLines: Array<lineCounter>) throws -> Int{
         let character = Character(fileContent[0])
         var pointer = 0
@@ -118,11 +123,9 @@ class LexicalAnalyzer: Token {
             
         } else {
             if(fileContent[0] == ReservedCharacters.sdoispontos.rawValue) {
-                if(fileContent[1] == ReservedCharacters.sig.rawValue){
+                if(fileContent[1] == ReservedCharacters.sig.rawValue){ // testes para caracteres combinados >= <= 
                     linkedCharacters.append(token_struct( lexema: "\(fileContent[0])"+"\(fileContent[1])", simbolo: whichEnumIs(value: "\(fileContent[0])"+"\(fileContent[1])") != "" ?
                             whichEnumIs(value: "\(fileContent[0])"+"\(fileContent[1])") : "sidentificador" ) )
-                    /*linkedCharacters.append(lexema: "\(fileContent[0])"+"\(fileContent[1])", simbolo: whichEnumIs(value: "\(fileContent[0])"+"\(fileContent[1])") != "" ?
-                            whichEnumIs(value: "\(fileContent[0])"+"\(fileContent[1])") : "sidentificador" )*/
                     pointer+=2
                 }else{
                     linkedCharacters.append(token_struct(lexema: "\(fileContent[0])", simbolo: whichEnumIs(value: "\(fileContent[0])") != "" ?
@@ -170,7 +173,6 @@ class LexicalAnalyzer: Token {
                         whichEnumIs(value: fileContent[0]) : "sidentificador" ))
                 pointer+=1
             } else {
-                //print(arrayLines)
                 let a = arrayLines.last
                 let line = a?.line ?? 0
                 let sumLastOnes = a?.sumLastOnes ?? 0
@@ -227,9 +229,6 @@ class LexicalAnalyzer: Token {
 
     //Algoritmo Analisador Lexical
     func analyse(fileContent1: Array<String>) throws -> LinkedList<token_struct>{
-//        openFile()
-            
-        //print(fileContent)
         
         if(fileContent1.count <= 1){
             print("Não há dados no arquivo - Arquivo vazio!")
@@ -239,8 +238,6 @@ class LexicalAnalyzer: Token {
         let TOTAL_LENGTH = fileContent1.count
     
         try treatCommentaryRemoveSpaces(fileContent: fileContent1, totalLength: TOTAL_LENGTH)
-    
-        //print(linkedCharacters)
 
         return linkedCharacters
     }
