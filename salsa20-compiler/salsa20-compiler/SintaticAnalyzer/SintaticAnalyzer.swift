@@ -404,7 +404,7 @@ class SyntacticAnalyzer: Token {
 
         auxRot1 = rotule
         codeGenerator.generate("\(self.rotule)       " , "NULL",  "        ",  "        ")
-        rotule += 1
+        self.rotule += 1
         linkedCharacters.nextNode()
         //analisaExpressão
 
