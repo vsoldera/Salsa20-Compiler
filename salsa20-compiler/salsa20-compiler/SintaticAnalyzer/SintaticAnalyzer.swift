@@ -376,6 +376,8 @@ class SyntacticAnalyzer: Token {
                     if(simbol?.tipo == "sinteiro"){
                         codeGenerator.generate("        ", "LDV", "\(simbol?.enderecoMemoria ?? "")", "        ")
                         codeGenerator.generate("        ", "PRN", "        ", "        ")
+                    }else{
+                        throw sintaticException(name: "Sintatic Exception", message: "Impressão de Variável Booleano não permitida - analyseWrite", stack:linkedCharacters)
                     }
 
                     linkedCharacters.nextNode()
