@@ -20,23 +20,21 @@ class ViewController: NSViewController, NSTextViewDelegate {
     @IBAction func compileButtonPressed(_ sender: Any) {
         errorTextView.string = ""
         lexical.fileContent = []
-        if let documentString = retrieveStringFromFile(fileName: fileNameTextView.stringValue) {
-            let fileContent = lexical.setFileContent(content: mainTextView.string)
-            print(fileContent)
-            //let fileContent = mainTextView.string
-            lexical.linkedCharacters.removeAll()
-            do {
-                linkedCharacters = try lexical.analyse(fileContent1: fileContent)
-                let sintatic = SyntacticAnalyzer(linkedCharacters: linkedCharacters)
-                try sintatic.analyser()
-                errorTextView.string = "Code successfully exited with no errors"
-            } catch {
-                if let errorMessage = error as? sintaticException {
-                    errorTextView.string = "\(errorMessage.name): \(errorMessage.message)"
-                    errorTextView.string += "\n Error detected near to: \n \(errorMessage.stack)"
-                }
-                print(error)
+        let fileContent = lexical.setFileContent(content: mainTextView.string)
+        print(fileContent)
+        //let fileContent = mainTextView.string
+        lexical.linkedCharacters.removeAll()
+        do {
+            linkedCharacters = try lexical.analyse(fileContent1: fileContent)
+            let sintatic = SyntacticAnalyzer(linkedCharacters: linkedCharacters)
+            try sintatic.analyser()
+            errorTextView.string = "Code successfully exited with no errors"
+        } catch {
+            if let errorMessage = error as? sintaticException {
+                errorTextView.string = "\(errorMessage.name): \(errorMessage.message)"
+                errorTextView.string += "\n Error detected near to: \n \(errorMessage.stack)"
             }
+            print(error)
         }
     }
 
