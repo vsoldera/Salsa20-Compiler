@@ -16,13 +16,15 @@ class ViewController: NSViewController, NSTextViewDelegate {
 
     var lexical = LexicalAnalyzer()
     var linkedCharacters = LinkedList<token_struct>()
-
+    /*
+        #REF
+        A função compileButtonPressed chama os analisadores sintático e léxico, mandando como parâmetro
+        o fileContent correspondente à string no mainTextView.
+    */
     @IBAction func compileButtonPressed(_ sender: Any) {
         errorTextView.string = ""
         lexical.fileContent = []
         let fileContent = lexical.setFileContent(content: mainTextView.string)
-        print(fileContent)
-        //let fileContent = mainTextView.string
         lexical.linkedCharacters.removeAll()
         do {
             linkedCharacters = try lexical.analyse(fileContent1: fileContent)
@@ -38,6 +40,10 @@ class ViewController: NSViewController, NSTextViewDelegate {
         }
     }
 
+    /*
+        #REF
+        Funções para importar o código
+    */
     @IBAction func importButtonPressed(_ sender: Any) {
         if let fileContent = retrieveStringFromFile(fileName: fileNameTextView.stringValue) {
             mainTextView.string = fileContent
@@ -71,8 +77,11 @@ class ViewController: NSViewController, NSTextViewDelegate {
         }
     }
 
+    /*
+        #REF
+        A função retrieveStringFromFile cria o caminho do arquivo e salva o conteúdo dele em forma de string.
+    */
     func retrieveStringFromFile(fileName: String) -> String? {
-
         let filepath = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask)[0].appendingPathComponent(fileName)
         var contents : String
         do{
@@ -107,7 +116,10 @@ class ViewController: NSViewController, NSTextViewDelegate {
         let variableName: String
         let range: NSRange
     }
-
+    /*
+        #REF
+        A função beautifyCode registra e pinta com suas respectivas cores todas as palavras reservadas.
+     */
     func beautifyCode() {
         var rangesAndStrings = [StringRange]()
         let formattedString = NSString(string: mainTextView.string)
