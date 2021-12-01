@@ -1,0 +1,34 @@
+ programa exemplo6;
+
+var entrada: inteiro;
+
+  procedimento isso;
+
+        var i: inteiro;
+             m: inteiro;
+            r: inteiro;
+            x: inteiro;
+
+        inicio
+
+        i:= 1;
+
+        enquanto i <= 10 faca inicio 
+            
+            se i = 5 entao escreva(i)
+            senao escreva(i);
+            m:=30;
+            x:=25;
+            se i != 5 entao escreva(m)
+            senao escreva(x);
+            
+            m := i * entrada;
+            i := i + 1;
+            escreva(m);
+        fim;
+    fim;
+    
+inicio
+    leia(entrada);
+    isso;
+fim.   

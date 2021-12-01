@@ -1,0 +1,94 @@
+programa muitasFuncoes;
+
+var final : inteiro;
+
+    funcao start: booleano;
+        var b, n1, n2, n3, i, num : inteiro;
+    
+        procedimento aobaFinal;
+         var expressao :inteiro;
+              i : inteiro;
+				j, k : inteiro;
+         inicio
+                i:= 0;
+				  j:= 0;
+				  k := 0;
+                expressao := 0;
+
+                leia(expressao);
+               
+                se (((50 div 2 + (-50))<= (25+expressao*3)) e ((50 div 2 * 10)!= 20 ))  entao
+                    escreva(i)
+                senao escreva(expressao);
+
+               enquanto i < 50 faca inicio
+                    escreva(i);
+						enquanto j <= 50 faca inicio
+								enquanto k <= 300 faca inicio
+                    				escreva(k);
+                    				k := k + 1;
+                				fim;
+                    		escreva(j);
+                    		j := j + 1;
+                		fim;
+                    i := i + 1;
+                fim;
+            fim;
+
+
+      funcao aoba: inteiro;
+         var a :inteiro;
+
+         inicio
+           final := final + 1;
+              escreva(final);
+              aobaFinal;
+
+    fim;
+
+    procedimento fibo;
+        
+        
+        
+        inicio
+        i:=0;
+        n1 := 0;
+        n2 := 1;
+        leia(num);
+        escreva(n1);
+        escreva(n2);
+
+        enquanto i < num faca
+        inicio
+
+            n3:=n1+n2;
+            escreva(n3);
+            n1:=n2;
+            n2:=n3;
+            i := i + 1
+
+            fim; 
+        fim;
+    
+         {inicio START}
+
+        inicio
+
+        se final < 3
+            entao aoba
+        senao fibo
+        
+    fim;
+
+
+
+inicio
+
+final:=0;
+
+start;
+
+
+
+
+fim. 

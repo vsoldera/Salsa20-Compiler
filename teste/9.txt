@@ -1,0 +1,17 @@
+ programa fibonacci;
+    var n1, n2, n3, i, num: inteiro;
+
+inicio
+    leia(num);
+    escreva(n1);
+    escreva(n2);
+
+    enquanto i < num faca
+        inicio
+            n3:=n1+n2;
+            escreva(n3);
+            n1:=n2;
+            n2:=n3;
+            i := i + 1
+        fim;        
+fim.

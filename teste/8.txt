@@ -1,0 +1,30 @@
+programa exemplo6;
+
+var entrada: inteiro;
+
+funcao soma: inteiro;
+inicio
+soma:=5;
+fim;
+
+
+  procedimento isso;
+
+        var i: inteiro;
+             m: inteiro;
+
+        inicio
+
+        i:= 1;
+
+        enquanto i <= 10 faca inicio
+            m := i * entrada+soma;
+            i := i + 1;
+            escreva(m);
+        fim;
+    fim;
+
+inicio
+    leia(entrada);
+    isso;
+fim.
