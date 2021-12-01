@@ -1,5 +1,15 @@
 import Foundation
 
+/* 
+    #REF
+
+    Implementa a estrutura de dados lista ligada. 
+
+    Possui as funções de uma lista, como: ir para o próximo nó, remoção de nó e verificar se está vazia
+
+    Dentro de cada unidade da lista, há um nó que normalmente possui uma struct (como um token, por exemplo)
+*/
+
 public class LinkedList<T> {
     fileprivate var head: Node<T>?
     private var tail: Node<T>?

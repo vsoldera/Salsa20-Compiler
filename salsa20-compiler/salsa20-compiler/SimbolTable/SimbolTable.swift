@@ -10,7 +10,14 @@ struct simbols_table_struct: Equatable {
     var tipo: String
     var enderecoMemoria: String
 }
+/*
+ #REF
 
+    Classe para construção da tabela simbolos e suas operações uteis.
+
+    Implementa a Classe Stack para suas operações.
+
+ */
 class SimbolTable {
     var counter = 0
     var stack : Stack<simbols_table_struct> = Stack<simbols_table_struct>()
@@ -155,14 +162,17 @@ class SimbolTable {
 
         return nil
     }
+/* #REF
 
+    Desaloca variaveis alocadas para uso
+
+ */
     func cleanVariables() -> Int{
         var auxStack = stack
         var counter = 1
         var value = stack.pop()
         var _stack : Stack<simbols_table_struct> = Stack<simbols_table_struct>()
         self.counter += 1
-
 
         while(value != nil){
             if (value?.tipo == "func sinteiro" || value?.tipo == "func sbooleano" || value?.tipo == "sprocedimento") {
@@ -171,18 +181,11 @@ class SimbolTable {
                     break
                 }
             }
-
             if(value?.tipo == "sinteiro" || value?.tipo == "sbooleano"){
                 counter+=1
             }
             value = stack.pop()
-
-
         }
-
-
-
-
 
         if(counter == 0){
             return 0

@@ -685,7 +685,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="Salsa 20 Compiler" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
@@ -813,11 +813,14 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="127" id="8cY-Md-90t"/>
                                 </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="Ev0-nu-enN">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="arquivo.txt" drawsBackground="YES" id="Ev0-nu-enN">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <action selector="textFieldAction:" target="XfG-lQ-9wD" id="eVp-0D-ivh"/>
+                                </connections>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AmH-dj-jq3">
                                 <rect key="frame" x="203" y="494" width="86" height="32"/>

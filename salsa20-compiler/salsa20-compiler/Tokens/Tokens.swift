@@ -4,6 +4,14 @@
 
 import Foundation
 
+
+/*
+    #REF
+
+    Classe responsável por definir o token da análise léxica,
+    responsável por identificar palavras reservadas, identificadores, operadores aritméticos e lógicos
+ */
+
 class Token {
     func isReal(value: String) -> Bool {
         if let character = ReservedCharacters.init(rawValue: "\(value)"){
@@ -37,7 +45,12 @@ class Token {
         return ""
     }
     
-   
+
+    /*
+        #REF
+
+        Enumera operadores lógicos, aritméticos e pontuações
+     */
     
     enum ReservedCharacters: String {
         case sponto = "."
@@ -64,6 +77,12 @@ class Token {
         case sexclamacao = "!"
         case satribuicao = ":="
     }
+
+    /*
+     #REF
+
+     Enum responsável por definir identificadores (palavras reservadas)
+     */
 
     enum ReserverdWords: String{
         case sprograma = "programa"
